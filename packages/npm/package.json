@@ -1,0 +1,50 @@
+{
+  "name": "gpt-agent-orchestrator",
+  "version": "0.1.0",
+  "description": "A CLI tool that uses GPT as an orchestrator to break down large projects into tasks, then runs each task through an AI coding agent automatically",
+  "main": "bin/gpt-orch.js",
+  "bin": {
+    "gpt-orch": "bin/gpt-orch.js"
+  },
+  "scripts": {
+    "postinstall": "node scripts/postinstall.js",
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "gpt",
+    "ai",
+    "automation",
+    "orchestrator",
+    "cli",
+    "agent",
+    "coding-assistant"
+  ],
+  "author": "Chinmay Shringi",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChinmayShringi/gpt-claude-orchestrator.git"
+  },
+  "homepage": "https://github.com/ChinmayShringi/gpt-claude-orchestrator",
+  "bugs": {
+    "url": "https://github.com/ChinmayShringi/gpt-claude-orchestrator/issues"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux",
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "files": [
+    "bin/",
+    "scripts/",
+    "lib/",
+    "README.md"
+  ]
+}

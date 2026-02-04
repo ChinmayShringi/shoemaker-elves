@@ -1,0 +1,9 @@
+node_modules/
+*.log
+npm-debug.log*
+.npm
+*.tgz
+
+# Downloaded binaries (all platforms)
+bin/gpt-orch-*
+bin/.downloaded

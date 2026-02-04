@@ -1,0 +1,350 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'  # Trigger on version tags like v0.1.0, v1.2.3
+  workflow_dispatch:  # Allow manual triggering for testing
+    inputs:
+      dry_run:
+        description: 'Dry run (skip publishing)'
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: write  # Required for creating releases
+  id-token: write  # Required for PyPI trusted publishing
+
+jobs:
+  # Job 1: Validate version consistency
+  validate-version:
+    name: Validate Version Sync
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install tomli
+
+      - name: Check version sync
+        run: |
+          python scripts/sync_version.py --check
+          echo "✓ Versions are in sync"
+
+      - name: Extract version
+        id: version
+        run: |
+          VERSION=$(python -c "import tomllib; data = tomllib.load(open('pyproject.toml', 'rb')); print(data['project']['version'])")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+          # If triggered by tag, validate tag matches version
+          if [ "${{ github.ref_type }}" = "tag" ]; then
+            TAG_VERSION="${GITHUB_REF#refs/tags/v}"
+            echo "tag=$TAG_VERSION" >> $GITHUB_OUTPUT
+
+            if [ "$VERSION" != "$TAG_VERSION" ]; then
+              echo "Error: Tag version ($TAG_VERSION) doesn't match pyproject.toml version ($VERSION)"
+              exit 1
+            fi
+          else
+            echo "tag=$VERSION" >> $GITHUB_OUTPUT
+          fi
+
+          echo "Version: $VERSION"
+
+  # Job 2: Build and publish Python package to PyPI
+  publish-pypi:
+    name: Publish to PyPI
+    needs: validate-version
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/gpt-agent-orchestrator
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install build tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+
+      - name: Build package
+        run: |
+          python -m build
+          ls -lh dist/
+
+      - name: Publish to PyPI (Dry Run)
+        if: inputs.dry_run == true
+        run: |
+          echo "🧪 DRY RUN: Would publish to PyPI"
+          echo "Files that would be uploaded:"
+          ls -lh dist/
+
+      - name: Publish to PyPI
+        if: inputs.dry_run != true && github.ref_type == 'tag'
+        uses: pypa/gh-action-pypi-publish@release/v1
+        # This uses PyPI trusted publishing (OIDC)
+        # No API token needed - configure at https://pypi.org/manage/account/publishing/
+
+  # Job 3: Build binaries for all platforms
+  build-binaries:
+    name: Build ${{ matrix.os }} ${{ matrix.arch }}
+    needs: validate-version
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # macOS builds
+          - os: macos-latest
+            arch: x64
+            platform: darwin
+            script: scripts/build_binaries.sh
+          - os: macos-latest
+            arch: arm64
+            platform: darwin
+            script: scripts/build_binaries.sh
+          # Linux builds
+          - os: ubuntu-latest
+            arch: x64
+            platform: linux
+            script: scripts/build_binaries.sh
+          # Windows builds
+          - os: windows-latest
+            arch: x64
+            platform: windows
+            script: scripts/build_binaries.ps1
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev,all]"
+
+      - name: Set architecture for macOS ARM64
+        if: matrix.os == 'macos-latest' && matrix.arch == 'arm64'
+        run: |
+          echo "MACOS_ARCH=arm64" >> $GITHUB_ENV
+
+      - name: Build binary (Unix)
+        if: matrix.platform != 'windows'
+        run: |
+          chmod +x ${{ matrix.script }}
+          bash ${{ matrix.script }}
+
+      - name: Build binary (Windows)
+        if: matrix.platform == 'windows'
+        shell: powershell
+        run: |
+          & ${{ matrix.script }}
+
+      - name: Get binary name and generate checksum
+        id: binary
+        shell: bash
+        run: |
+          if [ "${{ matrix.platform }}" = "windows" ]; then
+            BINARY_NAME="gpt-orch-${{ matrix.platform }}-${{ matrix.arch }}.exe"
+          else
+            BINARY_NAME="gpt-orch-${{ matrix.platform }}-${{ matrix.arch }}"
+          fi
+
+          BINARY_PATH="dist/$BINARY_NAME"
+
+          # Generate SHA256 checksum
+          if [ "${{ matrix.platform }}" = "windows" ]; then
+            certutil -hashfile "$BINARY_PATH" SHA256 | findstr /v "SHA256 CertUtil" > "${BINARY_PATH}.sha256"
+          else
+            shasum -a 256 "$BINARY_PATH" > "${BINARY_PATH}.sha256"
+          fi
+
+          echo "name=$BINARY_NAME" >> $GITHUB_OUTPUT
+          echo "path=$BINARY_PATH" >> $GITHUB_OUTPUT
+          echo "checksum_path=${BINARY_PATH}.sha256" >> $GITHUB_OUTPUT
+
+      - name: Upload binary as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: binary-${{ matrix.platform }}-${{ matrix.arch }}
+          path: |
+            ${{ steps.binary.outputs.path }}
+            ${{ steps.binary.outputs.checksum_path }}
+          if-no-files-found: error
+
+  # Job 4: Create GitHub Release with binaries
+  create-github-release:
+    name: Create GitHub Release
+    needs: [validate-version, publish-pypi, build-binaries]
+    runs-on: ubuntu-latest
+    if: github.ref_type == 'tag' || inputs.dry_run == true
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all binary artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: binaries/
+          pattern: binary-*
+          merge-multiple: true
+
+      - name: Display structure of downloaded files
+        run: ls -lh binaries/
+
+      - name: Extract changelog for this version
+        id: changelog
+        run: |
+          VERSION="${{ needs.validate-version.outputs.version }}"
+
+          # Extract the section for this version from CHANGELOG.md
+          if [ -f CHANGELOG.md ]; then
+            # Try to extract content between [VERSION] and next version or end
+            CHANGELOG=$(awk "/^## \[$VERSION\]/,/^## \[/" CHANGELOG.md | sed '$d' | tail -n +2)
+
+            if [ -z "$CHANGELOG" ]; then
+              CHANGELOG="See [CHANGELOG.md](CHANGELOG.md) for details."
+            fi
+          else
+            CHANGELOG="No changelog available."
+          fi
+
+          # Save to file for multiline content
+          echo "$CHANGELOG" > changelog.txt
+          echo "Extracted changelog for version $VERSION"
+
+      - name: Create Release (Dry Run)
+        if: inputs.dry_run == true
+        run: |
+          echo "🧪 DRY RUN: Would create GitHub release"
+          echo "Tag: v${{ needs.validate-version.outputs.version }}"
+          echo "Binaries:"
+          ls -lh binaries/
+          echo ""
+          echo "Release notes:"
+          cat changelog.txt
+
+      - name: Create GitHub Release
+        if: inputs.dry_run != true && github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: binaries/*
+          draft: false
+          prerelease: false
+          body_path: changelog.txt
+          generate_release_notes: true
+          name: Release v${{ needs.validate-version.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Job 5: Publish to npm
+  publish-npm:
+    name: Publish to npm
+    needs: [validate-version, create-github-release]
+    runs-on: ubuntu-latest
+    environment:
+      name: npm
+      url: https://www.npmjs.com/package/gpt-agent-orchestrator
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Set up Python (for version sync)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install tomli
+
+      - name: Sync version to package.json
+        run: |
+          python scripts/sync_version.py --sync
+          echo "Synced version to: ${{ needs.validate-version.outputs.version }}"
+
+      - name: Display package.json version
+        working-directory: packages/npm
+        run: |
+          echo "package.json version:"
+          node -p "require('./package.json').version"
+
+      - name: Publish to npm (Dry Run)
+        if: inputs.dry_run == true
+        working-directory: packages/npm
+        run: |
+          echo "🧪 DRY RUN: Would publish to npm"
+          npm pack --dry-run
+
+      - name: Publish to npm
+        if: inputs.dry_run != true && github.ref_type == 'tag'
+        working-directory: packages/npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  # Job 6: Summary
+  release-summary:
+    name: Release Summary
+    needs: [validate-version, publish-pypi, create-github-release, publish-npm]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Release Summary
+        run: |
+          echo "# 🎉 Release Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** ${{ needs.validate-version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- PyPI: ${{ needs.publish-pypi.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- GitHub Release: ${{ needs.create-github-release.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- npm: ${{ needs.publish-npm.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            echo "🧪 **This was a DRY RUN** - no packages were published" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## Links" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "- [PyPI Package](https://pypi.org/project/gpt-agent-orchestrator/${{ needs.validate-version.outputs.version }}/)" >> $GITHUB_STEP_SUMMARY
+            echo "- [npm Package](https://www.npmjs.com/package/gpt-agent-orchestrator/v/${{ needs.validate-version.outputs.version }})" >> $GITHUB_STEP_SUMMARY
+            echo "- [GitHub Release](https://github.com/${{ github.repository }}/releases/tag/v${{ needs.validate-version.outputs.version }})" >> $GITHUB_STEP_SUMMARY
+          fi

@@ -1,0 +1,171 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "gpt-agent-orchestrator"
+version = "0.1.0"
+description = "A standalone CLI tool that uses GPT as an orchestrator to break down large projects into tasks, then runs each task through an AI coding agent automatically using a hook-driven chain."
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "Chinmay Shringi"},
+]
+requires-python = ">=3.10"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "tomli>=2.0.0; python_version < '3.11'",
+    "tomli-w>=1.0.0",
+    "filelock>=3.0.0",
+]
+
+[project.optional-dependencies]
+gpt = ["openai>=1.0.0"]
+anthropic = ["anthropic>=0.18.0"]
+rich = ["rich>=13.0.0"]
+all = ["openai>=1.0.0", "anthropic>=0.18.0", "rich>=13.0.0"]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "pytest-asyncio>=0.23.0",
+    "ruff>=0.3.0",
+    "mypy>=1.8.0",
+    "pyinstaller>=6.0.0",
+]
+
+[project.scripts]
+gpt-orch = "gpt_agent_orchestrator.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/ChinmayShringi/gpt-claude-orchestrator"
+Repository = "https://github.com/ChinmayShringi/gpt-claude-orchestrator"
+Issues = "https://github.com/ChinmayShringi/gpt-claude-orchestrator/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/gpt_agent_orchestrator"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src",
+    "/README.md",
+    "/pyproject.toml",
+]
+
+# ─────────────────────────────────────────────────────────────
+# Testing Configuration
+# ─────────────────────────────────────────────────────────────
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "-v",
+    "--tb=short",
+    "--strict-markers",
+    "--cov=src/gpt_agent_orchestrator",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+    "--cov-report=xml",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+]
+
+# ─────────────────────────────────────────────────────────────
+# Coverage Configuration
+# ─────────────────────────────────────────────────────────────
+
+[tool.coverage.run]
+source = ["src/gpt_agent_orchestrator"]
+omit = [
+    "*/tests/*",
+    "*/__pycache__/*",
+    "*/.venv/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "@abstractmethod",
+]
+
+# ─────────────────────────────────────────────────────────────
+# Ruff Configuration
+# ─────────────────────────────────────────────────────────────
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "UP",     # pyupgrade
+    "ARG",    # flake8-unused-arguments
+    "SIM",    # flake8-simplify
+    "TCH",    # flake8-type-checking
+    "PTH",    # flake8-use-pathlib
+]
+ignore = [
+    "E501",   # line too long (handled by formatter)
+    "B008",   # do not perform function calls in argument defaults
+    "B905",   # zip without explicit strict parameter
+    "ARG002", # unused method argument
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = [
+    "ARG",    # unused arguments ok in tests
+    "S101",   # assert allowed in tests
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+# ─────────────────────────────────────────────────────────────
+# Mypy Configuration
+# ─────────────────────────────────────────────────────────────
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+check_untyped_defs = false

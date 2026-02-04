@@ -5,3 +5,12 @@ state.json
 .env
 *.tmp
 .DS_Store
+
+# Build artifacts
+/build/
+/dist/
+/*.egg-info
+.eggs/
+
+# Release artifacts
+changelog.txt

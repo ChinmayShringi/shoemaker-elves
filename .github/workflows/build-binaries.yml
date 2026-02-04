@@ -1,0 +1,85 @@
+name: Build Binaries
+
+on:
+  workflow_dispatch:  # Allow manual triggering for testing
+  workflow_call:  # Allow being called by other workflows
+
+jobs:
+  build-binaries:
+    name: Build ${{ matrix.os }} ${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # macOS builds
+          - os: macos-latest
+            arch: x64
+            platform: darwin
+            script: scripts/build_binaries.sh
+          - os: macos-latest
+            arch: arm64
+            platform: darwin
+            script: scripts/build_binaries.sh
+          # Linux builds
+          - os: ubuntu-latest
+            arch: x64
+            platform: linux
+            script: scripts/build_binaries.sh
+          # Windows builds
+          - os: windows-latest
+            arch: x64
+            platform: windows
+            script: scripts/build_binaries.ps1
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'  # Use a stable, modern Python version
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev,all]"
+
+      - name: Set architecture for macOS ARM64
+        if: matrix.os == 'macos-latest' && matrix.arch == 'arm64'
+        run: |
+          # PyInstaller on macOS can cross-compile for ARM64
+          echo "MACOS_ARCH=arm64" >> $GITHUB_ENV
+
+      - name: Build binary (Unix)
+        if: matrix.platform != 'windows'
+        run: |
+          chmod +x ${{ matrix.script }}
+          bash ${{ matrix.script }}
+
+      - name: Build binary (Windows)
+        if: matrix.platform == 'windows'
+        shell: powershell
+        run: |
+          & ${{ matrix.script }}
+
+      - name: Get binary name
+        id: binary
+        shell: bash
+        run: |
+          if [ "${{ matrix.platform }}" = "windows" ]; then
+            BINARY_NAME="gpt-orch-${{ matrix.platform }}-${{ matrix.arch }}.exe"
+          else
+            BINARY_NAME="gpt-orch-${{ matrix.platform }}-${{ matrix.arch }}"
+          fi
+          echo "name=$BINARY_NAME" >> $GITHUB_OUTPUT
+          echo "path=dist/$BINARY_NAME" >> $GITHUB_OUTPUT
+
+      - name: Upload binary as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.binary.outputs.name }}
+          path: ${{ steps.binary.outputs.path }}
+          if-no-files-found: error
+

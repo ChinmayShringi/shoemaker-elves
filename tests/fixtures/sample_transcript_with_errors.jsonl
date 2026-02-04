@@ -1,0 +1,6 @@
+{"type": "assistant", "message": {"usage": {"input_tokens": 1000, "output_tokens": 200}, "content": [{"type": "text", "text": "Let me try to read the configuration file."}]}}
+{"type": "assistant", "message": {"usage": {"input_tokens": 1200, "output_tokens": 150}, "content": [{"type": "tool_use", "name": "Read", "input": {"file_path": "/nonexistent/config.py"}}]}}
+{"type": "tool_result", "content": [{"type": "text", "text": "Error: File not found: /nonexistent/config.py"}], "is_error": true}
+{"type": "assistant", "message": {"usage": {"input_tokens": 1500, "output_tokens": 250}, "content": [{"type": "text", "text": "I encountered an error trying to read the file. Let me try a different approach."}]}}
+{"type": "assistant", "message": {"usage": {"input_tokens": 1300, "output_tokens": 180}, "content": [{"type": "tool_use", "name": "Bash", "input": {"command": "invalid-command --unknown-flag"}}]}}
+{"type": "tool_result", "content": [{"type": "text", "text": "bash: invalid-command: command not found"}], "is_error": true}
