@@ -91,6 +91,125 @@ Examples:
 # ──────────────────────────────────────────────
 
 
+class DocsManager:
+    """Manages prework.md and postwork.md template files in the target project."""
+
+    PREWORK_TEMPLATE = """\
+# Pre-work Documentation
+
+Before starting any task, create or update a documentation file at:
+  docs/<area>/<feature>.md
+
+## What to document
+
+1. **Task Overview**: What you are about to do
+2. **Plan**: Step-by-step approach you intend to take
+3. **Files Affected**: Which files you expect to create or modify
+4. **Dependencies**: Any libraries, APIs, or other components involved
+5. **Assumptions**: Any assumptions you are making
+
+## Format
+
+```markdown
+# <Feature Name>
+
+## Pre-work
+
+**Date**: YYYY-MM-DD
+**Task**: <task title>
+
+### Plan
+- Step 1: ...
+- Step 2: ...
+
+### Files to be affected
+- path/to/file1
+- path/to/file2
+
+### Dependencies
+- ...
+
+### Assumptions
+- ...
+```
+"""
+
+    POSTWORK_TEMPLATE = """\
+# Post-work Documentation
+
+After completing any task, update the same documentation file at:
+  docs/<area>/<feature>.md
+
+Append a Post-work section below the existing Pre-work section.
+
+## What to document
+
+1. **What was done**: Actual changes made
+2. **Files Modified**: Exact files created or modified with brief descriptions
+3. **Key Decisions**: Any architectural or design decisions made during implementation
+4. **Issues Encountered**: Problems faced and how they were resolved
+5. **Status**: Whether the task was fully completed or has remaining work
+
+## Format
+
+Append this to the existing doc file:
+
+```markdown
+## Post-work
+
+**Completed**: YYYY-MM-DD
+**Status**: Completed | Partial | Failed
+
+### Changes Made
+- Description of change 1
+- Description of change 2
+
+### Files Modified
+- `path/to/file1` — what was changed
+- `path/to/file2` — what was changed
+
+### Key Decisions
+- Decision 1 and reasoning
+- Decision 2 and reasoning
+
+### Issues & Resolutions
+- Issue: ... → Resolution: ...
+```
+"""
+
+    def __init__(self, project_dir: Path):
+        self.project_dir = project_dir
+        self.prework_path = project_dir / "prework.md"
+        self.postwork_path = project_dir / "postwork.md"
+        self.docs_dir = project_dir / "docs"
+
+    def setup(self):
+        """Create prework.md, postwork.md, and docs/ directory if they don't exist."""
+        try:
+            self.docs_dir.mkdir(parents=True, exist_ok=True)
+        except OSError as e:
+            print(f"  WARNING: Could not create docs/ directory: {e}")
+            return
+
+        if not self.prework_path.exists():
+            try:
+                self.prework_path.write_text(self.PREWORK_TEMPLATE)
+                print(f"  Created prework.md")
+            except OSError as e:
+                print(f"  WARNING: Could not create prework.md: {e}")
+        else:
+            print(f"  Found existing prework.md")
+
+        if not self.postwork_path.exists():
+            try:
+                self.postwork_path.write_text(self.POSTWORK_TEMPLATE)
+                print(f"  Created postwork.md")
+            except OSError as e:
+                print(f"  WARNING: Could not create postwork.md: {e}")
+        else:
+            print(f"  Found existing postwork.md")
+
+
 class ContextMDManager:
     """Manages the context file (CLAUDE.md) in the target project directory."""
 
@@ -125,6 +244,20 @@ class ContextMDManager:
             "Complete the task in your prompt thoroughly and precisely.",
             "Do not ask clarifying questions — make reasonable assumptions.",
             "Focus on writing working code.",
+            "",
+            "## Documentation Requirements",
+            "",
+            "IMPORTANT: Before and after each task, you MUST create documentation.",
+            "",
+            "1. **Before starting work**: Read `prework.md` in the project root for instructions.",
+            "   Create a doc file at `docs/<area>/<feature>.md` with a Pre-work section",
+            "   documenting your plan. Choose `<area>` based on the domain (e.g., frontend,",
+            "   backend, auth, database, api, config) and `<feature>` based on what you're building.",
+            "",
+            "2. **After completing work**: Read `postwork.md` in the project root for instructions.",
+            "   Update the SAME doc file with a Post-work section documenting what was actually done.",
+            "",
+            "If a doc file already exists for this feature, append to it rather than overwriting.",
             "",
         ]
 
@@ -330,6 +463,7 @@ class Orchestrator:
         self.state_path = str(ORCHESTRATOR_DIR / "state.json")
         self.state = State(self.state_path)
         self.context_md = ContextMDManager(self.project_dir)
+        self.docs_manager = DocsManager(self.project_dir)
         self.gpt = None
         self.shutting_down = False
 
@@ -440,6 +574,7 @@ class Orchestrator:
         # Set up project
         self.context_md.backup()
         self.context_md.write_initial()
+        self.docs_manager.setup()
         install_hook(self.project_dir)
 
         # Mark first task as running
@@ -472,6 +607,7 @@ class Orchestrator:
         }
 
         self.context_md.backup()
+        self.docs_manager.setup()
         install_hook(self.project_dir)
 
         cumulative_summary = ""
