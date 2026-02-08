@@ -2,7 +2,7 @@
 
 > An intelligent task orchestrator that breaks down large projects into atomic tasks and executes them through an AI coding agent automatically.
 
-[![CI Status](https://github.com/ChinmayShringi/Chainsmith/actions/workflows/ci.yml/badge.svg)](https://github.com/ChinmayShringi/Chainsmith/actions/workflows/ci.yml)
+[![CI Status](https://github.com/ChinmayShringi/shoemaker-elves/actions/workflows/ci.yml/badge.svg)](https://github.com/ChinmayShringi/shoemaker-elves/actions/workflows/ci.yml)
 [![PyPI version](https://badge.fury.io/py/chainsmith.svg)](https://badge.fury.io/py/chainsmith)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
@@ -91,7 +91,7 @@ pipx install "chainsmith[all]"
 ### From Source
 
 ```bash
-git clone https://github.com/ChinmayShringi/Chainsmith.git
+git clone https://github.com/ChinmayShringi/shoemaker-elves.git
 cd Chainsmith
 pip install -e ".[all]"
 ```

@@ -1,5 +1,5 @@
 {
-  "name": "chainsmith",
+  "name": "shoemaker-elves",
   "version": "0.1.0",
   "description": "A CLI tool that breaks down large projects into atomic tasks and runs each task through an AI coding agent automatically",
   "main": "bin/chainsmith.js",
@@ -23,11 +23,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ChinmayShringi/Chainsmith.git"
+    "url": "https://github.com/ChinmayShringi/shoemaker-elves.git"
   },
-  "homepage": "https://github.com/ChinmayShringi/Chainsmith",
+  "homepage": "https://github.com/ChinmayShringi/shoemaker-elves",
   "bugs": {
-    "url": "https://github.com/ChinmayShringi/Chainsmith/issues"
+    "url": "https://github.com/ChinmayShringi/shoemaker-elves/issues"
   },
   "engines": {
     "node": ">=16.0.0"

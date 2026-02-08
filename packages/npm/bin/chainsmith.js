@@ -23,7 +23,7 @@ if (!fs.existsSync(binaryPath)) {
   console.error('  npm install gpt-agent-orchestrator');
   console.error('');
   console.error('Or manually download the binary from:');
-  console.error('https://github.com/ChinmayShringi/Chainsmith/releases');
+  console.error('https://github.com/ChinmayShringi/shoemaker-elves/releases');
   console.error('');
   console.error(`Expected binary location: ${binaryPath}`);
   process.exit(1);

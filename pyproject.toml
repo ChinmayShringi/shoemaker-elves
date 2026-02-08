@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "chainsmith"
+name = "shoemaker-elves"
 version = "0.1.0"
 description = "A CLI tool that breaks down large projects into atomic tasks and runs each task through an AI coding agent automatically using a hook-driven chain."
 readme = "README.md"
@@ -45,9 +45,9 @@ dev = [
 chainsmith = "chainsmith.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/ChinmayShringi/Chainsmith"
-Repository = "https://github.com/ChinmayShringi/Chainsmith"
-Issues = "https://github.com/ChinmayShringi/Chainsmith/issues"
+Homepage = "https://github.com/ChinmayShringi/shoemaker-elves"
+Repository = "https://github.com/ChinmayShringi/shoemaker-elves"
+Issues = "https://github.com/ChinmayShringi/shoemaker-elves/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/chainsmith"]

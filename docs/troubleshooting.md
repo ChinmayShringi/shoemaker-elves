@@ -616,7 +616,7 @@ chainsmith ~/project --resume
 
 If you can't resolve your issue:
 
-1. **Check existing issues**: https://github.com/ChinmayShringi/Chainsmith/issues
+1. **Check existing issues**: https://github.com/ChinmayShringi/shoemaker-elves/issues
 2. **Create a new issue** with:
    - Error messages
    - Configuration (`chainsmith config show`)

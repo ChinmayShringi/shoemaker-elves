@@ -142,7 +142,7 @@ describe('URL Structure', () => {
     const downloadUrl = getDownloadUrl('0.1.0');
     const checksumsUrl = getChecksumsUrl('0.1.0');
 
-    const expectedRepo = 'ChinmayShringi/Chainsmith';
+    const expectedRepo = 'ChinmayShringi/shoemaker-elves';
     assert.ok(downloadUrl.includes(expectedRepo));
     assert.ok(checksumsUrl.includes(expectedRepo));
   });

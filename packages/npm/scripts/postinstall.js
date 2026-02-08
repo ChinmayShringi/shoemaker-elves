@@ -20,7 +20,7 @@ function showManualInstallInstructions() {
   console.error('To manually install chainsmith:');
   console.error('');
   console.error('1. Download the binary for your platform from:');
-  console.error(`   https://github.com/ChinmayShringi/Chainsmith/releases/tag/v${PACKAGE_JSON.version}`);
+  console.error(`   https://github.com/ChinmayShringi/shoemaker-elves/releases/tag/v${PACKAGE_JSON.version}`);
   console.error('');
   console.error('2. Place the binary in:');
   console.error(`   ${path.join(__dirname, '..', 'bin', 'chainsmith' + (process.platform === 'win32' ? '.exe' : ''))}`);
