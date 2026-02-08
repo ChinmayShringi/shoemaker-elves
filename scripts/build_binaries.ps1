@@ -48,8 +48,11 @@ try {
 Write-Host ""
 Write-ColorOutput "Checking dependencies..." -Color Green
 $checkCmd = "import openai, anthropic, rich, tomli, tomli_w, filelock"
+$ErrorActionPreference = "Continue"
 python -c $checkCmd 2>$null
-if ($LASTEXITCODE -ne 0) {
+$depCheck = $LASTEXITCODE
+$ErrorActionPreference = "Stop"
+if ($depCheck -ne 0) {
     Write-ColorOutput "Warning: Some optional dependencies not found" -Color Yellow
     Write-Host "Installing all dependencies..."
     pip install -e ".[all]"
