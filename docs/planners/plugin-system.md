@@ -12,7 +12,7 @@
    - Understand how built-in providers are registered
 
 2. **Design Plugin Interface**
-   - Define entrypoint group name: `gpt_orch.planners`
+   - Define entrypoint group name: `shoemaker_elves.planners`
    - Design plugin registration API (function-based: `register(registry)`)
    - Define plugin contract and requirements
 
@@ -84,7 +84,7 @@
 
 Successfully implemented a complete plugin system for custom planner providers with the following features:
 
-1. **Automatic Plugin Discovery**: Plugins are discovered via `importlib.metadata` entrypoints from the `gpt_orch.planners` group
+1. **Automatic Plugin Discovery**: Plugins are discovered via `importlib.metadata` entrypoints from the `shoemaker_elves.planners` group
 2. **Graceful Error Handling**: Plugin load failures are logged as warnings but don't crash the application
 3. **Built-in Protection**: Plugins cannot override built-in providers (openai, anthropic, azure_openai, deepseek, openai_compatible)
 4. **Python 3.9+ Compatibility**: Supports both old (dict) and new (SelectableGroups) entrypoint APIs
@@ -115,7 +115,7 @@ Successfully implemented a complete plugin system for custom planner providers w
 **Example Plugin:**
 - `examples/planner_plugin_example/pyproject.toml` (new)
   - Package configuration with entrypoint registration
-  - Minimal dependencies (just gpt-agent-orchestrator)
+  - Minimal dependencies (just shoemaker-elves)
 
 - `examples/planner_plugin_example/src/example_planner/__init__.py` (new)
   - Registration function with lazy adapter import
@@ -149,7 +149,7 @@ Successfully implemented a complete plugin system for custom planner providers w
    - Easier for plugin authors to understand
    - More flexible (can register multiple providers in one plugin)
 
-2. **Entrypoint Group Naming**: Used `gpt_orch.planners` to match project name
+2. **Entrypoint Group Naming**: Used `shoemaker_elves.planners` to match project name
    - Clear namespace
    - Follows Python packaging conventions
 

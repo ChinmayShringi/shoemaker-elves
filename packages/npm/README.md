@@ -1,6 +1,6 @@
 # shoemaker-elves
 
-A CLI tool that uses GPT as an orchestrator to break down large projects into tasks, then runs each task through an AI coding agent automatically using a hook-driven chain.
+A CLI tool that breaks down large projects into atomic tasks and runs each task through an AI coding agent automatically using a hook-driven chain.
 
 ## Installation
 

@@ -1,6 +1,6 @@
 # Custom Planner Plugin Development
 
-Guide to creating custom planner providers for the GPT Agent Orchestrator.
+Guide to creating custom planner providers for the Shoemaker Elves.
 
 ## Table of Contents
 
@@ -170,10 +170,10 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "my-planner-plugin"
 version = "0.1.0"
-description = "Custom planner adapter for GPT Agent Orchestrator"
+description = "Custom planner adapter for Shoemaker Elves"
 requires-python = ">=3.10"
 dependencies = [
-    "gpt-agent-orchestrator>=0.1.0",
+    "shoemaker-elves>=0.1.0",
     # Your LLM client dependencies
     "my-llm-sdk>=1.0.0",
 ]
@@ -516,7 +516,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "my-planner-plugin"
 version = "0.1.0"
-description = "Custom planner for GPT Agent Orchestrator"
+description = "Custom planner for Shoemaker Elves"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -524,7 +524,7 @@ authors = [
     {name = "Your Name", email = "you@example.com"}
 ]
 dependencies = [
-    "gpt-agent-orchestrator>=0.1.0",
+    "shoemaker-elves>=0.1.0",
     "requests>=2.28.0",  # Or your LLM SDK
 ]
 

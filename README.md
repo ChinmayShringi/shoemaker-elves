@@ -1,4 +1,4 @@
-# GPT Agent Orchestrator
+# Shoemaker Elves
 
 > An intelligent task orchestrator that breaks down large projects into atomic tasks and executes them through an AI coding agent automatically.
 

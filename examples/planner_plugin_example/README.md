@@ -1,6 +1,6 @@
 # Example Planner Plugin
 
-This is a minimal working example of a custom planner provider plugin for the GPT Agent Orchestrator.
+This is a minimal working example of a custom planner provider plugin for Shoemaker Elves.
 
 ## What This Demonstrates
 
@@ -38,10 +38,10 @@ shoemaker-elves gpt "Build a web app" \
 
 ### 1. Entrypoint Registration
 
-The plugin is registered via the `gpt_orch.planners` entrypoint group in `pyproject.toml`:
+The plugin is registered via the `shoemaker_elves.planners` entrypoint group in `pyproject.toml`:
 
 ```toml
-[project.entry-points."gpt_orch.planners"]
+[project.entry-points."shoemaker_elves.planners"]
 example = "example_planner:register"
 ```
 

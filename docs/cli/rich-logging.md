@@ -41,7 +41,7 @@
 Successfully implemented rich logging and UX improvements for the CLI:
 
 1. **Optional Rich Dependency**: Added `rich>=13.0.0` as an optional dependency in `pyproject.toml` under `[project.optional-dependencies]`
-   - Users can install with: `pip install gpt-agent-orchestrator[rich]`
+   - Users can install with: `pip install shoemaker-elves[rich]`
    - Also included in the `all` extras bundle
 
 2. **Logging Module** (`src/shoemaker-elves/logging.py`):

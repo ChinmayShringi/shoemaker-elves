@@ -1,6 +1,6 @@
 # Troubleshooting Guide
 
-Common issues and solutions for the GPT Agent Orchestrator.
+Common issues and solutions for the Shoemaker Elves.
 
 ## Table of Contents
 

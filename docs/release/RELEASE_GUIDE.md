@@ -1,6 +1,6 @@
 # Release Guide
 
-This guide explains how to create a new release of gpt-agent-orchestrator.
+This guide explains how to create a new release of shoemaker-elves.
 
 ## Overview
 
@@ -113,15 +113,15 @@ Once the tag is pushed, GitHub Actions automatically:
 
 After the workflow completes, verify:
 
-1. **PyPI**: https://pypi.org/project/gpt-agent-orchestrator/
+1. **PyPI**: https://pypi.org/project/shoemaker-elves/
    ```bash
-   pip install gpt-agent-orchestrator==1.2.3
+   pip install shoemaker-elves==1.2.3
    shoemaker-elves --version
    ```
 
-2. **npm**: https://www.npmjs.com/package/gpt-agent-orchestrator
+2. **npm**: https://www.npmjs.com/package/shoemaker-elves
    ```bash
-   npm install -g gpt-agent-orchestrator@1.2.3
+   npm install -g shoemaker-elves@1.2.3
    shoemaker-elves --version
    ```
 
@@ -230,12 +230,12 @@ If a release has critical issues:
 1. **PyPI**: You cannot delete releases, but you can yank them:
    ```bash
    # Using twine
-   twine yank gpt-agent-orchestrator 1.2.3
+   twine yank shoemaker-elves 1.2.3
    ```
 
 2. **npm**: You can unpublish within 72 hours:
    ```bash
-   npm unpublish gpt-agent-orchestrator@1.2.3
+   npm unpublish shoemaker-elves@1.2.3
    ```
 
 3. **GitHub Release**: Delete the release and tag:

@@ -1,14 +1,14 @@
 [project]
 name = "example-planner-plugin"
 version = "0.1.0"
-description = "Example planner plugin for GPT Agent Orchestrator"
+description = "Example planner plugin for Shoemaker Elves"
 readme = "README.md"
 requires-python = ">=3.9"
 dependencies = [
-    "gpt-agent-orchestrator",
+    "shoemaker-elves",
 ]
 
-[project.entry-points."gpt_orch.planners"]
+[project.entry-points."shoemaker_elves.planners"]
 example = "example_planner:register"
 
 [build-system]

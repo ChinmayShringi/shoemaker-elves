@@ -1,6 +1,6 @@
 # Plugin Development Guide
 
-This guide explains how to create custom planner provider plugins for the GPT Agent Orchestrator.
+This guide explains how to create custom planner provider plugins for the Shoemaker Elves.
 
 ## Overview
 
@@ -10,7 +10,7 @@ The plugin system allows you to add support for new LLM providers without modify
 
 ### Entrypoint Group
 
-Plugins must register under the `gpt_orch.planners` entrypoint group.
+Plugins must register under the `shoemaker_elves.planners` entrypoint group.
 
 ### Registration Function
 
@@ -216,7 +216,7 @@ class MyProviderAdapter:
 `src/my_planner/__init__.py`:
 
 ```python
-"""My Planner Plugin for GPT Agent Orchestrator."""
+"""My Planner Plugin for Shoemaker Elves."""
 
 from .adapter import MyProviderAdapter
 
@@ -246,14 +246,14 @@ def register(registry_func):
 [project]
 name = "my-planner-plugin"
 version = "0.1.0"
-description = "My Provider plugin for GPT Agent Orchestrator"
+description = "My Provider plugin for Shoemaker Elves"
 requires-python = ">=3.9"
 dependencies = [
-    "gpt-agent-orchestrator",
+    "shoemaker-elves",
     "requests>=2.31.0",
 ]
 
-[project.entry-points."gpt_orch.planners"]
+[project.entry-points."shoemaker_elves.planners"]
 my_provider = "my_planner:register"
 
 [build-system]

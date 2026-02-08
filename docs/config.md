@@ -1,6 +1,6 @@
 # Configuration Guide
 
-This guide covers all configuration options for the GPT Agent Orchestrator.
+This guide covers all configuration options for the Shoemaker Elves.
 
 ## Table of Contents
 

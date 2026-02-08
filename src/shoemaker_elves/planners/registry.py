@@ -72,7 +72,7 @@ def load_plugins() -> None:
     """
     Discover and load planner plugins via importlib.metadata entrypoints.
 
-    Plugins are loaded from the 'gpt_orch.planners' entrypoint group.
+    Plugins are loaded from the 'shoemaker_elves.planners' entrypoint group.
     Each plugin should expose a 'register' function that accepts the registry
     as an argument and registers one or more providers.
 
@@ -88,10 +88,10 @@ def load_plugins() -> None:
         # Handle both old (dict) and new (SelectableGroups) API
         if hasattr(eps, "select"):
             # Python 3.10+ API
-            plugin_entries = eps.select(group="gpt_orch.planners")
+            plugin_entries = eps.select(group="shoemaker_elves.planners")
         else:
             # Python 3.9 API (dict-like)
-            plugin_entries = eps.get("gpt_orch.planners", [])
+            plugin_entries = eps.get("shoemaker_elves.planners", [])
     except Exception as e:
         logger.warning(f"Failed to discover plugins: {e}")
         return

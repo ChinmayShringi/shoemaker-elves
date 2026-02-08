@@ -411,7 +411,7 @@ def test_plugin_with_python39_entrypoints_api():
     mock_ep.load.return_value = mock_register_39
 
     # Mock Python 3.9 style dict API (no 'select' method)
-    mock_eps_dict = {"gpt_orch.planners": [mock_ep]}
+    mock_eps_dict = {"shoemaker_elves.planners": [mock_ep]}
 
     with patch("src.chainsmith.planners.registry.entry_points", return_value=mock_eps_dict):
         load_plugins()

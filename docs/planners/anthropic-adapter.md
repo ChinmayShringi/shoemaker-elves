@@ -97,7 +97,7 @@
 - Anthropic provider successfully registered and discoverable via `get_available_providers()`
 - CLI properly supports `--planner-provider anthropic` argument
 - Config system correctly reads `SHOEMAKER_ELVES_ANTHROPIC_API_KEY` environment variable
-- Optional dependency structure allows installation with `pip install gpt-agent-orchestrator[anthropic]`
+- Optional dependency structure allows installation with `pip install shoemaker-elves[anthropic]`
 
 ### Usage Example
 ```bash
