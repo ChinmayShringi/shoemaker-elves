@@ -28,12 +28,12 @@ python --version
 pip install --upgrade pip
 
 # Try installing with verbose output
-pip install -v chainsmith
+pip install -v shoemaker-elves
 ```
 
 ### Import errors after installation
 
-**Error**: `ModuleNotFoundError: No module named 'chainsmith'`
+**Error**: `ModuleNotFoundError: No module named 'shoemaker-elves'`
 
 **Solution**:
 ```bash
@@ -44,18 +44,18 @@ pip list | grep gpt-agent
 source venv/bin/activate  # or `venv\Scripts\activate` on Windows
 
 # Reinstall
-pip install --force-reinstall chainsmith
+pip install --force-reinstall shoemaker-elves
 ```
 
-### `chainsmith` command not found
+### `shoemaker-elves` command not found
 
 **Solution**:
 ```bash
 # Ensure pip's bin directory is in PATH
-python -m chainsmith --help
+python -m shoemaker-elves --help
 
 # Or use pipx (recommended)
-pipx install chainsmith
+pipx install shoemaker-elves
 
 # Or add pip's bin to PATH
 export PATH="$HOME/.local/bin:$PATH"  # Linux/macOS
@@ -86,16 +86,16 @@ claude --version
 **Solution**:
 ```bash
 # Option 1: Use environment variable (recommended)
-export CHAINSMITH_OPENAI_API_KEY=sk-...
+export SHOEMAKER_ELVES_OPENAI_API_KEY=sk-...
 
 # Option 2: Use config file
-chainsmith init
+shoemaker-elves init
 
 # Option 3: Set via config command
-chainsmith config set planner.api_key sk-...
+shoemaker-elves config set planner.api_key sk-...
 
 # Verify
-chainsmith config show --no-mask
+shoemaker-elves config show --no-mask
 ```
 
 ### Config file not loaded
@@ -105,17 +105,17 @@ chainsmith config show --no-mask
 **Solution**:
 ```bash
 # Check config file location
-chainsmith config show
+shoemaker-elves config show
 
 # Ensure config file exists
-ls -la ~/.config/chainsmith/config.toml  # Linux/macOS
-dir %APPDATA%\chainsmith\config.toml     # Windows
+ls -la ~/.config/shoemaker-elves/config.toml  # Linux/macOS
+dir %APPDATA%\shoemaker-elves\config.toml     # Windows
 
 # Verify config syntax (TOML)
-cat ~/.config/chainsmith/config.toml
+cat ~/.config/shoemaker-elves/config.toml
 
 # Recreate config
-chainsmith init
+shoemaker-elves init
 ```
 
 ### Wrong provider selected
@@ -125,14 +125,14 @@ chainsmith init
 **Solution**:
 ```bash
 # Check effective configuration
-chainsmith config show
+shoemaker-elves config show
 
 # Remember priority: CLI flags > env vars > config file
 # Unset env vars if needed
-unset CHAINSMITH_PLANNER_PROVIDER
+unset SHOEMAKER_ELVES_PLANNER_PROVIDER
 
 # Or explicitly set via CLI
-chainsmith ~/project --gpt -d "..." --planner-provider openai
+shoemaker-elves ~/project --gpt -d "..." --planner-provider openai
 ```
 
 ## Provider Issues
@@ -147,7 +147,7 @@ chainsmith ~/project --gpt -d "..." --planner-provider openai
    ```bash
    # Test your key
    curl https://api.openai.com/v1/models \
-     -H "Authorization: Bearer $CHAINSMITH_OPENAI_API_KEY"
+     -H "Authorization: Bearer $SHOEMAKER_ELVES_OPENAI_API_KEY"
 
    # Regenerate key at https://platform.openai.com/api-keys
    ```
@@ -155,10 +155,10 @@ chainsmith ~/project --gpt -d "..." --planner-provider openai
 2. **Rate limit exceeded**:
    ```bash
    # Reduce batch size
-   chainsmith ~/project --gpt -d "..." --batch-size 3
+   shoemaker-elves ~/project --gpt -d "..." --batch-size 3
 
    # Wait and retry
-   chainsmith ~/project --resume
+   shoemaker-elves ~/project --resume
    ```
 
 3. **Insufficient quota**:
@@ -174,7 +174,7 @@ chainsmith ~/project --gpt -d "..." --planner-provider openai
 1. **Invalid API key**:
    ```bash
    # Verify key format (should start with sk-ant-)
-   echo $CHAINSMITH_ANTHROPIC_API_KEY
+   echo $SHOEMAKER_ELVES_ANTHROPIC_API_KEY
 
    # Get new key at https://console.anthropic.com/
    ```
@@ -182,7 +182,7 @@ chainsmith ~/project --gpt -d "..." --planner-provider openai
 2. **Model not available**:
    ```bash
    # Use exact model name
-   chainsmith config set planner.model claude-sonnet-4-5-20250929
+   shoemaker-elves config set planner.model claude-sonnet-4-5-20250929
    ```
 
 ### Azure OpenAI errors
@@ -194,9 +194,9 @@ chainsmith ~/project --gpt -d "..." --planner-provider openai
 1. **Missing configuration**:
    ```bash
    # All three required
-   export CHAINSMITH_AZURE_ENDPOINT=https://your-resource.openai.azure.com
-   export CHAINSMITH_AZURE_DEPLOYMENT=your-deployment-name
-   export CHAINSMITH_AZURE_API_VERSION=2024-02-01
+   export SHOEMAKER_ELVES_AZURE_ENDPOINT=https://your-resource.openai.azure.com
+   export SHOEMAKER_ELVES_AZURE_DEPLOYMENT=your-deployment-name
+   export SHOEMAKER_ELVES_AZURE_API_VERSION=2024-02-01
    ```
 
 2. **Wrong deployment name**:
@@ -214,14 +214,14 @@ chainsmith ~/project --gpt -d "..." --planner-provider openai
 **Solutions**:
 ```bash
 # Verify API key
-echo $CHAINSMITH_DEEPSEEK_API_KEY
+echo $SHOEMAKER_ELVES_DEEPSEEK_API_KEY
 
 # Test connection
 curl https://api.deepseek.com/v1/models \
-  -H "Authorization: Bearer $CHAINSMITH_DEEPSEEK_API_KEY"
+  -H "Authorization: Bearer $SHOEMAKER_ELVES_DEEPSEEK_API_KEY"
 
 # Try custom base URL if needed
-chainsmith config set planner.base_url https://api.deepseek.com
+shoemaker-elves config set planner.base_url https://api.deepseek.com
 ```
 
 ### Local model (OpenAI-compatible) issues
@@ -243,7 +243,7 @@ chainsmith config set planner.base_url https://api.deepseek.com
    ```bash
    # Check server logs for correct port
    # Update config
-   chainsmith config set planner.base_url http://localhost:11434/v1
+   shoemaker-elves config set planner.base_url http://localhost:11434/v1
    ```
 
 3. **Model not loaded**:
@@ -279,7 +279,7 @@ chainsmith config set planner.base_url https://api.deepseek.com
    # Should contain SessionEnd hook
    # Reinstall if needed
    rm ~/your-project/.claude/settings.local.json
-   chainsmith ~/your-project  # Reinstalls hook
+   shoemaker-elves ~/your-project  # Reinstalls hook
    ```
 
 3. **Check permissions**:
@@ -297,7 +297,7 @@ chainsmith config set planner.base_url https://api.deepseek.com
 1. **Check task content**:
    ```bash
    # View generated tasks
-   cat src/chainsmith/tasks/1.md
+   cat src/shoemaker-elves/tasks/1.md
 
    # Ensure tasks are well-formed
    ```
@@ -324,13 +324,13 @@ chainsmith config set planner.base_url https://api.deepseek.com
    ```bash
    # Default timeout: 600s (10 minutes)
    # Adjust if needed
-   chainsmith ~/project --task-timeout 1200  # 20 minutes
+   shoemaker-elves ~/project --task-timeout 1200  # 20 minutes
    ```
 
 2. **Resume after timeout**:
    ```bash
    # Wait for timeout, then
-   chainsmith ~/project --resume
+   shoemaker-elves ~/project --resume
    ```
 
 3. **Check agent process**:
@@ -359,7 +359,7 @@ chainsmith config set planner.base_url https://api.deepseek.com
 
 3. **Monitor with verbose mode**:
    ```bash
-   chainsmith ~/project --verbose
+   shoemaker-elves ~/project --verbose
    ```
 
 ## Performance Issues
@@ -372,12 +372,12 @@ chainsmith config set planner.base_url https://api.deepseek.com
 
 1. **Use faster model**:
    ```bash
-   chainsmith config set planner.model gpt-4-turbo
+   shoemaker-elves config set planner.model gpt-4-turbo
    ```
 
 2. **Reduce batch size**:
    ```bash
-   chainsmith ~/project --gpt -d "..." --batch-size 3
+   shoemaker-elves ~/project --gpt -d "..." --batch-size 3
    ```
 
 3. **Simplify description**:
@@ -392,24 +392,24 @@ chainsmith config set planner.base_url https://api.deepseek.com
 
 1. **Set cost limits**:
    ```bash
-   chainsmith config set planner.max_cost_usd 25.0
+   shoemaker-elves config set planner.max_cost_usd 25.0
    ```
 
 2. **Use cheaper model**:
    ```bash
    # OpenAI
-   chainsmith config set planner.model gpt-3.5-turbo
+   shoemaker-elves config set planner.model gpt-3.5-turbo
 
    # Anthropic
-   chainsmith config set planner.model claude-3-haiku-20240307
+   shoemaker-elves config set planner.model claude-3-haiku-20240307
 
    # DeepSeek
-   chainsmith config set planner.provider deepseek
+   shoemaker-elves config set planner.provider deepseek
    ```
 
 3. **Reduce batches**:
    ```bash
-   chainsmith ~/project --gpt -d "..." --max-batches 3
+   shoemaker-elves ~/project --gpt -d "..." --max-batches 3
    ```
 
 4. **Use manual mode**:
@@ -429,7 +429,7 @@ chainsmith config set planner.base_url https://api.deepseek.com
 
 2. **Clear old state files**:
    ```bash
-   rm src/chainsmith/state.json
+   rm src/shoemaker-elves/state.json
    ```
 
 3. **Use manual mode** for large projects
@@ -443,10 +443,10 @@ chainsmith config set planner.base_url https://api.deepseek.com
 **Solution**:
 ```bash
 # Ensure state file exists
-ls src/chainsmith/state.json
+ls src/shoemaker-elves/state.json
 
 # If missing, cannot resume - start fresh
-chainsmith ~/project --gpt -d "..."
+shoemaker-elves ~/project --gpt -d "..."
 ```
 
 ### Stale state
@@ -456,10 +456,10 @@ chainsmith ~/project --gpt -d "..."
 **Solution**:
 ```bash
 # Manually inspect state
-cat src/chainsmith/state.json | jq .
+cat src/shoemaker-elves/state.json | jq .
 
 # Delete stale state to restart
-rm src/chainsmith/state.json
+rm src/shoemaker-elves/state.json
 ```
 
 ### State corruption
@@ -469,11 +469,11 @@ rm src/chainsmith/state.json
 **Solution**:
 ```bash
 # Validate JSON
-cat src/chainsmith/state.json | jq .
+cat src/shoemaker-elves/state.json | jq .
 
 # If corrupted, delete and restart
-rm src/chainsmith/state.json
-chainsmith ~/project --gpt -d "..."
+rm src/shoemaker-elves/state.json
+shoemaker-elves ~/project --gpt -d "..."
 ```
 
 ### Lock file issues
@@ -483,16 +483,16 @@ chainsmith ~/project --gpt -d "..."
 **Solution**:
 ```bash
 # Another orchestrator process may be running
-ps aux | grep chainsmith
+ps aux | grep shoemaker-elves
 
 # Kill other processes
 kill <PID>
 
 # Remove lock file
-rm src/chainsmith/state.json.lock
+rm src/shoemaker-elves/state.json.lock
 
 # Retry
-chainsmith ~/project --resume
+shoemaker-elves ~/project --resume
 ```
 
 ## Cost and Limits
@@ -505,18 +505,18 @@ chainsmith ~/project --resume
 
 1. **Increase limit**:
    ```bash
-   chainsmith config set planner.max_cost_usd 100.0
+   shoemaker-elves config set planner.max_cost_usd 100.0
    ```
 
 2. **Resume with new limit**:
    ```bash
-   chainsmith ~/project --resume --max-cost-usd 75.0
+   shoemaker-elves ~/project --resume --max-cost-usd 75.0
    ```
 
 3. **Check cost tracking accuracy**:
    ```bash
    # View state
-   cat src/chainsmith/state.json | jq .total_cost_usd
+   cat src/shoemaker-elves/state.json | jq .total_cost_usd
 
    # Costs are estimates; actual may vary
    ```
@@ -555,7 +555,7 @@ chainsmith ~/project --resume
 2. **Reinstall hook**:
    ```bash
    rm ~/your-project/.claude/settings.local.json
-   chainsmith ~/project --resume
+   shoemaker-elves ~/project --resume
    ```
 
 3. **Check agent permissions**:
@@ -600,7 +600,7 @@ chainsmith ~/project --resume
 2. **Test hook manually**:
    ```bash
    # Simulate hook execution
-   python src/chainsmith/hook_handler.py ~/your-project
+   python src/shoemaker-elves/hook_handler.py ~/your-project
    ```
 
 3. **Verify Python path**:
@@ -609,7 +609,7 @@ chainsmith ~/project --resume
    which python3
 
    # Ensure shebang is correct in hook_handler.py
-   head -1 src/chainsmith/hook_handler.py
+   head -1 src/shoemaker-elves/hook_handler.py
    ```
 
 ## Getting Help
@@ -619,12 +619,12 @@ If you can't resolve your issue:
 1. **Check existing issues**: https://github.com/ChinmayShringi/shoemaker-elves/issues
 2. **Create a new issue** with:
    - Error messages
-   - Configuration (`chainsmith config show`)
+   - Configuration (`shoemaker-elves config show`)
    - Steps to reproduce
    - Environment (OS, Python version, etc.)
 3. **Enable verbose logging**:
    ```bash
-   chainsmith ~/project --verbose
+   shoemaker-elves ~/project --verbose
    ```
 
 ## See Also

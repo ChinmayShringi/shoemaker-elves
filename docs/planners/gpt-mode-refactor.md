@@ -53,13 +53,13 @@ On JSON parse failure:
 ### Files to be affected
 
 **Modified**:
-- `src/chainsmith/gpt_planner.py` - Remove legacy code, use adapters only
-- `src/chainsmith/planners/base.py` - Add token usage to return types
-- `src/chainsmith/planners/types.py` - Add token/cost tracking fields
-- `src/chainsmith/planners/openai_adapter.py` - Enhanced retry and repair logic
-- `src/chainsmith/planners/anthropic_adapter.py` - Enhanced retry and repair logic
-- `src/chainsmith/planners/azure_openai_adapter.py` - Enhanced retry and repair logic
-- `src/chainsmith/state.py` - Add per-batch planner cost tracking
+- `src/shoemaker-elves/gpt_planner.py` - Remove legacy code, use adapters only
+- `src/shoemaker-elves/planners/base.py` - Add token usage to return types
+- `src/shoemaker-elves/planners/types.py` - Add token/cost tracking fields
+- `src/shoemaker-elves/planners/openai_adapter.py` - Enhanced retry and repair logic
+- `src/shoemaker-elves/planners/anthropic_adapter.py` - Enhanced retry and repair logic
+- `src/shoemaker-elves/planners/azure_openai_adapter.py` - Enhanced retry and repair logic
+- `src/shoemaker-elves/state.py` - Add per-batch planner cost tracking
 
 **New**:
 - `tests/test_gpt_planner_resilience.py` - Tests for retry and repair logic
@@ -101,11 +101,11 @@ Successfully refactored GPT mode to use adapters exclusively with comprehensive 
 - `tests/test_gpt_planner_resilience.py` — 10 comprehensive tests for retry, repair, and cost tracking
 
 **Modified Files:**
-- `src/chainsmith/planners/types.py` — Added UsageMetrics, PlanResult, and ReviewResult classes for token/cost tracking
-- `src/chainsmith/planners/openai_adapter.py` — Enhanced with retry logic, JSON repair, cost estimation, and usage tracking
-- `src/chainsmith/planners/anthropic_adapter.py` — Enhanced with retry logic, JSON repair, cost estimation, and usage tracking
-- `src/chainsmith/planners/azure_openai_adapter.py` — Enhanced with retry logic, JSON repair, cost estimation, and usage tracking
-- `src/chainsmith/gpt_planner.py` — Completely refactored to use adapters only, removed all legacy code (reduced from 330 to 174 lines)
+- `src/shoemaker-elves/planners/types.py` — Added UsageMetrics, PlanResult, and ReviewResult classes for token/cost tracking
+- `src/shoemaker-elves/planners/openai_adapter.py` — Enhanced with retry logic, JSON repair, cost estimation, and usage tracking
+- `src/shoemaker-elves/planners/anthropic_adapter.py` — Enhanced with retry logic, JSON repair, cost estimation, and usage tracking
+- `src/shoemaker-elves/planners/azure_openai_adapter.py` — Enhanced with retry logic, JSON repair, cost estimation, and usage tracking
+- `src/shoemaker-elves/gpt_planner.py` — Completely refactored to use adapters only, removed all legacy code (reduced from 330 to 174 lines)
 - `tests/test_openai_adapter.py` — Updated test expectations for new JSON repair behavior
 - `tests/test_anthropic_adapter.py` — Updated test expectations for new JSON repair behavior
 

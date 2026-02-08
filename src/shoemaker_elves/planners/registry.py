@@ -188,17 +188,17 @@ def _azure_openai_factory(**kwargs) -> AzureOpenAIAdapter:
     if not endpoint:
         raise ValueError(
             "endpoint is required for azure_openai provider. "
-            "Use --azure-endpoint or set CHAINSMITH_AZURE_ENDPOINT."
+            "Use --azure-endpoint or set SHOEMAKER_ELVES_AZURE_ENDPOINT."
         )
     if not deployment:
         raise ValueError(
             "deployment is required for azure_openai provider. "
-            "Use --azure-deployment or set CHAINSMITH_AZURE_DEPLOYMENT."
+            "Use --azure-deployment or set SHOEMAKER_ELVES_AZURE_DEPLOYMENT."
         )
     if not api_key:
         raise ValueError(
             "api_key is required for azure_openai provider. "
-            "Set CHAINSMITH_AZURE_OPENAI_API_KEY."
+            "Set SHOEMAKER_ELVES_AZURE_OPENAI_API_KEY."
         )
 
     # Remove provider and other unused args

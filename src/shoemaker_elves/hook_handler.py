@@ -19,8 +19,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 # Import from package
-from chainsmith.state import State
-from chainsmith.transcript_parser import parse_transcript
+from shoemaker_elves.state import State
+from shoemaker_elves.transcript_parser import parse_transcript
 
 
 def log(msg: str):

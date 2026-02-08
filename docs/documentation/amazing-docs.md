@@ -31,15 +31,15 @@
 - `docs/troubleshooting.md` - New file
 - `docs/plugin-planners.md` - New file
 - `examples/project-spec.md` - New file
-- `src/chainsmith/tasks/1.md` - Update to realistic example
-- `src/chainsmith/tasks/2.md` - Update to realistic example
-- `src/chainsmith/tasks/3.md` - Update to realistic example
+- `src/shoemaker-elves/tasks/1.md` - Update to realistic example
+- `src/shoemaker-elves/tasks/2.md` - Update to realistic example
+- `src/shoemaker-elves/tasks/3.md` - Update to realistic example
 
 ### Dependencies
 
-- Must accurately reflect CLI implementation in `src/chainsmith/cli.py`
+- Must accurately reflect CLI implementation in `src/shoemaker-elves/cli.py`
 - Must document all providers: openai, anthropic, azure_openai, deepseek, openai_compatible
-- Must align with configuration system in `src/chainsmith/config.py`
+- Must align with configuration system in `src/shoemaker-elves/config.py`
 - Must reference existing documentation in subdirectories (planners/, config/, testing/, etc.)
 
 ### Assumptions
@@ -138,9 +138,9 @@
 - `docs/troubleshooting.md` — New file, ~430 lines, common issues
 - `docs/plugin-planners.md` — New file, ~650 lines, plugin development
 - `examples/project-spec.md` — New file, ~150 lines, sample spec
-- `src/chainsmith/tasks/1.md` — Updated, realistic Express setup
-- `src/chainsmith/tasks/2.md` — Updated, Prisma/PostgreSQL setup
-- `src/chainsmith/tasks/3.md` — Updated, JWT authentication
+- `src/shoemaker-elves/tasks/1.md` — Updated, realistic Express setup
+- `src/shoemaker-elves/tasks/2.md` — Updated, Prisma/PostgreSQL setup
+- `src/shoemaker-elves/tasks/3.md` — Updated, JWT authentication
 - `docs/documentation/amazing-docs.md` — Documentation tracking file
 
 ### Key Decisions
@@ -155,7 +155,7 @@
 
 5. **Examples**: Created realistic, production-ready examples (Task Management API) instead of toy examples
 
-6. **CLI accuracy**: Verified all documented CLI commands match actual implementation by testing with `python -m chainsmith --help`
+6. **CLI accuracy**: Verified all documented CLI commands match actual implementation by testing with `python -m shoemaker-elves --help`
 
 7. **Cross-linking**: Added extensive cross-references between docs to help users find related information
 

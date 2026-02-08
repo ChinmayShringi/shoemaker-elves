@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from chainsmith.state import State, StateCorruptionError
+from shoemaker_elves.state import State, StateCorruptionError
 
 
 @pytest.fixture

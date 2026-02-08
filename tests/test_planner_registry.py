@@ -6,14 +6,14 @@ Tests provider registration and adapter factory functionality.
 
 import pytest
 
-from chainsmith.planners.registry import (
+from shoemaker_elves.planners.registry import (
     create_planner,
     get_available_providers,
     register_planner,
 )
-from chainsmith.planners.anthropic_adapter import AnthropicAdapter
-from chainsmith.planners.azure_openai_adapter import AzureOpenAIAdapter
-from chainsmith.planners.openai_adapter import OpenAIAdapter
+from shoemaker_elves.planners.anthropic_adapter import AnthropicAdapter
+from shoemaker_elves.planners.azure_openai_adapter import AzureOpenAIAdapter
+from shoemaker_elves.planners.openai_adapter import OpenAIAdapter
 
 
 def test_get_available_providers():
@@ -183,8 +183,8 @@ def test_create_unknown_provider():
 
 def test_register_custom_planner():
     """Test registering a custom planner."""
-    from chainsmith.planners.base import PlannerAdapter
-    from chainsmith.planners.types import ReviewSpec, TaskSpec
+    from shoemaker_elves.planners.base import PlannerAdapter
+    from shoemaker_elves.planners.types import ReviewSpec, TaskSpec
 
     class MockAdapter:
         """Mock adapter for testing."""
@@ -223,8 +223,8 @@ def test_register_custom_planner():
 def test_load_plugins_with_mock_entrypoint():
     """Test plugin loading with mocked entrypoint."""
     from unittest.mock import Mock, patch
-    from chainsmith.planners.registry import load_plugins, _REGISTRY
-    from chainsmith.planners.types import ReviewSpec, TaskSpec
+    from shoemaker_elves.planners.registry import load_plugins, _REGISTRY
+    from shoemaker_elves.planners.types import ReviewSpec, TaskSpec
 
     class MockPluginAdapter:
         """Mock adapter from a plugin."""
@@ -282,7 +282,7 @@ def test_load_plugins_with_mock_entrypoint():
 def test_plugin_cannot_override_builtin():
     """Test that plugins cannot override built-in providers."""
     from unittest.mock import Mock, patch
-    from chainsmith.planners.registry import load_plugins
+    from shoemaker_elves.planners.registry import load_plugins
 
     def bad_register(registry_func):
         """Plugin that tries to override built-in."""
@@ -309,7 +309,7 @@ def test_plugin_cannot_override_builtin():
 def test_plugin_load_failure_is_non_fatal():
     """Test that plugin load failures don't crash the application."""
     from unittest.mock import Mock, patch
-    from chainsmith.planners.registry import load_plugins
+    from shoemaker_elves.planners.registry import load_plugins
 
     def broken_register(registry_func):
         """Plugin that raises an error."""
@@ -340,7 +340,7 @@ def test_plugin_load_failure_is_non_fatal():
 def test_plugin_load_failure_missing_module():
     """Test handling of plugins with missing modules."""
     from unittest.mock import Mock, patch
-    from chainsmith.planners.registry import load_plugins
+    from shoemaker_elves.planners.registry import load_plugins
 
     # Create mock entrypoint that fails to load
     mock_ep = Mock()
@@ -365,7 +365,7 @@ def test_plugin_load_failure_missing_module():
 def test_entrypoint_discovery_failure():
     """Test handling of entry_points() call failure."""
     from unittest.mock import patch
-    from chainsmith.planners.registry import load_plugins
+    from shoemaker_elves.planners.registry import load_plugins
 
     # Mock entry_points to raise an error
     with patch("src.chainsmith.planners.registry.entry_points", side_effect=RuntimeError("Discovery failed")):
@@ -382,8 +382,8 @@ def test_entrypoint_discovery_failure():
 def test_plugin_with_python39_entrypoints_api():
     """Test plugin loading with Python 3.9 dict-style entry_points API."""
     from unittest.mock import Mock, patch
-    from chainsmith.planners.registry import load_plugins, _REGISTRY
-    from chainsmith.planners.types import ReviewSpec, TaskSpec
+    from shoemaker_elves.planners.registry import load_plugins, _REGISTRY
+    from shoemaker_elves.planners.types import ReviewSpec, TaskSpec
 
     class MockPluginAdapter39:
         """Mock adapter for Python 3.9 test."""

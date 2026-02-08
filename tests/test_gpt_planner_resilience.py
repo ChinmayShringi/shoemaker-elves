@@ -8,8 +8,8 @@ from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 
-from chainsmith.planners.openai_adapter import OpenAIAdapter
-from chainsmith.planners.types import TaskSpec, UsageMetrics
+from shoemaker_elves.planners.openai_adapter import OpenAIAdapter
+from shoemaker_elves.planners.types import TaskSpec, UsageMetrics
 
 
 def create_mock_rate_limit_error():

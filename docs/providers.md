@@ -68,14 +68,14 @@ The agent that executes tasks (currently Claude Code) is independent of the plan
 
 ```bash
 # Set API key
-export CHAINSMITH_OPENAI_API_KEY=sk-...
+export SHOEMAKER_ELVES_OPENAI_API_KEY=sk-...
 
 # Configure
-chainsmith config set planner.provider openai
-chainsmith config set planner.model gpt-4
+shoemaker-elves config set planner.provider openai
+shoemaker-elves config set planner.model gpt-4
 
 # Or use init wizard
-chainsmith init
+shoemaker-elves init
 ```
 
 ### Configuration
@@ -90,14 +90,14 @@ model = "gpt-4"
 
 **Via environment**:
 ```bash
-export CHAINSMITH_PLANNER_PROVIDER=openai
-export CHAINSMITH_PLANNER_MODEL=gpt-4
-export CHAINSMITH_OPENAI_API_KEY=sk-...
+export SHOEMAKER_ELVES_PLANNER_PROVIDER=openai
+export SHOEMAKER_ELVES_PLANNER_MODEL=gpt-4
+export SHOEMAKER_ELVES_OPENAI_API_KEY=sk-...
 ```
 
 **Via CLI**:
 ```bash
-chainsmith ~/project \
+shoemaker-elves ~/project \
   --gpt \
   -d "Build a web app" \
   --planner-provider openai \
@@ -120,7 +120,7 @@ OpenAI costs are estimated from token counts:
 
 Cost limit:
 ```bash
-chainsmith ~/project --gpt -d "..." --max-cost-usd 50.0
+shoemaker-elves ~/project --gpt -d "..." --max-cost-usd 50.0
 ```
 
 ## Anthropic (Claude)
@@ -129,14 +129,14 @@ chainsmith ~/project --gpt -d "..." --max-cost-usd 50.0
 
 ```bash
 # Set API key
-export CHAINSMITH_ANTHROPIC_API_KEY=sk-ant-...
+export SHOEMAKER_ELVES_ANTHROPIC_API_KEY=sk-ant-...
 
 # Configure
-chainsmith config set planner.provider anthropic
-chainsmith config set planner.model claude-sonnet-4-5-20250929
+shoemaker-elves config set planner.provider anthropic
+shoemaker-elves config set planner.model claude-sonnet-4-5-20250929
 
 # Or use init wizard
-chainsmith init
+shoemaker-elves init
 ```
 
 ### Configuration
@@ -151,14 +151,14 @@ model = "claude-sonnet-4-5-20250929"
 
 **Via environment**:
 ```bash
-export CHAINSMITH_PLANNER_PROVIDER=anthropic
-export CHAINSMITH_PLANNER_MODEL=claude-sonnet-4-5-20250929
-export CHAINSMITH_ANTHROPIC_API_KEY=sk-ant-...
+export SHOEMAKER_ELVES_PLANNER_PROVIDER=anthropic
+export SHOEMAKER_ELVES_PLANNER_MODEL=claude-sonnet-4-5-20250929
+export SHOEMAKER_ELVES_ANTHROPIC_API_KEY=sk-ant-...
 ```
 
 **Via CLI**:
 ```bash
-chainsmith ~/project \
+shoemaker-elves ~/project \
   --gpt \
   -d "Build a REST API" \
   --planner-provider anthropic \
@@ -192,12 +192,12 @@ Claude costs are estimated from token counts:
 
 ```bash
 # Set API key and endpoint
-export CHAINSMITH_AZURE_OPENAI_API_KEY=...
-export CHAINSMITH_AZURE_ENDPOINT=https://your-resource.openai.azure.com
-export CHAINSMITH_AZURE_DEPLOYMENT=your-deployment-name
+export SHOEMAKER_ELVES_AZURE_OPENAI_API_KEY=...
+export SHOEMAKER_ELVES_AZURE_ENDPOINT=https://your-resource.openai.azure.com
+export SHOEMAKER_ELVES_AZURE_DEPLOYMENT=your-deployment-name
 
 # Configure
-chainsmith init
+shoemaker-elves init
 ```
 
 ### Configuration
@@ -216,16 +216,16 @@ api_version = "2024-02-01"
 
 **Via environment**:
 ```bash
-export CHAINSMITH_PLANNER_PROVIDER=azure_openai
-export CHAINSMITH_AZURE_OPENAI_API_KEY=...
-export CHAINSMITH_AZURE_ENDPOINT=https://your-resource.openai.azure.com
-export CHAINSMITH_AZURE_DEPLOYMENT=your-deployment-name
-export CHAINSMITH_AZURE_API_VERSION=2024-02-01
+export SHOEMAKER_ELVES_PLANNER_PROVIDER=azure_openai
+export SHOEMAKER_ELVES_AZURE_OPENAI_API_KEY=...
+export SHOEMAKER_ELVES_AZURE_ENDPOINT=https://your-resource.openai.azure.com
+export SHOEMAKER_ELVES_AZURE_DEPLOYMENT=your-deployment-name
+export SHOEMAKER_ELVES_AZURE_API_VERSION=2024-02-01
 ```
 
 **Via CLI**:
 ```bash
-chainsmith ~/project \
+shoemaker-elves ~/project \
   --gpt \
   -d "Build a web app" \
   --planner-provider azure_openai \
@@ -267,14 +267,14 @@ Any model deployed in your Azure OpenAI resource:
 
 ```bash
 # Set API key
-export CHAINSMITH_DEEPSEEK_API_KEY=...
+export SHOEMAKER_ELVES_DEEPSEEK_API_KEY=...
 
 # Configure
-chainsmith config set planner.provider deepseek
-chainsmith config set planner.model deepseek-chat
+shoemaker-elves config set planner.provider deepseek
+shoemaker-elves config set planner.model deepseek-chat
 
 # Or use init wizard
-chainsmith init
+shoemaker-elves init
 ```
 
 ### Configuration
@@ -290,14 +290,14 @@ model = "deepseek-chat"
 
 **Via environment**:
 ```bash
-export CHAINSMITH_PLANNER_PROVIDER=deepseek
-export CHAINSMITH_PLANNER_MODEL=deepseek-chat
-export CHAINSMITH_DEEPSEEK_API_KEY=...
+export SHOEMAKER_ELVES_PLANNER_PROVIDER=deepseek
+export SHOEMAKER_ELVES_PLANNER_MODEL=deepseek-chat
+export SHOEMAKER_ELVES_DEEPSEEK_API_KEY=...
 ```
 
 **Via CLI**:
 ```bash
-chainsmith ~/project \
+shoemaker-elves ~/project \
   --gpt \
   -d "Build a data pipeline" \
   --planner-provider deepseek \
@@ -332,9 +332,9 @@ Use this provider for local models or any API that implements the OpenAI chat co
 
 ```bash
 # For Ollama
-chainsmith config set planner.provider openai_compatible
-chainsmith config set planner.model llama3
-chainsmith config set planner.base_url http://localhost:11434/v1
+shoemaker-elves config set planner.provider openai_compatible
+shoemaker-elves config set planner.model llama3
+shoemaker-elves config set planner.base_url http://localhost:11434/v1
 ```
 
 ### Configuration
@@ -350,14 +350,14 @@ base_url = "http://localhost:11434/v1"
 
 **Via environment**:
 ```bash
-export CHAINSMITH_PLANNER_PROVIDER=openai_compatible
-export CHAINSMITH_PLANNER_MODEL=llama3
-export CHAINSMITH_PLANNER_BASE_URL=http://localhost:11434/v1
+export SHOEMAKER_ELVES_PLANNER_PROVIDER=openai_compatible
+export SHOEMAKER_ELVES_PLANNER_MODEL=llama3
+export SHOEMAKER_ELVES_PLANNER_BASE_URL=http://localhost:11434/v1
 ```
 
 **Via CLI**:
 ```bash
-chainsmith ~/project \
+shoemaker-elves ~/project \
   --gpt \
   -d "Build a chatbot" \
   --planner-provider openai_compatible \
@@ -374,9 +374,9 @@ chainsmith ~/project \
 ollama pull llama3
 
 # Configure orchestrator
-chainsmith config set planner.provider openai_compatible
-chainsmith config set planner.model llama3
-chainsmith config set planner.base_url http://localhost:11434/v1
+shoemaker-elves config set planner.provider openai_compatible
+shoemaker-elves config set planner.model llama3
+shoemaker-elves config set planner.base_url http://localhost:11434/v1
 ```
 
 #### LM Studio
@@ -386,9 +386,9 @@ chainsmith config set planner.base_url http://localhost:11434/v1
 # Load a model
 
 # Configure orchestrator
-chainsmith config set planner.provider openai_compatible
-chainsmith config set planner.model local-model
-chainsmith config set planner.base_url http://localhost:1234/v1
+shoemaker-elves config set planner.provider openai_compatible
+shoemaker-elves config set planner.model local-model
+shoemaker-elves config set planner.base_url http://localhost:1234/v1
 ```
 
 #### vLLM
@@ -400,9 +400,9 @@ python -m vllm.entrypoints.openai.api_server \
   --port 8000
 
 # Configure orchestrator
-chainsmith config set planner.provider openai_compatible
-chainsmith config set planner.model Llama-2-7b-hf
-chainsmith config set planner.base_url http://localhost:8000/v1
+shoemaker-elves config set planner.provider openai_compatible
+shoemaker-elves config set planner.model Llama-2-7b-hf
+shoemaker-elves config set planner.base_url http://localhost:8000/v1
 ```
 
 #### Text Generation WebUI (oobabooga)
@@ -411,9 +411,9 @@ chainsmith config set planner.base_url http://localhost:8000/v1
 # Enable OpenAI extension in webui
 
 # Configure orchestrator
-chainsmith config set planner.provider openai_compatible
-chainsmith config set planner.model your-model-name
-chainsmith config set planner.base_url http://localhost:5000/v1
+shoemaker-elves config set planner.provider openai_compatible
+shoemaker-elves config set planner.model your-model-name
+shoemaker-elves config set planner.base_url http://localhost:5000/v1
 ```
 
 ### Model Recommendations
@@ -497,10 +497,10 @@ See [Plugin Development Guide](plugin-planners.md) for details.
 
 **Solution**: Set the appropriate environment variable:
 ```bash
-export CHAINSMITH_OPENAI_API_KEY=sk-...
-export CHAINSMITH_ANTHROPIC_API_KEY=sk-ant-...
-export CHAINSMITH_AZURE_OPENAI_API_KEY=...
-export CHAINSMITH_DEEPSEEK_API_KEY=...
+export SHOEMAKER_ELVES_OPENAI_API_KEY=sk-...
+export SHOEMAKER_ELVES_ANTHROPIC_API_KEY=sk-ant-...
+export SHOEMAKER_ELVES_AZURE_OPENAI_API_KEY=...
+export SHOEMAKER_ELVES_DEEPSEEK_API_KEY=...
 ```
 
 ### Azure Endpoint Errors
@@ -509,9 +509,9 @@ export CHAINSMITH_DEEPSEEK_API_KEY=...
 
 **Solution**: Set all three required values:
 ```bash
-export CHAINSMITH_AZURE_ENDPOINT=https://...
-export CHAINSMITH_AZURE_DEPLOYMENT=...
-export CHAINSMITH_AZURE_API_VERSION=2024-02-01
+export SHOEMAKER_ELVES_AZURE_ENDPOINT=https://...
+export SHOEMAKER_ELVES_AZURE_DEPLOYMENT=...
+export SHOEMAKER_ELVES_AZURE_API_VERSION=2024-02-01
 ```
 
 ### OpenAI-Compatible Connection Failed

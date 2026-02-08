@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "shoemaker-elves"
-version = "0.1.0"
+version = "0.1.1"
 description = "A CLI tool that breaks down large projects into atomic tasks and runs each task through an AI coding agent automatically using a hook-driven chain."
 readme = "README.md"
 license = {text = "MIT"}
@@ -42,7 +42,7 @@ dev = [
 ]
 
 [project.scripts]
-chainsmith = "chainsmith.cli:main"
+shoemaker-elves = "shoemaker_elves.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/ChinmayShringi/shoemaker-elves"
@@ -50,7 +50,7 @@ Repository = "https://github.com/ChinmayShringi/shoemaker-elves"
 Issues = "https://github.com/ChinmayShringi/shoemaker-elves/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/chainsmith"]
+packages = ["src/shoemaker_elves"]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -72,7 +72,7 @@ addopts = [
     "-v",
     "--tb=short",
     "--strict-markers",
-    "--cov=src/chainsmith",
+    "--cov=src/shoemaker_elves",
     "--cov-report=term-missing",
     "--cov-report=html",
     "--cov-report=xml",
@@ -87,7 +87,7 @@ markers = [
 # ─────────────────────────────────────────────────────────────
 
 [tool.coverage.run]
-source = ["src/chainsmith"]
+source = ["src/shoemaker_elves"]
 omit = [
     "*/tests/*",
     "*/__pycache__/*",

@@ -70,10 +70,10 @@
 - `tests/fixtures/sample_transcript_success.jsonl` — Test fixture for successful task execution
 - `tests/fixtures/sample_transcript_with_errors.jsonl` — Test fixture for error scenarios
 - `tests/fixtures/sample_transcript_complex.jsonl` — Test fixture for complex multi-file operations
-- `src/chainsmith/transcript_parser.py` — Fixed bug tracking NotebookEdit files (uses `notebook_path` not `file_path`)
+- `src/shoemaker-elves/transcript_parser.py` — Fixed bug tracking NotebookEdit files (uses `notebook_path` not `file_path`)
 - `pyproject.toml` — Added dev dependencies (pytest, pytest-cov, pytest-asyncio, ruff, mypy) and comprehensive tool configurations
 - `.github/workflows/ci.yml` — Created CI workflow with matrix testing (Ubuntu/macOS/Windows, Python 3.10-3.12), linting, type checking, and package build verification
-- `tests/test_*.py` (multiple files) — Fixed import paths from `src.chainsmith` to `chainsmith`
+- `tests/test_*.py` (multiple files) — Fixed import paths from `src.shoemaker-elves` to `shoemaker-elves`
 
 ### Test Results
 - **118 tests passing** (13 config, 15 state, 19 transcript parser, 11 logging, 5 hook handler, 21 planner types, 24 prompt validator, 10 gpt planner resilience)
@@ -85,7 +85,7 @@
 ### Key Decisions
 1. **Test Organization**: Organized tests into logical classes (TestTranscriptParserBasics, TestTranscriptParserEdgeCases, TestTokenUsageAndCost, etc.) for better structure
 2. **Fixture Strategy**: Used JSON fixture files instead of inline JSON strings for better readability and reusability
-3. **Import Fix**: Changed all test imports from `src.chainsmith` to `chainsmith` to work with the installed package
+3. **Import Fix**: Changed all test imports from `src.shoemaker-elves` to `shoemaker-elves` to work with the installed package
 4. **Coverage Configuration**: Set coverage to exclude tests, pycache, and venv directories; configured reasonable exclusion patterns for pragmatic lines
 5. **Ruff Configuration**: Selected comprehensive rule sets (pycodestyle, pyflakes, isort, flake8-bugbear, etc.) but ignored line-length enforcement to let formatter handle it
 6. **Mypy Configuration**: Used moderate strictness (warn on unused configs, redundant casts, unreachable code) but allowed untyped defs for gradual adoption
@@ -94,7 +94,7 @@
 
 ### Issues & Resolutions
 1. **Issue**: Test imports failing with `ModuleNotFoundError: No module named 'src'`
-   **Resolution**: Fixed all test imports to use `chainsmith` directly instead of `src.chainsmith`
+   **Resolution**: Fixed all test imports to use `shoemaker-elves` directly instead of `src.shoemaker-elves`
 
 2. **Issue**: Transcript parser test failing - expected 5 files but got 4
    **Resolution**: Found bug in transcript_parser.py where NotebookEdit tool was checking for `file_path` instead of `notebook_path`. Fixed by adding separate handling for NotebookEdit.

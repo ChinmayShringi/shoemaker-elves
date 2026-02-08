@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from chainsmith.transcript_parser import parse_transcript
+from shoemaker_elves.transcript_parser import parse_transcript
 
 
 @pytest.fixture

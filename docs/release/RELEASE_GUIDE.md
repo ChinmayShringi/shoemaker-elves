@@ -116,13 +116,13 @@ After the workflow completes, verify:
 1. **PyPI**: https://pypi.org/project/gpt-agent-orchestrator/
    ```bash
    pip install gpt-agent-orchestrator==1.2.3
-   chainsmith --version
+   shoemaker-elves --version
    ```
 
 2. **npm**: https://www.npmjs.com/package/gpt-agent-orchestrator
    ```bash
    npm install -g gpt-agent-orchestrator@1.2.3
-   chainsmith --version
+   shoemaker-elves --version
    ```
 
 3. **GitHub Release**: https://github.com/ChinmayShringi/shoemaker-elves/releases

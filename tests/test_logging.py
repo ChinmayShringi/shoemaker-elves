@@ -19,7 +19,7 @@ def test_logger_imports_without_rich():
     with patch.dict(sys.modules, {'rich': None, 'rich.console': None, 'rich.progress': None, 'rich.table': None, 'rich.panel': None, 'rich.text': None}):
         # Reload the module to trigger the import error path
         import importlib
-        from chainsmith import logging as log_module
+        from shoemaker_elves import logging as log_module
         importlib.reload(log_module)
 
         # Should be able to create a logger
@@ -30,7 +30,7 @@ def test_logger_imports_without_rich():
 
 def test_logger_basic_functions_without_rich():
     """Test that basic logging functions work without rich."""
-    from chainsmith.logging import Logger
+    from shoemaker_elves.logging import Logger
 
     with tempfile.TemporaryDirectory() as tmpdir:
         log_dir = Path(tmpdir)
@@ -68,7 +68,7 @@ def test_logger_basic_functions_without_rich():
 
 def test_logger_creates_log_file():
     """Test that logger creates machine-readable log files."""
-    from chainsmith.logging import Logger
+    from shoemaker_elves.logging import Logger
 
     with tempfile.TemporaryDirectory() as tmpdir:
         log_dir = Path(tmpdir)
@@ -101,7 +101,7 @@ def test_logger_creates_log_file():
 
 def test_logger_log_event():
     """Test custom event logging."""
-    from chainsmith.logging import Logger
+    from shoemaker_elves.logging import Logger
 
     with tempfile.TemporaryDirectory() as tmpdir:
         log_dir = Path(tmpdir)
@@ -125,7 +125,7 @@ def test_logger_log_event():
 
 def test_logger_without_log_dir():
     """Test that logger works without a log directory."""
-    from chainsmith.logging import Logger
+    from shoemaker_elves.logging import Logger
 
     # Should not crash
     logger = Logger(log_dir=None, enable_rich=False)
@@ -136,7 +136,7 @@ def test_logger_without_log_dir():
 
 def test_is_rich_available():
     """Test the is_rich_available function."""
-    from chainsmith.logging import is_rich_available
+    from shoemaker_elves.logging import is_rich_available
 
     # Should return a boolean
     result = is_rich_available()
@@ -145,7 +145,7 @@ def test_is_rich_available():
 
 def test_get_logger_singleton():
     """Test that get_logger returns a singleton."""
-    from chainsmith.logging import get_logger
+    from shoemaker_elves.logging import get_logger
 
     logger1 = get_logger()
     logger2 = get_logger()
@@ -156,7 +156,7 @@ def test_get_logger_singleton():
 
 def test_logger_table_with_rich(monkeypatch):
     """Test table display with rich available."""
-    from chainsmith.logging import Logger, RICH_AVAILABLE
+    from shoemaker_elves.logging import Logger, RICH_AVAILABLE
 
     if not RICH_AVAILABLE:
         pytest.skip("Rich not installed")
@@ -173,7 +173,7 @@ def test_logger_table_with_rich(monkeypatch):
 
 def test_logger_progress_with_rich(monkeypatch):
     """Test progress display with rich available."""
-    from chainsmith.logging import Logger, RICH_AVAILABLE
+    from shoemaker_elves.logging import Logger, RICH_AVAILABLE
 
     if not RICH_AVAILABLE:
         pytest.skip("Rich not installed")
@@ -192,7 +192,7 @@ def test_logger_progress_with_rich(monkeypatch):
 
 def test_logger_task_summary_with_rich():
     """Test task summary display with rich available."""
-    from chainsmith.logging import Logger, RICH_AVAILABLE
+    from shoemaker_elves.logging import Logger, RICH_AVAILABLE
 
     if not RICH_AVAILABLE:
         pytest.skip("Rich not installed")
@@ -216,7 +216,7 @@ def test_logger_task_summary_with_rich():
 
 def test_logger_handles_log_file_errors():
     """Test that logger handles log file write errors gracefully."""
-    from chainsmith.logging import Logger
+    from shoemaker_elves.logging import Logger
 
     # Use an invalid directory path
     logger = Logger(log_dir=Path("/invalid/directory/that/does/not/exist"), enable_rich=False)

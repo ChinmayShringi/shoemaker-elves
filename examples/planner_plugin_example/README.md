@@ -24,11 +24,11 @@ After installation, the `example` provider will be available to the orchestrator
 
 ```bash
 # Check that the plugin is available
-chainsmith init
+shoemaker-elves init
 # You should see "example" in the provider list
 
 # Run with the example provider
-chainsmith gpt "Build a web app" \
+shoemaker-elves gpt "Build a web app" \
     --planner-provider example \
     --planner-api-key demo-key \
     --planner-model example-model-v1
@@ -97,15 +97,15 @@ To verify the plugin works:
 pip install -e .
 
 # Check it's registered
-python -c "from chainsmith.planners.registry import get_available_providers; print(get_available_providers())"
+python -c "from shoemaker-elves.planners.registry import get_available_providers; print(get_available_providers())"
 # Should include 'example'
 
 # Try running with it
-chainsmith gpt "test project" --planner-provider example
+shoemaker-elves gpt "test project" --planner-provider example
 ```
 
 ## Learn More
 
 - See `docs/planners/plugin-development-guide.md` for detailed documentation
-- Review built-in adapters in `src/chainsmith/planners/` for reference implementations
-- Check the `PlannerAdapter` protocol in `src/chainsmith/planners/base.py`
+- Review built-in adapters in `src/shoemaker-elves/planners/` for reference implementations
+- Check the `PlannerAdapter` protocol in `src/shoemaker-elves/planners/base.py`

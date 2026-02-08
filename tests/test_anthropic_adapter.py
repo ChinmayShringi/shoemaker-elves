@@ -9,8 +9,8 @@ from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 
-from chainsmith.planners.anthropic_adapter import AnthropicAdapter
-from chainsmith.planners.types import ReviewSpec, TaskSpec
+from shoemaker_elves.planners.anthropic_adapter import AnthropicAdapter
+from shoemaker_elves.planners.types import ReviewSpec, TaskSpec
 
 
 # ─────────────────────────────────────────────────────────────

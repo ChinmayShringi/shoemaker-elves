@@ -18,7 +18,7 @@ function Write-ColorOutput {
 $ProjectRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $ProjectRoot
 
-Write-ColorOutput "Building chainsmith standalone binary" -Color Green
+Write-ColorOutput "Building shoemaker-elves standalone binary" -Color Green
 Write-Host "Project root: $ProjectRoot"
 
 # Detect architecture
@@ -58,17 +58,17 @@ if (Test-Path "dist") { Remove-Item -Recurse -Force "dist" }
 # Build with PyInstaller
 Write-Host ""
 Write-ColorOutput "Building binary with PyInstaller..." -Color Green
-pyinstaller --clean --noconfirm packaging/pyinstaller/chainsmith.spec
+pyinstaller --clean --noconfirm packaging/pyinstaller/shoemaker-elves.spec
 
 # Check if build succeeded
-$BinaryPath = "dist/chainsmith.exe"
+$BinaryPath = "dist/shoemaker-elves.exe"
 if (-not (Test-Path $BinaryPath)) {
     Write-ColorOutput "Error: Build failed - binary not found" -Color Red
     exit 1
 }
 
 # Rename binary with platform and architecture
-$BinaryName = "chainsmith-$Platform-$Arch.exe"
+$BinaryName = "shoemaker-elves-$Platform-$Arch.exe"
 Write-Host ""
 Write-ColorOutput "Renaming binary to $BinaryName" -Color Green
 Move-Item -Path $BinaryPath -Destination "dist/$BinaryName" -Force

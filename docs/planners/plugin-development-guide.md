@@ -33,8 +33,8 @@ def register(registry_func):
 Your factory function must return an object that implements the `PlannerAdapter` protocol:
 
 ```python
-from chainsmith.planners.base import PlannerAdapter
-from chainsmith.planners.types import TaskSpec, ReviewSpec
+from shoemaker-elves.planners.base import PlannerAdapter
+from shoemaker-elves.planners.types import TaskSpec, ReviewSpec
 
 class MyCustomAdapter:
     """Custom planner adapter for My Provider."""
@@ -137,7 +137,7 @@ my_planner_plugin/
 """Custom planner adapter for My Provider."""
 
 import requests
-from chainsmith.planners.types import TaskSpec, ReviewSpec
+from shoemaker-elves.planners.types import TaskSpec, ReviewSpec
 
 
 class MyProviderAdapter:
@@ -268,11 +268,11 @@ build-backend = "setuptools.build_meta"
 pip install -e .
 
 # Test that your provider is available
-chainsmith init
+shoemaker-elves init
 # Select "my_provider" from the list
 
 # Run with your provider
-chainsmith gpt "Build a web app" \
+shoemaker-elves gpt "Build a web app" \
     --planner-provider my_provider \
     --planner-api-key YOUR_API_KEY \
     --planner-model my-model-v1
@@ -330,7 +330,7 @@ def plan_batch(self, ...):
 
 1. Check that entrypoint is correctly defined in `pyproject.toml`
 2. Verify the plugin is installed: `pip list | grep my-plugin`
-3. Check orchestrator logs for warnings: `chainsmith --verbose ...`
+3. Check orchestrator logs for warnings: `shoemaker-elves --verbose ...`
 
 ### Provider Not Available
 
@@ -357,5 +357,5 @@ def plan_batch(self, ...):
 See `examples/planner_plugin_example/` for a complete working example.
 
 For built-in adapter implementations, review:
-- `src/chainsmith/planners/openai_adapter.py`
-- `src/chainsmith/planners/anthropic_adapter.py`
+- `src/shoemaker-elves/planners/openai_adapter.py`
+- `src/shoemaker-elves/planners/anthropic_adapter.py`

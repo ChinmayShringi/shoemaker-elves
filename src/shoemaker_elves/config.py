@@ -51,25 +51,25 @@ def get_config_path() -> Path:
 
 # Environment variable mapping
 ENV_VAR_MAP = {
-    "planner.provider": "CHAINSMITH_PLANNER_PROVIDER",
-    "planner.model": "CHAINSMITH_PLANNER_MODEL",
-    "planner.api_key": "CHAINSMITH_OPENAI_API_KEY",  # Default for openai
-    "planner.base_url": "CHAINSMITH_PLANNER_BASE_URL",
-    "planner.max_cost_usd": "CHAINSMITH_MAX_COST_USD",
-    "azure.endpoint": "CHAINSMITH_AZURE_ENDPOINT",
-    "azure.deployment": "CHAINSMITH_AZURE_DEPLOYMENT",
-    "azure.api_version": "CHAINSMITH_AZURE_API_VERSION",
-    "azure.api_key": "CHAINSMITH_AZURE_OPENAI_API_KEY",
-    "agent.model": "CHAINSMITH_AGENT_MODEL",
+    "planner.provider": "SHOEMAKER_ELVES_PLANNER_PROVIDER",
+    "planner.model": "SHOEMAKER_ELVES_PLANNER_MODEL",
+    "planner.api_key": "SHOEMAKER_ELVES_OPENAI_API_KEY",  # Default for openai
+    "planner.base_url": "SHOEMAKER_ELVES_PLANNER_BASE_URL",
+    "planner.max_cost_usd": "SHOEMAKER_ELVES_MAX_COST_USD",
+    "azure.endpoint": "SHOEMAKER_ELVES_AZURE_ENDPOINT",
+    "azure.deployment": "SHOEMAKER_ELVES_AZURE_DEPLOYMENT",
+    "azure.api_version": "SHOEMAKER_ELVES_AZURE_API_VERSION",
+    "azure.api_key": "SHOEMAKER_ELVES_AZURE_OPENAI_API_KEY",
+    "agent.model": "SHOEMAKER_ELVES_AGENT_MODEL",
 }
 
 # Provider-specific API key env vars
 PROVIDER_API_KEY_ENV_VARS = {
-    "openai": "CHAINSMITH_OPENAI_API_KEY",
-    "anthropic": "CHAINSMITH_ANTHROPIC_API_KEY",
-    "azure_openai": "CHAINSMITH_AZURE_OPENAI_API_KEY",
-    "deepseek": "CHAINSMITH_DEEPSEEK_API_KEY",
-    "openai_compatible": "CHAINSMITH_OPENAI_API_KEY",
+    "openai": "SHOEMAKER_ELVES_OPENAI_API_KEY",
+    "anthropic": "SHOEMAKER_ELVES_ANTHROPIC_API_KEY",
+    "azure_openai": "SHOEMAKER_ELVES_AZURE_OPENAI_API_KEY",
+    "deepseek": "SHOEMAKER_ELVES_DEEPSEEK_API_KEY",
+    "openai_compatible": "SHOEMAKER_ELVES_OPENAI_API_KEY",
 }
 
 # Default config schema

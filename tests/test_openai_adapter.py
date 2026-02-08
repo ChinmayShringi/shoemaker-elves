@@ -9,8 +9,8 @@ from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 
-from chainsmith.planners.openai_adapter import OpenAIAdapter
-from chainsmith.planners.types import ReviewSpec, TaskSpec
+from shoemaker_elves.planners.openai_adapter import OpenAIAdapter
+from shoemaker_elves.planners.types import ReviewSpec, TaskSpec
 
 
 # ─────────────────────────────────────────────────────────────

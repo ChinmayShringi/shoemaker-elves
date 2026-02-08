@@ -8,8 +8,8 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from chainsmith.hook_handler import launch_next_task, main
-from chainsmith.state import State
+from shoemaker_elves.hook_handler import launch_next_task, main
+from shoemaker_elves.state import State
 
 
 @pytest.fixture

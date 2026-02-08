@@ -35,9 +35,9 @@
 
 ### Files to be affected
 
-- `src/chainsmith/state.py` - Add cross-platform locking, atomic writes, backup/recovery
-- `src/chainsmith/hook_handler.py` - Add idempotency checks, completion markers
-- `src/chainsmith/cli.py` - Improve resume logic with stall detection
+- `src/shoemaker-elves/state.py` - Add cross-platform locking, atomic writes, backup/recovery
+- `src/shoemaker-elves/hook_handler.py` - Add idempotency checks, completion markers
+- `src/shoemaker-elves/cli.py` - Improve resume logic with stall detection
 - `tests/test_state.py` - New file for state management tests
 - `tests/test_hook_handler.py` - New file for hook idempotency tests
 
@@ -103,19 +103,19 @@
 ### Files Modified
 
 - `pyproject.toml` — Added `filelock>=3.0.0` dependency
-- `src/chainsmith/state.py` — Complete rewrite with:
+- `src/shoemaker-elves/state.py` — Complete rewrite with:
   - Cross-platform locking using `filelock`
   - Atomic writes with backup mechanism
   - State validation and corruption recovery
   - Idempotency support with execution history
   - New `mark_task_running()` method
   - Custom exceptions: `StateError`, `StateCorruptionError`
-- `src/chainsmith/hook_handler.py` — Enhanced with:
+- `src/shoemaker-elves/hook_handler.py` — Enhanced with:
   - Session-based idempotency check
   - Smart task detection (finds running task instead of using stale index)
   - Updated `launch_next_task()` signature to accept `State` object
   - Idempotency check in launch to prevent double-launching
-- `src/chainsmith/cli.py` — Improved with:
+- `src/shoemaker-elves/cli.py` — Improved with:
   - Stall detection in `_resume()` method
   - Timeout-based stalled task identification
   - Automatic failed status for stalled tasks

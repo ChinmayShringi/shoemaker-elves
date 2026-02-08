@@ -1226,7 +1226,7 @@ def cmd_init():
     else:
         # Provide guidance on env var
         from .config import PROVIDER_API_KEY_ENV_VARS
-        env_var = PROVIDER_API_KEY_ENV_VARS.get(provider, "CHAINSMITH_OPENAI_API_KEY")
+        env_var = PROVIDER_API_KEY_ENV_VARS.get(provider, "SHOEMAKER_ELVES_OPENAI_API_KEY")
         print(f"\nSet your API key as environment variable: {env_var}")
         print(f"Example: export {env_var}=your-api-key-here")
 

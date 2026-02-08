@@ -6,7 +6,7 @@ Tests validation of task planning and review responses.
 
 import pytest
 
-from chainsmith.prompt_validator import (
+from shoemaker_elves.prompt_validator import (
     PromptValidator,
     ValidationError,
 )

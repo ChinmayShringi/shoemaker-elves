@@ -47,7 +47,7 @@ echo "  1. A matching release exists on GitHub"
 echo "  2. The version in package.json matches a release tag"
 echo ""
 echo "To test the wrapper after binary is available:"
-echo "  npx chainsmith --help"
+echo "  npx shoemaker-elves --help"
 echo ""
 
 # Show what was installed

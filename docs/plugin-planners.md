@@ -67,8 +67,8 @@ touch README.md
 
 ```python
 # src/my_planner/adapter.py
-from chainsmith.planners.base import PlannerAdapter
-from chainsmith.planners.types import (
+from shoemaker-elves.planners.base import PlannerAdapter
+from shoemaker-elves.planners.types import (
     PlannerResponse,
     AssessmentResponse,
     TaskItem,
@@ -178,7 +178,7 @@ dependencies = [
     "my-llm-sdk>=1.0.0",
 ]
 
-[project.entry-points."chainsmith.planners"]
+[project.entry-points."shoemaker-elves.planners"]
 my_provider = "my_planner.adapter:MyPlannerAdapter"
 ```
 
@@ -196,14 +196,14 @@ pip install .
 
 ```bash
 # Configure to use your provider
-chainsmith config set planner.provider my_provider
-chainsmith config set planner.model my-model-name
+shoemaker-elves config set planner.provider my_provider
+shoemaker-elves config set planner.model my-model-name
 
 # Set API key
-export CHAINSMITH_MY_PROVIDER_API_KEY=...
+export SHOEMAKER_ELVES_MY_PROVIDER_API_KEY=...
 
 # Run orchestration
-chainsmith ~/project --gpt -d "Build something"
+shoemaker-elves ~/project --gpt -d "Build something"
 ```
 
 ## Plugin Interface
@@ -214,7 +214,7 @@ All planner adapters must implement `PlannerAdapter` interface:
 
 ```python
 from abc import ABC, abstractmethod
-from chainsmith.planners.types import (
+from shoemaker-elves.planners.types import (
     PlannerResponse,
     AssessmentResponse,
 )
@@ -295,8 +295,8 @@ my-planner-plugin/
 
 ```python
 # src/my_planner/adapter.py
-from chainsmith.planners.base import PlannerAdapter
-from chainsmith.planners.types import (
+from shoemaker-elves.planners.base import PlannerAdapter
+from shoemaker-elves.planners.types import (
     PlannerResponse,
     AssessmentResponse,
     TaskItem,
@@ -535,7 +535,7 @@ dev = [
 ]
 
 # CRITICAL: Entry point registration
-[project.entry-points."chainsmith.planners"]
+[project.entry-points."shoemaker-elves.planners"]
 my_provider = "my_planner.adapter:MyPlannerAdapter"
 ```
 
@@ -551,22 +551,22 @@ The orchestrator discovers plugins via Python entry points.
 
 1. Plugin declares entry point in `pyproject.toml`
 2. On installation, entry point is registered
-3. Orchestrator's registry scans for `chainsmith.planners` entry points
+3. Orchestrator's registry scans for `shoemaker-elves.planners` entry points
 4. Adapters are loaded dynamically
 
 ### Entry Point Naming
 
 ```toml
-[project.entry-points."chainsmith.planners"]
+[project.entry-points."shoemaker-elves.planners"]
 my_provider = "my_planner.adapter:MyPlannerAdapter"
 company_llm = "company_planner.adapter:CompanyAdapter"
 ```
 
 **Use in config**:
 ```bash
-chainsmith config set planner.provider my_provider
+shoemaker-elves config set planner.provider my_provider
 # or
-chainsmith config set planner.provider company_llm
+shoemaker-elves config set planner.provider company_llm
 ```
 
 ## Testing
@@ -625,11 +625,11 @@ def test_assess_batch():
 # Test with orchestrator
 pip install -e .
 
-chainsmith config set planner.provider my_provider
-export CHAINSMITH_MY_PROVIDER_API_KEY=...
+shoemaker-elves config set planner.provider my_provider
+export SHOEMAKER_ELVES_MY_PROVIDER_API_KEY=...
 
 # Run small test
-chainsmith ~/test-project --gpt -d "Create a hello world file" --max-batches 1
+shoemaker-elves ~/test-project --gpt -d "Create a hello world file" --max-batches 1
 ```
 
 ## Distribution
@@ -651,7 +651,7 @@ python -m twine upload dist/*
 pip install my-planner-plugin
 
 # Will automatically register with orchestrator
-chainsmith config set planner.provider my_provider
+shoemaker-elves config set planner.provider my_provider
 ```
 
 ## Examples

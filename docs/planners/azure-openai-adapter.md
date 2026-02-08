@@ -6,7 +6,7 @@
 **Task**: Azure OpenAI adapter (planner mode)
 
 ### Plan
-1. Create `src/chainsmith/planners/azure_openai_adapter.py` with AzureOpenAIAdapter class
+1. Create `src/shoemaker-elves/planners/azure_openai_adapter.py` with AzureOpenAIAdapter class
 2. Use OpenAI SDK configured for Azure endpoints
 3. Support Azure-specific configuration: endpoint, deployment name, api_version, api_key
 4. Register `azure_openai` provider in the registry
@@ -15,10 +15,10 @@
 7. Write comprehensive tests with mocked API calls
 
 ### Files to be affected
-- `src/chainsmith/planners/azure_openai_adapter.py` (new)
-- `src/chainsmith/planners/registry.py` (update)
-- `src/chainsmith/config.py` (already supports Azure config)
-- `src/chainsmith/cli.py` (update)
+- `src/shoemaker-elves/planners/azure_openai_adapter.py` (new)
+- `src/shoemaker-elves/planners/registry.py` (update)
+- `src/shoemaker-elves/config.py` (already supports Azure config)
+- `src/shoemaker-elves/cli.py` (update)
 - `tests/test_azure_openai_adapter.py` (new)
 
 ### Dependencies
@@ -47,10 +47,10 @@
 - Created comprehensive test suite with 18 tests covering all functionality
 
 ### Files Modified
-- `src/chainsmith/planners/azure_openai_adapter.py` — New adapter class implementing PlannerAdapter protocol with Azure OpenAI client
-- `src/chainsmith/planners/registry.py` — Added azure_openai provider registration with validation of required parameters
-- `src/chainsmith/cli.py` — Added --azure-endpoint, --azure-deployment, and --azure-api-version CLI flags with config override handling
-- `src/chainsmith/gpt_planner.py` — Extended adapter system integration to include azure_openai provider
+- `src/shoemaker-elves/planners/azure_openai_adapter.py` — New adapter class implementing PlannerAdapter protocol with Azure OpenAI client
+- `src/shoemaker-elves/planners/registry.py` — Added azure_openai provider registration with validation of required parameters
+- `src/shoemaker-elves/cli.py` — Added --azure-endpoint, --azure-deployment, and --azure-api-version CLI flags with config override handling
+- `src/shoemaker-elves/gpt_planner.py` — Extended adapter system integration to include azure_openai provider
 - `tests/test_azure_openai_adapter.py` — Comprehensive test suite covering initialization, planning, review, error handling, and Azure-specific features
 - `tests/test_planner_registry.py` — Added tests for azure_openai provider registration and parameter validation
 
@@ -77,24 +77,24 @@ All 85 tests pass, including:
 ### Usage Examples
 ```bash
 # Using CLI flags
-chainsmith ~/project --gpt -d "Build API" \\
+shoemaker-elves ~/project --gpt -d "Build API" \\
   --planner-provider azure_openai \\
   --azure-endpoint https://my-resource.openai.azure.com/ \\
   --azure-deployment gpt-4o \\
   --azure-api-version 2024-02-01
 
 # Using environment variables
-export CHAINSMITH_AZURE_OPENAI_API_KEY="your-key"
-export CHAINSMITH_AZURE_ENDPOINT="https://my-resource.openai.azure.com/"
-export CHAINSMITH_AZURE_DEPLOYMENT="gpt-4o"
-export CHAINSMITH_AZURE_API_VERSION="2024-02-01"
-chainsmith ~/project --gpt -d "Build API" --planner-provider azure_openai
+export SHOEMAKER_ELVES_AZURE_OPENAI_API_KEY="your-key"
+export SHOEMAKER_ELVES_AZURE_ENDPOINT="https://my-resource.openai.azure.com/"
+export SHOEMAKER_ELVES_AZURE_DEPLOYMENT="gpt-4o"
+export SHOEMAKER_ELVES_AZURE_API_VERSION="2024-02-01"
+shoemaker-elves ~/project --gpt -d "Build API" --planner-provider azure_openai
 
 # Using config file
-chainsmith config set planner.provider azure_openai
-chainsmith config set azure.endpoint https://my-resource.openai.azure.com/
-chainsmith config set azure.deployment gpt-4o
-chainsmith config set azure.api_version 2024-02-01
+shoemaker-elves config set planner.provider azure_openai
+shoemaker-elves config set azure.endpoint https://my-resource.openai.azure.com/
+shoemaker-elves config set azure.deployment gpt-4o
+shoemaker-elves config set azure.api_version 2024-02-01
 ```
 
 ### Status

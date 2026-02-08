@@ -5,7 +5,7 @@ This file uses absolute imports to avoid PyInstaller issues with relative import
 """
 
 import sys
-from chainsmith.cli import main
+from shoemaker_elves.cli import main
 
 if __name__ == "__main__":
     sys.exit(main())

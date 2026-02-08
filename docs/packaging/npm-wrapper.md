@@ -22,7 +22,7 @@
 
 ### Files to be affected
 - `packages/npm/package.json` (new)
-- `packages/npm/bin/chainsmith.js` (new) - wrapper script
+- `packages/npm/bin/shoemaker-elves.js` (new) - wrapper script
 - `packages/npm/scripts/postinstall.js` (new) - download logic
 - `packages/npm/lib/platform.js` (new) - platform detection
 - `packages/npm/lib/download.js` (new) - download and verify
@@ -35,7 +35,7 @@
 - No external dependencies for core functionality (keeping it lightweight)
 
 ### Assumptions
-- Binaries are published to GitHub Releases with naming convention: `chainsmith-{platform}-{arch}` (e.g., `chainsmith-darwin-arm64`, `chainsmith-linux-x64`, `chainsmith-win-x64.exe`)
+- Binaries are published to GitHub Releases with naming convention: `shoemaker-elves-{platform}-{arch}` (e.g., `shoemaker-elves-darwin-arm64`, `shoemaker-elves-linux-x64`, `shoemaker-elves-win-x64.exe`)
 - A `checksums.txt` file is published alongside binaries in each release
 - Release tags follow semantic versioning (e.g., `v1.0.0`)
 - The npm package version will match the GitHub release version
@@ -58,11 +58,11 @@
 - Confirmed all unit tests pass (13 tests in 3 suites)
 
 ### Files Modified
-- `packages/npm/.gitignore` — Updated to use `bin/chainsmith-*` pattern instead of specific binary names
+- `packages/npm/.gitignore` — Updated to use `bin/shoemaker-elves-*` pattern instead of specific binary names
 
 ### Files Already Present (Verified)
 - `packages/npm/package.json` — Package metadata with bin entry, postinstall hook, and platform constraints
-- `packages/npm/bin/chainsmith.js` — Wrapper script that spawns platform-specific binary with proper signal handling
+- `packages/npm/bin/shoemaker-elves.js` — Wrapper script that spawns platform-specific binary with proper signal handling
 - `packages/npm/lib/platform.js` — Platform detection (darwin/linux/win32) and architecture mapping (x64/arm64)
 - `packages/npm/lib/download.js` — HTTP download with redirect handling, SHA256 checksum verification, and executable permissions
 - `packages/npm/scripts/postinstall.js` — Downloads binary on install, verifies checksum, shows manual instructions on failure
@@ -91,7 +91,7 @@
 - Graceful handling of missing checksums file (warns but continues)
 - Automatic executable permissions on Unix-like systems
 
-#### Wrapper Script (`bin/chainsmith.js`)
+#### Wrapper Script (`bin/shoemaker-elves.js`)
 - Determines correct binary name for current platform
 - Spawns binary with inherited stdio
 - Forwards all CLI arguments
@@ -134,7 +134,7 @@ npm pack --dry-run
 
 ### Issues & Resolutions
 - **Issue**: Original `.gitignore` listed specific binary names
-  - **Resolution**: Updated to use wildcard pattern `bin/chainsmith-*` to cover all platform binaries
+  - **Resolution**: Updated to use wildcard pattern `bin/shoemaker-elves-*` to cover all platform binaries
 
 ### Next Steps (Not Part of This Task)
 1. Publish binaries to GitHub Releases with matching version tags

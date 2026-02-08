@@ -6,7 +6,7 @@
 **Task**: Better UX: rich logging, progress, and readable summaries
 
 ### Plan
-1. Add `rich` as an optional dependency (extra: `chainsmith[rich]`)
+1. Add `rich` as an optional dependency (extra: `shoemaker-elves[rich]`)
 2. Create a logging module that supports both rich and fallback output
 3. Add progress bars for task execution in batches
 4. Add clean tables for displaying planned tasks
@@ -17,8 +17,8 @@
 
 ### Files to be affected
 - `pyproject.toml` — add rich as optional dependency
-- `src/chainsmith/logging.py` (new) — logging module with rich support
-- `src/chainsmith/cli.py` — integrate rich logging
+- `src/shoemaker-elves/logging.py` (new) — logging module with rich support
+- `src/shoemaker-elves/cli.py` — integrate rich logging
 - `tests/test_logging.py` (new) — tests for logging module
 
 ### Dependencies
@@ -44,7 +44,7 @@ Successfully implemented rich logging and UX improvements for the CLI:
    - Users can install with: `pip install gpt-agent-orchestrator[rich]`
    - Also included in the `all` extras bundle
 
-2. **Logging Module** (`src/chainsmith/logging.py`):
+2. **Logging Module** (`src/shoemaker-elves/logging.py`):
    - Created comprehensive Logger class with rich support
    - Graceful fallback to plain text when rich is not available
    - Features:
@@ -78,8 +78,8 @@ Successfully implemented rich logging and UX improvements for the CLI:
 ### Files Modified
 
 - `pyproject.toml` — Added rich as optional dependency
-- `src/chainsmith/logging.py` (new) — Complete logging module with rich support
-- `src/chainsmith/cli.py` — Integrated logger throughout CLI
+- `src/shoemaker-elves/logging.py` (new) — Complete logging module with rich support
+- `src/shoemaker-elves/cli.py` — Integrated logger throughout CLI
 - `tests/test_logging.py` (new) — Comprehensive test suite for logging module
 
 ### Key Decisions

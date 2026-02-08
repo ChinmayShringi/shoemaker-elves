@@ -12,7 +12,7 @@ import pytest
 # Add src to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from chainsmith.config import (
+from shoemaker_elves.config import (
     load_config,
     save_config,
     merge_env_overrides,
@@ -67,9 +67,9 @@ def test_merge_env_overrides(monkeypatch):
     config = DEFAULT_CONFIG.copy()
 
     # Set env vars
-    monkeypatch.setenv("CHAINSMITH_PLANNER_PROVIDER", "anthropic")
-    monkeypatch.setenv("CHAINSMITH_PLANNER_MODEL", "claude-3-opus")
-    monkeypatch.setenv("CHAINSMITH_MAX_COST_USD", "100.0")
+    monkeypatch.setenv("SHOEMAKER_ELVES_PLANNER_PROVIDER", "anthropic")
+    monkeypatch.setenv("SHOEMAKER_ELVES_PLANNER_MODEL", "claude-3-opus")
+    monkeypatch.setenv("SHOEMAKER_ELVES_MAX_COST_USD", "100.0")
 
     merged = merge_env_overrides(config)
 
@@ -83,7 +83,7 @@ def test_merge_env_overrides_provider_api_key(monkeypatch):
     config = DEFAULT_CONFIG.copy()
     config["planner"]["provider"] = "anthropic"
 
-    monkeypatch.setenv("CHAINSMITH_ANTHROPIC_API_KEY", "anthropic-key")
+    monkeypatch.setenv("SHOEMAKER_ELVES_ANTHROPIC_API_KEY", "anthropic-key")
 
     merged = merge_env_overrides(config)
 
@@ -95,7 +95,7 @@ def test_merge_env_overrides_deepseek_api_key(monkeypatch):
     config = DEFAULT_CONFIG.copy()
     config["planner"]["provider"] = "deepseek"
 
-    monkeypatch.setenv("CHAINSMITH_DEEPSEEK_API_KEY", "deepseek-key")
+    monkeypatch.setenv("SHOEMAKER_ELVES_DEEPSEEK_API_KEY", "deepseek-key")
 
     merged = merge_env_overrides(config)
 
@@ -179,7 +179,7 @@ def test_get_config_value():
 
 def test_parse_env_value_types():
     """Test parsing environment variable values to appropriate types."""
-    from chainsmith.config import _parse_env_value
+    from shoemaker_elves.config import _parse_env_value
 
     assert _parse_env_value("42") == 42
     assert _parse_env_value("3.14") == 3.14
@@ -198,7 +198,7 @@ def test_env_override_priority(temp_config_dir, monkeypatch):
     save_config(config)
 
     # Set env var with different value
-    monkeypatch.setenv("CHAINSMITH_PLANNER_MODEL", "gpt-4")
+    monkeypatch.setenv("SHOEMAKER_ELVES_PLANNER_MODEL", "gpt-4")
 
     # Load and merge
     loaded = load_config()
@@ -219,7 +219,7 @@ def test_config_preserves_new_keys():
     }
 
     # Deep merge with defaults
-    from chainsmith.config import _deep_merge, _deep_copy_dict
+    from shoemaker_elves.config import _deep_merge, _deep_copy_dict
 
     result = _deep_copy_dict(DEFAULT_CONFIG)
     _deep_merge(result, old_config)

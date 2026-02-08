@@ -6,7 +6,7 @@ Tests TaskSpec and ReviewSpec serialization and deserialization.
 
 import pytest
 
-from chainsmith.planners.types import ReviewSpec, TaskSpec
+from shoemaker_elves.planners.types import ReviewSpec, TaskSpec
 
 
 # ─────────────────────────────────────────────────────────────

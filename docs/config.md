@@ -17,22 +17,22 @@ This guide covers all configuration options for the GPT Agent Orchestrator.
 
 The orchestrator supports three configuration methods:
 
-1. **Configuration file** (`~/.config/chainsmith/config.toml`)
-2. **Environment variables** (`CHAINSMITH_*`)
+1. **Configuration file** (`~/.config/shoemaker-elves/config.toml`)
+2. **Environment variables** (`SHOEMAKER_ELVES_*`)
 3. **CLI flags** (`--planner-model`, etc.)
 
 ## Configuration File
 
 ### Location
 
-- **Linux/macOS**: `~/.config/chainsmith/config.toml`
-- **Windows**: `%APPDATA%\chainsmith\config.toml`
+- **Linux/macOS**: `~/.config/shoemaker-elves/config.toml`
+- **Windows**: `%APPDATA%\shoemaker-elves\config.toml`
 
 ### Creating a Config File
 
 **Interactive setup (recommended)**:
 ```bash
-chainsmith init
+shoemaker-elves init
 ```
 
 **Manual creation**:
@@ -89,53 +89,53 @@ api_version = "2024-02-01"
 
 ## Environment Variables
 
-Environment variables override config file values. All environment variables use the prefix `CHAINSMITH_`.
+Environment variables override config file values. All environment variables use the prefix `SHOEMAKER_ELVES_`.
 
 ### General Settings
 
 ```bash
 # Provider selection
-export CHAINSMITH_PLANNER_PROVIDER=openai
+export SHOEMAKER_ELVES_PLANNER_PROVIDER=openai
 
 # Model selection
-export CHAINSMITH_PLANNER_MODEL=gpt-4
+export SHOEMAKER_ELVES_PLANNER_MODEL=gpt-4
 
 # Cost limit
-export CHAINSMITH_MAX_COST_USD=100.0
+export SHOEMAKER_ELVES_MAX_COST_USD=100.0
 
 # Agent model
-export CHAINSMITH_AGENT_MODEL=sonnet
+export SHOEMAKER_ELVES_AGENT_MODEL=sonnet
 ```
 
 ### API Keys (Provider-Specific)
 
 ```bash
 # OpenAI
-export CHAINSMITH_OPENAI_API_KEY=sk-...
+export SHOEMAKER_ELVES_OPENAI_API_KEY=sk-...
 
 # Anthropic
-export CHAINSMITH_ANTHROPIC_API_KEY=sk-ant-...
+export SHOEMAKER_ELVES_ANTHROPIC_API_KEY=sk-ant-...
 
 # Azure OpenAI
-export CHAINSMITH_AZURE_OPENAI_API_KEY=...
+export SHOEMAKER_ELVES_AZURE_OPENAI_API_KEY=...
 
 # DeepSeek
-export CHAINSMITH_DEEPSEEK_API_KEY=...
+export SHOEMAKER_ELVES_DEEPSEEK_API_KEY=...
 ```
 
 ### OpenAI-Compatible Providers
 
 ```bash
 # Base URL for custom OpenAI-compatible API
-export CHAINSMITH_PLANNER_BASE_URL=http://localhost:11434/v1
+export SHOEMAKER_ELVES_PLANNER_BASE_URL=http://localhost:11434/v1
 ```
 
 ### Azure OpenAI Specific
 
 ```bash
-export CHAINSMITH_AZURE_ENDPOINT=https://your-resource.openai.azure.com
-export CHAINSMITH_AZURE_DEPLOYMENT=your-deployment-name
-export CHAINSMITH_AZURE_API_VERSION=2024-02-01
+export SHOEMAKER_ELVES_AZURE_ENDPOINT=https://your-resource.openai.azure.com
+export SHOEMAKER_ELVES_AZURE_DEPLOYMENT=your-deployment-name
+export SHOEMAKER_ELVES_AZURE_API_VERSION=2024-02-01
 ```
 
 ## CLI Flags
@@ -168,7 +168,7 @@ CLI flags have the highest priority and override all other configuration sources
 ### Full Example
 
 ```bash
-chainsmith ~/my-project \
+shoemaker-elves ~/my-project \
   --gpt \
   -d "Build a web app" \
   --planner-provider openai \
@@ -192,7 +192,7 @@ Configuration values are resolved in this order (highest to lowest priority):
 
 If you have:
 - Config file: `model = "gpt-3.5-turbo"`
-- Environment: `CHAINSMITH_PLANNER_MODEL=gpt-4`
+- Environment: `SHOEMAKER_ELVES_PLANNER_MODEL=gpt-4`
 - CLI flag: `--planner-model claude-sonnet-4-5`
 
 The orchestrator will use `claude-sonnet-4-5` (CLI flag wins).
@@ -210,7 +210,7 @@ model = "gpt-4"
 
 **Environment variables**:
 ```bash
-export CHAINSMITH_OPENAI_API_KEY=sk-...
+export SHOEMAKER_ELVES_OPENAI_API_KEY=sk-...
 ```
 
 **Supported models**: `gpt-4`, `gpt-4-turbo`, `gpt-4o`, `gpt-3.5-turbo`, etc.
@@ -226,7 +226,7 @@ model = "claude-sonnet-4-5-20250929"
 
 **Environment variables**:
 ```bash
-export CHAINSMITH_ANTHROPIC_API_KEY=sk-ant-...
+export SHOEMAKER_ELVES_ANTHROPIC_API_KEY=sk-ant-...
 ```
 
 **Supported models**:
@@ -251,9 +251,9 @@ api_version = "2024-02-01"
 
 **Environment variables**:
 ```bash
-export CHAINSMITH_AZURE_OPENAI_API_KEY=...
-export CHAINSMITH_AZURE_ENDPOINT=https://your-resource.openai.azure.com
-export CHAINSMITH_AZURE_DEPLOYMENT=your-deployment-name
+export SHOEMAKER_ELVES_AZURE_OPENAI_API_KEY=...
+export SHOEMAKER_ELVES_AZURE_ENDPOINT=https://your-resource.openai.azure.com
+export SHOEMAKER_ELVES_AZURE_DEPLOYMENT=your-deployment-name
 ```
 
 ### DeepSeek
@@ -267,7 +267,7 @@ model = "deepseek-chat"
 
 **Environment variables**:
 ```bash
-export CHAINSMITH_DEEPSEEK_API_KEY=...
+export SHOEMAKER_ELVES_DEEPSEEK_API_KEY=...
 ```
 
 **Optional custom base URL**:
@@ -308,29 +308,29 @@ base_url = "http://localhost:8000/v1"
 
 ```bash
 # View with secrets masked
-chainsmith config show
+shoemaker-elves config show
 
 # View unmasked (shows API keys)
-chainsmith config show --no-mask
+shoemaker-elves config show --no-mask
 ```
 
 ### Update Configuration
 
 ```bash
 # Set provider
-chainsmith config set planner.provider anthropic
+shoemaker-elves config set planner.provider anthropic
 
 # Set model
-chainsmith config set planner.model gpt-4
+shoemaker-elves config set planner.model gpt-4
 
 # Set cost limit
-chainsmith config set planner.max_cost_usd 100.0
+shoemaker-elves config set planner.max_cost_usd 100.0
 
 # Set agent model
-chainsmith config set agent.model opus
+shoemaker-elves config set agent.model opus
 
 # Set Azure endpoint
-chainsmith config set azure.endpoint https://your-resource.openai.azure.com
+shoemaker-elves config set azure.endpoint https://your-resource.openai.azure.com
 ```
 
 ### Multiple Configurations
@@ -340,15 +340,15 @@ You can maintain multiple configurations by using environment variables or CLI f
 **Development**:
 ```bash
 # Use cheaper model for testing
-export CHAINSMITH_PLANNER_MODEL=gpt-3.5-turbo
-export CHAINSMITH_MAX_COST_USD=10.0
+export SHOEMAKER_ELVES_PLANNER_MODEL=gpt-3.5-turbo
+export SHOEMAKER_ELVES_MAX_COST_USD=10.0
 ```
 
 **Production**:
 ```bash
 # Use better model for production
-export CHAINSMITH_PLANNER_MODEL=gpt-4
-export CHAINSMITH_MAX_COST_USD=100.0
+export SHOEMAKER_ELVES_PLANNER_MODEL=gpt-4
+export SHOEMAKER_ELVES_MAX_COST_USD=100.0
 ```
 
 ## Advanced Configuration
@@ -359,8 +359,8 @@ export CHAINSMITH_MAX_COST_USD=100.0
 
 ```bash
 # Add to your shell profile (~/.bashrc, ~/.zshrc, etc.)
-export CHAINSMITH_OPENAI_API_KEY=sk-...
-export CHAINSMITH_ANTHROPIC_API_KEY=sk-ant-...
+export SHOEMAKER_ELVES_OPENAI_API_KEY=sk-...
+export SHOEMAKER_ELVES_ANTHROPIC_API_KEY=sk-ant-...
 ```
 
 **Alternative**: Use a `.env` file with a tool like `direnv` or `dotenv`.
@@ -376,7 +376,7 @@ max_cost_usd = 50.0  # Stops when this limit is reached
 
 Override per-run:
 ```bash
-chainsmith ~/project --gpt -d "..." --max-cost-usd 25.0
+shoemaker-elves ~/project --gpt -d "..." --max-cost-usd 25.0
 ```
 
 ### Task Timeout
@@ -384,7 +384,7 @@ chainsmith ~/project --gpt -d "..." --max-cost-usd 25.0
 Configure how long a task can run before being marked as stalled:
 
 ```bash
-chainsmith ~/project --task-timeout 900  # 15 minutes
+shoemaker-elves ~/project --task-timeout 900  # 15 minutes
 ```
 
 Default: 600 seconds (10 minutes)
@@ -393,20 +393,20 @@ Default: 600 seconds (10 minutes)
 
 ```bash
 # More, smaller batches (iterative)
-chainsmith ~/project --gpt -d "..." --max-batches 10 --batch-size 3
+shoemaker-elves ~/project --gpt -d "..." --max-batches 10 --batch-size 3
 
 # Fewer, larger batches (aggressive)
-chainsmith ~/project --gpt -d "..." --max-batches 3 --batch-size 8
+shoemaker-elves ~/project --gpt -d "..." --max-batches 3 --batch-size 8
 ```
 
 ### Logging
 
 ```bash
 # Verbose logging (disables rich UI)
-chainsmith ~/project --verbose
+shoemaker-elves ~/project --verbose
 
 # Standard (uses rich UI if available)
-chainsmith ~/project
+shoemaker-elves ~/project
 ```
 
 ## Troubleshooting Configuration
@@ -414,7 +414,7 @@ chainsmith ~/project
 ### Check Current Effective Configuration
 
 ```bash
-chainsmith config show
+shoemaker-elves config show
 ```
 
 This shows the final resolved configuration after merging all sources.
@@ -422,7 +422,7 @@ This shows the final resolved configuration after merging all sources.
 ### Verify API Key Is Set
 
 ```bash
-chainsmith config show --no-mask | grep api_key
+shoemaker-elves config show --no-mask | grep api_key
 ```
 
 Or check environment:

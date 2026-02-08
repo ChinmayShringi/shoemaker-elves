@@ -3,7 +3,7 @@
 > An intelligent task orchestrator that breaks down large projects into atomic tasks and executes them through an AI coding agent automatically.
 
 [![CI Status](https://github.com/ChinmayShringi/shoemaker-elves/actions/workflows/ci.yml/badge.svg)](https://github.com/ChinmayShringi/shoemaker-elves/actions/workflows/ci.yml)
-[![PyPI version](https://badge.fury.io/py/chainsmith.svg)](https://badge.fury.io/py/chainsmith)
+[![PyPI version](https://badge.fury.io/py/shoemaker-elves.svg)](https://badge.fury.io/py/shoemaker-elves)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
 ## Table of Contents
@@ -69,23 +69,23 @@ An LLM (GPT, Claude, etc.) generates tasks, the agent executes them, and the LLM
 
 ```bash
 # Core package (manual mode only)
-pip install chainsmith
+pip install shoemaker-elves
 
 # With OpenAI support (GPT mode)
-pip install "chainsmith[gpt]"
+pip install "shoemaker-elves[gpt]"
 
 # With Anthropic support
-pip install "chainsmith[anthropic]"
+pip install "shoemaker-elves[anthropic]"
 
 # With all providers
-pip install "chainsmith[all]"
+pip install "shoemaker-elves[all]"
 ```
 
 ### Via pipx (Isolated Environment)
 
 ```bash
 # Recommended for CLI tools
-pipx install "chainsmith[all]"
+pipx install "shoemaker-elves[all]"
 ```
 
 ### From Source
@@ -114,23 +114,23 @@ pip install -e ".[all]"
 
 1. **Install the orchestrator**:
    ```bash
-   pip install "chainsmith[all]"
+   pip install "shoemaker-elves[all]"
    ```
 
 2. **Configure your provider**:
    ```bash
-   chainsmith init
+   shoemaker-elves init
    ```
    This interactive wizard will guide you through selecting a provider, model, and API key setup.
 
 3. **Run in Manual Mode** (using pre-written tasks):
    ```bash
-   chainsmith ~/my-project
+   shoemaker-elves ~/my-project
    ```
 
 4. **Or run in GPT Mode** (auto-generated tasks):
    ```bash
-   chainsmith ~/my-project --gpt -d "Build a REST API with user authentication"
+   shoemaker-elves ~/my-project --gpt -d "Build a REST API with user authentication"
    ```
 
 ### Manual Mode Example
@@ -138,7 +138,7 @@ pip install -e ".[all]"
 Create task files in the orchestrator's `tasks/` directory:
 
 ```bash
-# src/chainsmith/tasks/1.md
+# src/shoemaker-elves/tasks/1.md
 # Initialize Express.js project
 
 Create a new Express.js project with TypeScript support.
@@ -147,7 +147,7 @@ Create a basic src/app.ts with a health check endpoint.
 ```
 
 ```bash
-# src/chainsmith/tasks/2.md
+# src/shoemaker-elves/tasks/2.md
 # Add user authentication
 
 Implement JWT-based authentication with /register and /login endpoints.
@@ -157,7 +157,7 @@ Add middleware for protected routes.
 
 Then run:
 ```bash
-chainsmith ~/my-project
+shoemaker-elves ~/my-project
 ```
 
 ### GPT Mode Example
@@ -165,7 +165,7 @@ chainsmith ~/my-project
 Simply provide a project description:
 
 ```bash
-chainsmith ~/my-project \
+shoemaker-elves ~/my-project \
   --gpt \
   -d "Build a todo app with REST API, SQLite database, and basic CRUD operations" \
   --max-batches 3 \
@@ -175,7 +175,7 @@ chainsmith ~/my-project \
 Or use a spec file:
 
 ```bash
-chainsmith ~/my-project --gpt -d ./examples/project-spec.md
+shoemaker-elves ~/my-project --gpt -d ./examples/project-spec.md
 ```
 
 ## Configuration
@@ -183,16 +183,16 @@ chainsmith ~/my-project --gpt -d ./examples/project-spec.md
 ### Interactive Setup (Recommended)
 
 ```bash
-chainsmith init
+shoemaker-elves init
 ```
 
 This creates a configuration file at:
-- **Linux/macOS**: `~/.config/chainsmith/config.toml`
-- **Windows**: `%APPDATA%\chainsmith\config.toml`
+- **Linux/macOS**: `~/.config/shoemaker-elves/config.toml`
+- **Windows**: `%APPDATA%\shoemaker-elves\config.toml`
 
 ### Manual Configuration
 
-Create `~/.config/chainsmith/config.toml`:
+Create `~/.config/shoemaker-elves/config.toml`:
 
 ```toml
 [planner]
@@ -217,56 +217,56 @@ Environment variables override config file values:
 
 ```bash
 # Provider selection
-export CHAINSMITH_PLANNER_PROVIDER=openai
+export SHOEMAKER_ELVES_PLANNER_PROVIDER=openai
 
 # Model selection
-export CHAINSMITH_PLANNER_MODEL=gpt-4
+export SHOEMAKER_ELVES_PLANNER_MODEL=gpt-4
 
 # API keys (provider-specific)
-export CHAINSMITH_OPENAI_API_KEY=sk-...
-export CHAINSMITH_ANTHROPIC_API_KEY=sk-ant-...
-export CHAINSMITH_AZURE_OPENAI_API_KEY=...
-export CHAINSMITH_DEEPSEEK_API_KEY=...
+export SHOEMAKER_ELVES_OPENAI_API_KEY=sk-...
+export SHOEMAKER_ELVES_ANTHROPIC_API_KEY=sk-ant-...
+export SHOEMAKER_ELVES_AZURE_OPENAI_API_KEY=...
+export SHOEMAKER_ELVES_DEEPSEEK_API_KEY=...
 
 # OpenAI-compatible or DeepSeek custom base URL
-export CHAINSMITH_PLANNER_BASE_URL=https://api.example.com
+export SHOEMAKER_ELVES_PLANNER_BASE_URL=https://api.example.com
 
 # Azure OpenAI specific
-export CHAINSMITH_AZURE_ENDPOINT=https://...
-export CHAINSMITH_AZURE_DEPLOYMENT=...
+export SHOEMAKER_ELVES_AZURE_ENDPOINT=https://...
+export SHOEMAKER_ELVES_AZURE_DEPLOYMENT=...
 
 # Cost and agent settings
-export CHAINSMITH_MAX_COST_USD=100.0
-export CHAINSMITH_AGENT_MODEL=sonnet
+export SHOEMAKER_ELVES_MAX_COST_USD=100.0
+export SHOEMAKER_ELVES_AGENT_MODEL=sonnet
 ```
 
 ### Configuration Priority
 
 Values are resolved in this order (highest to lowest):
 1. **CLI flags** (`--planner-model gpt-4`)
-2. **Environment variables** (`CHAINSMITH_PLANNER_MODEL`)
-3. **Config file** (`~/.config/chainsmith/config.toml`)
+2. **Environment variables** (`SHOEMAKER_ELVES_PLANNER_MODEL`)
+3. **Config file** (`~/.config/shoemaker-elves/config.toml`)
 4. **Default values**
 
 ### Managing Configuration
 
 ```bash
 # View current config (secrets masked)
-chainsmith config show
+shoemaker-elves config show
 
 # View unmasked config
-chainsmith config show --no-mask
+shoemaker-elves config show --no-mask
 
 # Update specific values
-chainsmith config set planner.model gpt-4
-chainsmith config set planner.max_cost_usd 100.0
+shoemaker-elves config set planner.model gpt-4
+shoemaker-elves config set planner.max_cost_usd 100.0
 ```
 
 ## Usage
 
 ### Manual Mode
 
-**Create task files** in `src/chainsmith/tasks/`:
+**Create task files** in `src/shoemaker-elves/tasks/`:
 - `tasks/1.md` - First task
 - `tasks/2.md` - Second task
 - `tasks/3.md` - Third task
@@ -274,7 +274,7 @@ chainsmith config set planner.max_cost_usd 100.0
 
 **Run orchestration**:
 ```bash
-chainsmith ~/my-project
+shoemaker-elves ~/my-project
 ```
 
 **What happens**:
@@ -289,12 +289,12 @@ chainsmith ~/my-project
 
 **Basic usage**:
 ```bash
-chainsmith ~/my-project --gpt -d "Your project description here"
+shoemaker-elves ~/my-project --gpt -d "Your project description here"
 ```
 
 **With custom settings**:
 ```bash
-chainsmith ~/my-project \
+shoemaker-elves ~/my-project \
   --gpt \
   -d "Build a web app with user auth and dashboard" \
   --planner-provider openai \
@@ -307,7 +307,7 @@ chainsmith ~/my-project \
 
 **Using a spec file**:
 ```bash
-chainsmith ~/my-project --gpt -d ./project-spec.md
+shoemaker-elves ~/my-project --gpt -d ./project-spec.md
 ```
 
 **What happens**:
@@ -322,7 +322,7 @@ chainsmith ~/my-project --gpt -d ./project-spec.md
 #### OpenAI
 
 ```bash
-chainsmith ~/my-project \
+shoemaker-elves ~/my-project \
   --gpt \
   -d "Build a CLI tool in Python" \
   --planner-provider openai \
@@ -332,9 +332,9 @@ chainsmith ~/my-project \
 #### Anthropic (Claude)
 
 ```bash
-export CHAINSMITH_ANTHROPIC_API_KEY=sk-ant-...
+export SHOEMAKER_ELVES_ANTHROPIC_API_KEY=sk-ant-...
 
-chainsmith ~/my-project \
+shoemaker-elves ~/my-project \
   --gpt \
   -d "Build a REST API" \
   --planner-provider anthropic \
@@ -344,9 +344,9 @@ chainsmith ~/my-project \
 #### Azure OpenAI
 
 ```bash
-export CHAINSMITH_AZURE_OPENAI_API_KEY=...
+export SHOEMAKER_ELVES_AZURE_OPENAI_API_KEY=...
 
-chainsmith ~/my-project \
+shoemaker-elves ~/my-project \
   --gpt \
   -d "Build a web app" \
   --planner-provider azure_openai \
@@ -358,9 +358,9 @@ chainsmith ~/my-project \
 #### DeepSeek
 
 ```bash
-export CHAINSMITH_DEEPSEEK_API_KEY=...
+export SHOEMAKER_ELVES_DEEPSEEK_API_KEY=...
 
-chainsmith ~/my-project \
+shoemaker-elves ~/my-project \
   --gpt \
   -d "Build a data pipeline" \
   --planner-provider deepseek \
@@ -371,7 +371,7 @@ chainsmith ~/my-project \
 
 ```bash
 # For example, using Ollama, LM Studio, or vLLM
-chainsmith ~/my-project \
+shoemaker-elves ~/my-project \
   --gpt \
   -d "Build a chatbot" \
   --planner-provider openai_compatible \
@@ -384,7 +384,7 @@ chainsmith ~/my-project \
 If you interrupt the orchestrator (Ctrl+C) or it crashes, you can resume:
 
 ```bash
-chainsmith ~/my-project --resume
+shoemaker-elves ~/my-project --resume
 ```
 
 **Stall detection**: Resume mode automatically detects and retries stalled tasks (tasks running longer than `--task-timeout` seconds).
@@ -394,10 +394,10 @@ chainsmith ~/my-project --resume
 ### Commands
 
 ```bash
-chainsmith <project_dir> [options]    # Run orchestration (default command)
-chainsmith init                        # Interactive configuration setup
-chainsmith config show [--no-mask]    # Show current configuration
-chainsmith config set <key> <value>   # Set configuration value
+shoemaker-elves <project_dir> [options]    # Run orchestration (default command)
+shoemaker-elves init                        # Interactive configuration setup
+shoemaker-elves config show [--no-mask]    # Show current configuration
+shoemaker-elves config set <key> <value>   # Set configuration value
 ```
 
 ### Orchestration Options
@@ -436,7 +436,7 @@ These flags are deprecated but still supported:
 
 ```bash
 # Via Python module
-python -m chainsmith <project_dir> [options]
+python -m shoemaker-elves <project_dir> [options]
 
 # Legacy shim (backward compatibility)
 python3 orchestrator.py <project_dir> [options]
@@ -480,13 +480,13 @@ Implement basic CRUD operations.
 
 Run:
 ```bash
-chainsmith ~/my-nextjs-app
+shoemaker-elves ~/my-nextjs-app
 ```
 
 ### Example 2: GPT Mode - Build a CLI Tool
 
 ```bash
-chainsmith ~/my-cli-tool \
+shoemaker-elves ~/my-cli-tool \
   --gpt \
   -d "Build a Python CLI tool that:
     - Fetches weather data from OpenWeather API
@@ -537,19 +537,19 @@ Build a RESTful API for an e-commerce platform.
 
 Run:
 ```bash
-chainsmith ~/ecommerce-api --gpt -d ./project-spec.md --max-batches 6
+shoemaker-elves ~/ecommerce-api --gpt -d ./project-spec.md --max-batches 6
 ```
 
 ### Example 4: Resume After Interruption
 
 ```bash
 # Start orchestration
-chainsmith ~/my-project --gpt -d "Build a dashboard"
+shoemaker-elves ~/my-project --gpt -d "Build a dashboard"
 
 # ... Ctrl+C to interrupt ...
 
 # Resume later
-chainsmith ~/my-project --resume
+shoemaker-elves ~/my-project --resume
 ```
 
 ## Documentation
@@ -651,7 +651,7 @@ pip install -e ".[dev]"
 pytest
 
 # With coverage
-pytest --cov=src/chainsmith --cov-report=html
+pytest --cov=src/shoemaker-elves --cov-report=html
 ```
 
 ### Building Documentation
@@ -687,7 +687,7 @@ See [Release Guide](docs/release/RELEASE_GUIDE.md) for detailed release instruct
 ```
 Chainsmith/
 ├── src/
-│   └── chainsmith/      # Main package
+│   └── shoemaker-elves/      # Main package
 │       ├── __init__.py
 │       ├── __main__.py              # Entry point for `python -m`
 │       ├── cli.py                   # CLI implementation
@@ -747,7 +747,7 @@ A: The orchestrator marks it as failed and continues. In GPT mode, the LLM recei
 A: Cost is estimated from transcript token counts. Actual costs may vary based on caching, batching, and API pricing changes.
 
 **Q: Can I customize the prompts sent to the LLM?**
-A: Yes, modify `src/chainsmith/templates.py` or create a custom planner plugin.
+A: Yes, modify `src/shoemaker-elves/templates.py` or create a custom planner plugin.
 
 ## License
 

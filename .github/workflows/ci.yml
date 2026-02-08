@@ -87,7 +87,7 @@ jobs:
 
       - name: Run mypy
         run: |
-          mypy src/chainsmith
+          mypy src/shoemaker_elves
 
   # Check version consistency
   version-sync:

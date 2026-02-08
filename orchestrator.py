@@ -15,7 +15,7 @@ This script imports and runs the main CLI from the chainsmith package.
 import sys
 
 try:
-    from chainsmith.cli import main
+    from shoemaker_elves.cli import main
 except ImportError:
     print("Error: chainsmith package not found.")
     print("Install it with: pip install -e .")

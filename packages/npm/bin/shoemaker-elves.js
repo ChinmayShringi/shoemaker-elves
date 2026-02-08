@@ -10,12 +10,12 @@ const fs = require('fs');
 // Determine binary path
 const binDir = __dirname;
 const isWindows = process.platform === 'win32';
-const binaryName = isWindows ? 'chainsmith-win-x64.exe' : `chainsmith-${process.platform}-${process.arch}`;
+const binaryName = isWindows ? 'shoemaker-elves-win-x64.exe' : `shoemaker-elves-${process.platform}-${process.arch}`;
 const binaryPath = path.join(binDir, binaryName);
 
 // Check if binary exists
 if (!fs.existsSync(binaryPath)) {
-  console.error('Error: chainsmith binary not found.');
+  console.error('Error: shoemaker-elves binary not found.');
   console.error('');
   console.error('The binary may not have been downloaded during installation.');
   console.error('Please try reinstalling the package:');

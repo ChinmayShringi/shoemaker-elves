@@ -6,15 +6,15 @@
 **Task**: Robust config system + "init" UX (tokens, models, provider selection)
 
 ### Plan
-1. Create `src/chainsmith/config.py` with TOML-based config system
-   - Define config file location based on OS (Linux/macOS: `~/.config/chainsmith/config.toml`, Windows: `%APPDATA%\chainsmith\config.toml`)
+1. Create `src/shoemaker-elves/config.py` with TOML-based config system
+   - Define config file location based on OS (Linux/macOS: `~/.config/shoemaker-elves/config.toml`, Windows: `%APPDATA%\shoemaker-elves\config.toml`)
    - Implement `load_config()`, `save_config()`, and `merge_env_overrides()` functions
    - Define config schema with sections for planner, azure, and agent settings
 
 2. Add CLI subcommands for configuration management
-   - `chainsmith init` - Interactive setup wizard
-   - `chainsmith config show` - Display effective config (masking secrets)
-   - `chainsmith config set <key> <value>` - Update config values using dot-path notation
+   - `shoemaker-elves init` - Interactive setup wizard
+   - `shoemaker-elves config show` - Display effective config (masking secrets)
+   - `shoemaker-elves config set <key> <value>` - Update config values using dot-path notation
 
 3. Implement environment variable override support
    - Define env var names for all config options
@@ -33,9 +33,9 @@
    - Test priority chain (flags > env > config > defaults)
 
 ### Files to be affected
-- `src/chainsmith/config.py` (new) - Core config system
-- `src/chainsmith/cli.py` - Integration with CLI, new subcommands
-- `src/chainsmith/gpt_planner.py` - Support for multiple providers
+- `src/shoemaker-elves/config.py` (new) - Core config system
+- `src/shoemaker-elves/cli.py` - Integration with CLI, new subcommands
+- `src/shoemaker-elves/gpt_planner.py` - Support for multiple providers
 - `tests/test_config.py` (new) - Unit tests
 - `pyproject.toml` - Add toml dependency if needed
 - `README.md` - Update with config documentation
@@ -63,8 +63,8 @@
 
 ### Changes Made
 - Created comprehensive TOML-based configuration system with support for multiple LLM providers
-- Implemented interactive `chainsmith init` wizard for easy setup
-- Added `chainsmith config show` and `chainsmith config set` commands for configuration management
+- Implemented interactive `shoemaker-elves init` wizard for easy setup
+- Added `shoemaker-elves config show` and `shoemaker-elves config set` commands for configuration management
 - Integrated config system into existing CLI with proper priority chain (flags > env > config > defaults)
 - Added environment variable override support for all configuration options
 - Implemented secret masking for API keys and sensitive data
@@ -72,13 +72,13 @@
 - Updated README with comprehensive configuration documentation
 
 ### Files Modified
-- `src/chainsmith/config.py` (new) — Core configuration system with TOML support
+- `src/shoemaker-elves/config.py` (new) — Core configuration system with TOML support
   - Implements load_config(), save_config(), merge_env_overrides()
   - Handles platform-specific config directories
   - Provides secret masking and dot-path value access
   - Supports type conversion for env vars (int, float, bool, string)
 
-- `src/chainsmith/cli.py` — Integrated config system
+- `src/shoemaker-elves/cli.py` — Integrated config system
   - Added import statements for config functions
   - Refactored parse_args() to use subparsers for init/config/run commands
   - Added cmd_init() for interactive configuration wizard
@@ -88,7 +88,7 @@
   - Updated validate() to use config-based API keys and provider settings
   - Updated all references to self.args to use self.config where appropriate
 
-- `src/chainsmith/gpt_planner.py` — Multi-provider support
+- `src/shoemaker-elves/gpt_planner.py` — Multi-provider support
   - Extended GPTPlanner.__init__() to accept provider-specific parameters
   - Added support for Azure OpenAI, Anthropic, DeepSeek, and OpenAI-compatible APIs
   - Implemented _call_anthropic() for Anthropic-specific API calls
@@ -114,7 +114,7 @@
 
 - `README.md` — Updated documentation
   - Added comprehensive Configuration section
-  - Documented chainsmith init wizard
+  - Documented shoemaker-elves init wizard
   - Documented config file format and locations
   - Listed all environment variables
   - Explained priority chain
@@ -153,11 +153,11 @@
 
 All acceptance criteria met:
 
-✅ `chainsmith init` creates a config file at the correct platform-specific location
-✅ `chainsmith config show` displays effective config with secrets masked
-✅ `chainsmith config show --no-mask` displays secrets unmasked
-✅ `chainsmith config set` updates config values successfully
-✅ Environment variable overrides work correctly (tested with CHAINSMITH_PLANNER_MODEL and CHAINSMITH_PLANNER_PROVIDER)
+✅ `shoemaker-elves init` creates a config file at the correct platform-specific location
+✅ `shoemaker-elves config show` displays effective config with secrets masked
+✅ `shoemaker-elves config show --no-mask` displays secrets unmasked
+✅ `shoemaker-elves config set` updates config values successfully
+✅ Environment variable overrides work correctly (tested with SHOEMAKER_ELVES_PLANNER_MODEL and SHOEMAKER_ELVES_PLANNER_PROVIDER)
 ✅ All 10 unit tests pass
 ✅ Existing CLI flags still work (backward compatibility maintained)
 ✅ Config priority chain works correctly: flags > env > config > defaults
