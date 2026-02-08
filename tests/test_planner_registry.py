@@ -34,7 +34,7 @@ def test_create_openai_planner():
     """Test creating standard OpenAI planner."""
     from unittest.mock import patch
 
-    with patch("src.chainsmith.planners.openai_adapter.OpenAI"):
+    with patch("shoemaker_elves.planners.openai_adapter.OpenAI"):
         planner = create_planner(
             provider="openai",
             api_key="test-key",
@@ -50,7 +50,7 @@ def test_create_openai_compatible_planner():
     """Test creating OpenAI-compatible planner."""
     from unittest.mock import patch
 
-    with patch("src.chainsmith.planners.openai_adapter.OpenAI"):
+    with patch("shoemaker_elves.planners.openai_adapter.OpenAI"):
         planner = create_planner(
             provider="openai_compatible",
             api_key="test-key",
@@ -66,7 +66,7 @@ def test_create_anthropic_planner():
     """Test creating Anthropic planner."""
     from unittest.mock import patch
 
-    with patch("src.chainsmith.planners.anthropic_adapter.Anthropic"):
+    with patch("shoemaker_elves.planners.anthropic_adapter.Anthropic"):
         planner = create_planner(
             provider="anthropic",
             api_key="test-key",
@@ -81,7 +81,7 @@ def test_create_azure_openai_planner():
     """Test creating Azure OpenAI planner."""
     from unittest.mock import patch
 
-    with patch("src.chainsmith.planners.azure_openai_adapter.AzureOpenAI"):
+    with patch("shoemaker_elves.planners.azure_openai_adapter.AzureOpenAI"):
         planner = create_planner(
             provider="azure_openai",
             api_key="test-key",
@@ -139,7 +139,7 @@ def test_create_deepseek_planner():
     """Test creating DeepSeek planner with default base_url."""
     from unittest.mock import patch
 
-    with patch("src.chainsmith.planners.openai_adapter.OpenAI"):
+    with patch("shoemaker_elves.planners.openai_adapter.OpenAI"):
         planner = create_planner(
             provider="deepseek",
             api_key="test-key",
@@ -155,7 +155,7 @@ def test_create_deepseek_planner_custom_base_url():
     """Test creating DeepSeek planner with custom base_url."""
     from unittest.mock import patch
 
-    with patch("src.chainsmith.planners.openai_adapter.OpenAI"):
+    with patch("shoemaker_elves.planners.openai_adapter.OpenAI"):
         planner = create_planner(
             provider="deepseek",
             api_key="test-key",
@@ -259,7 +259,7 @@ def test_load_plugins_with_mock_entrypoint():
     # Track built-in providers before loading
     initial_providers = set(get_available_providers())
 
-    with patch("src.chainsmith.planners.registry.entry_points", return_value=mock_eps):
+    with patch("shoemaker_elves.planners.registry.entry_points", return_value=mock_eps):
         # Manually call load_plugins (normally called on import)
         load_plugins()
 
@@ -299,8 +299,8 @@ def test_plugin_cannot_override_builtin():
     mock_eps.select.return_value = [mock_ep]
 
     # Plugin should fail to load but not crash the app
-    with patch("src.chainsmith.planners.registry.entry_points", return_value=mock_eps):
-        with patch("src.chainsmith.planners.registry.logger") as mock_logger:
+    with patch("shoemaker_elves.planners.registry.entry_points", return_value=mock_eps):
+        with patch("shoemaker_elves.planners.registry.logger") as mock_logger:
             load_plugins()
             # Should have logged a warning
             mock_logger.warning.assert_called()
@@ -325,8 +325,8 @@ def test_plugin_load_failure_is_non_fatal():
     mock_eps.select.return_value = [mock_ep]
 
     # Plugin should fail to load but not crash
-    with patch("src.chainsmith.planners.registry.entry_points", return_value=mock_eps):
-        with patch("src.chainsmith.planners.registry.logger") as mock_logger:
+    with patch("shoemaker_elves.planners.registry.entry_points", return_value=mock_eps):
+        with patch("shoemaker_elves.planners.registry.logger") as mock_logger:
             # Should not raise
             load_plugins()
             # Should have logged a warning
@@ -352,8 +352,8 @@ def test_plugin_load_failure_missing_module():
     mock_eps.select.return_value = [mock_ep]
 
     # Should handle gracefully
-    with patch("src.chainsmith.planners.registry.entry_points", return_value=mock_eps):
-        with patch("src.chainsmith.planners.registry.logger") as mock_logger:
+    with patch("shoemaker_elves.planners.registry.entry_points", return_value=mock_eps):
+        with patch("shoemaker_elves.planners.registry.logger") as mock_logger:
             load_plugins()
             # Should have logged a warning
             mock_logger.warning.assert_called()
@@ -368,8 +368,8 @@ def test_entrypoint_discovery_failure():
     from shoemaker_elves.planners.registry import load_plugins
 
     # Mock entry_points to raise an error
-    with patch("src.chainsmith.planners.registry.entry_points", side_effect=RuntimeError("Discovery failed")):
-        with patch("src.chainsmith.planners.registry.logger") as mock_logger:
+    with patch("shoemaker_elves.planners.registry.entry_points", side_effect=RuntimeError("Discovery failed")):
+        with patch("shoemaker_elves.planners.registry.logger") as mock_logger:
             load_plugins()
             # Should have logged a warning
             mock_logger.warning.assert_called()
@@ -413,7 +413,7 @@ def test_plugin_with_python39_entrypoints_api():
     # Mock Python 3.9 style dict API (no 'select' method)
     mock_eps_dict = {"shoemaker_elves.planners": [mock_ep]}
 
-    with patch("src.chainsmith.planners.registry.entry_points", return_value=mock_eps_dict):
+    with patch("shoemaker_elves.planners.registry.entry_points", return_value=mock_eps_dict):
         load_plugins()
 
     # Verify plugin was loaded

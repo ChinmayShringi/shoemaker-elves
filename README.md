@@ -92,7 +92,7 @@ pipx install "shoemaker-elves[all]"
 
 ```bash
 git clone https://github.com/ChinmayShringi/shoemaker-elves.git
-cd Chainsmith
+cd shoemaker-elves
 pip install -e ".[all]"
 ```
 
@@ -685,7 +685,7 @@ See [Release Guide](docs/release/RELEASE_GUIDE.md) for detailed release instruct
 ## Project Structure
 
 ```
-Chainsmith/
+shoemaker-elves/
 ├── src/
 │   └── shoemaker-elves/      # Main package
 │       ├── __init__.py

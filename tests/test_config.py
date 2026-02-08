@@ -29,7 +29,7 @@ def temp_config_dir(monkeypatch):
     with tempfile.TemporaryDirectory() as tmpdir:
         # Mock the config directory
         monkeypatch.setattr(
-            "chainsmith.config.get_config_dir",
+            "shoemaker_elves.config.get_config_dir",
             lambda: Path(tmpdir)
         )
         yield Path(tmpdir)

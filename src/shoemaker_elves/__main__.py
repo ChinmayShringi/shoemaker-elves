@@ -1,5 +1,5 @@
 """
-Allow running the package as a module with: python -m chainsmith
+Allow running the package as a module with: python -m shoemaker-elves
 """
 
 from .cli import main

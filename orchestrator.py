@@ -4,12 +4,12 @@ GPT Agent Orchestrator - Legacy Entry Point
 ============================================
 
 This is a backward-compatibility shim for the old CLI interface.
-For new installations, use `chainsmith` instead.
+For new installations, use `shoemaker-elves` instead.
 
 Usage:
   python3 orchestrator.py <project_dir> [options]
 
-This script imports and runs the main CLI from the chainsmith package.
+This script imports and runs the main CLI from the shoemaker-elves package.
 """
 
 import sys
@@ -17,7 +17,7 @@ import sys
 try:
     from shoemaker_elves.cli import main
 except ImportError:
-    print("Error: chainsmith package not found.")
+    print("Error: shoemaker-elves package not found.")
     print("Install it with: pip install -e .")
     sys.exit(1)
 

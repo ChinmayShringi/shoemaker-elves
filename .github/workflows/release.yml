@@ -171,9 +171,9 @@ jobs:
         shell: bash
         run: |
           if [ "${{ matrix.platform }}" = "windows" ]; then
-            BINARY_NAME="chainsmith-${{ matrix.platform }}-${{ matrix.arch }}.exe"
+            BINARY_NAME="shoemaker-elves-${{ matrix.platform }}-${{ matrix.arch }}.exe"
           else
-            BINARY_NAME="chainsmith-${{ matrix.platform }}-${{ matrix.arch }}"
+            BINARY_NAME="shoemaker-elves-${{ matrix.platform }}-${{ matrix.arch }}"
           fi
 
           BINARY_PATH="dist/$BINARY_NAME"

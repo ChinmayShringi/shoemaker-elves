@@ -3,8 +3,8 @@ Configuration system for GPT Agent Orchestrator.
 
 Supports TOML config files with environment variable overrides.
 Config file locations:
-  - Linux/macOS: ~/.config/chainsmith/config.toml
-  - Windows: %APPDATA%\\chainsmith\\config.toml
+  - Linux/macOS: ~/.config/shoemaker-elves/config.toml
+  - Windows: %APPDATA%\\shoemaker-elves\\config.toml
 """
 
 import os
@@ -31,17 +31,17 @@ except ImportError:
 def get_config_dir() -> Path:
     """Get the platform-specific config directory."""
     if sys.platform == "win32":
-        # Windows: %APPDATA%\chainsmith
+        # Windows: %APPDATA%\shoemaker-elves
         appdata = os.environ.get("APPDATA")
         if not appdata:
             raise RuntimeError("APPDATA environment variable not found")
-        return Path(appdata) / "chainsmith"
+        return Path(appdata) / "shoemaker-elves"
     else:
-        # Linux/macOS: ~/.config/chainsmith
+        # Linux/macOS: ~/.config/shoemaker-elves
         xdg_config = os.environ.get("XDG_CONFIG_HOME")
         if xdg_config:
-            return Path(xdg_config) / "chainsmith"
-        return Path.home() / ".config" / "chainsmith"
+            return Path(xdg_config) / "shoemaker-elves"
+        return Path.home() / ".config" / "shoemaker-elves"
 
 
 def get_config_path() -> Path:

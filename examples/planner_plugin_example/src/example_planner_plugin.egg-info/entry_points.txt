@@ -1,2 +1,0 @@
-[gpt_orch.planners]
-example = example_planner:register

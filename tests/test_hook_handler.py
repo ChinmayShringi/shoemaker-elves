@@ -96,7 +96,7 @@ def sample_state_data(temp_project_dir):
 class TestLaunchNextTaskIdempotency:
     """Test that launch_next_task is idempotent."""
 
-    @patch("chainsmith.hook_handler.subprocess.Popen")
+    @patch("shoemaker_elves.hook_handler.subprocess.Popen")
     def test_launch_next_task_already_running(
         self, mock_popen, temp_project_dir, sample_state_data
     ):
@@ -119,7 +119,7 @@ class TestLaunchNextTaskIdempotency:
         # Verify subprocess was not called
         mock_popen.assert_not_called()
 
-    @patch("chainsmith.hook_handler.subprocess.Popen")
+    @patch("shoemaker_elves.hook_handler.subprocess.Popen")
     def test_launch_next_task_pending(
         self, mock_popen, temp_project_dir, sample_state_data
     ):
@@ -145,7 +145,7 @@ class TestLaunchNextTaskIdempotency:
         assert updated_state["tasks"][1]["status"] == "running"
         assert updated_state["tasks"][1]["started_at"] is not None
 
-    @patch("chainsmith.hook_handler.subprocess.Popen")
+    @patch("shoemaker_elves.hook_handler.subprocess.Popen")
     def test_launch_next_task_double_call(
         self, mock_popen, temp_project_dir, sample_state_data
     ):
@@ -176,8 +176,8 @@ class TestLaunchNextTaskIdempotency:
 class TestHookHandlerIdempotency:
     """Test full hook handler idempotency."""
 
-    @patch("chainsmith.hook_handler.subprocess.Popen")
-    @patch("chainsmith.hook_handler.parse_transcript")
+    @patch("shoemaker_elves.hook_handler.subprocess.Popen")
+    @patch("shoemaker_elves.hook_handler.parse_transcript")
     def test_double_hook_invocation(
         self, mock_parse, mock_popen, temp_project_dir, sample_state_data
     ):
@@ -208,7 +208,7 @@ class TestHookHandlerIdempotency:
             "transcript_path": "/tmp/transcript.txt",
             "cwd": str(temp_project_dir["project_dir"]),
         }))):
-            with patch("chainsmith.hook_handler.log"):
+            with patch("shoemaker_elves.hook_handler.log"):
                 main()
 
         # Verify task 2 was launched
@@ -227,7 +227,7 @@ class TestHookHandlerIdempotency:
             "transcript_path": "/tmp/transcript.txt",
             "cwd": str(temp_project_dir["project_dir"]),
         }))):
-            with patch("chainsmith.hook_handler.log"):
+            with patch("shoemaker_elves.hook_handler.log"):
                 main()
 
         # Verify task 2 was NOT launched again (still 1 call)
@@ -239,8 +239,8 @@ class TestHookHandlerIdempotency:
         assert len(state_data["tasks"][0]["executions"]) == 1  # Still 1 execution
         assert state_data["current_task_index"] == 1  # Index didn't advance again
 
-    @patch("chainsmith.hook_handler.subprocess.Popen")
-    @patch("chainsmith.hook_handler.parse_transcript")
+    @patch("shoemaker_elves.hook_handler.subprocess.Popen")
+    @patch("shoemaker_elves.hook_handler.parse_transcript")
     def test_different_session_not_idempotent(
         self, mock_parse, mock_popen, temp_project_dir, sample_state_data
     ):
@@ -274,7 +274,7 @@ class TestHookHandlerIdempotency:
             "transcript_path": "/tmp/transcript1.txt",
             "cwd": str(temp_project_dir["project_dir"]),
         }))):
-            with patch("chainsmith.hook_handler.log"):
+            with patch("shoemaker_elves.hook_handler.log"):
                 main()
 
         # Verify state
@@ -304,7 +304,7 @@ class TestHookHandlerIdempotency:
             "transcript_path": "/tmp/transcript2.txt",
             "cwd": str(temp_project_dir["project_dir"]),
         }))):
-            with patch("chainsmith.hook_handler.log"):
+            with patch("shoemaker_elves.hook_handler.log"):
                 main()
 
         # Verify state has both executions

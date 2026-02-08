@@ -17,7 +17,7 @@ The release process is automated via GitHub Actions and publishes to:
    - Go to https://pypi.org/manage/account/publishing/
    - Add a new publisher:
      - Owner: `ChinmayShringi`
-     - Repository: `Chainsmith`
+     - Repository: `shoemaker-elves`
      - Workflow: `release.yml`
      - Environment: `pypi`
    - No API token needed with trusted publishing!
