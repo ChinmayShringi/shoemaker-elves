@@ -45,9 +45,9 @@ dev = [
 gpt-orch = "gpt_agent_orchestrator.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/ChinmayShringi/gpt-claude-orchestrator"
-Repository = "https://github.com/ChinmayShringi/gpt-claude-orchestrator"
-Issues = "https://github.com/ChinmayShringi/gpt-claude-orchestrator/issues"
+Homepage = "https://github.com/ChinmayShringi/Chainsmith"
+Repository = "https://github.com/ChinmayShringi/Chainsmith"
+Issues = "https://github.com/ChinmayShringi/Chainsmith/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/gpt_agent_orchestrator"]

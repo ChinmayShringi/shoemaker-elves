@@ -39,7 +39,7 @@ This package automatically downloads the appropriate binary for your platform du
 
 If automatic installation fails, you can manually install the binary:
 
-1. Download the binary for your platform from the [releases page](https://github.com/ChinmayShringi/gpt-claude-orchestrator/releases)
+1. Download the binary for your platform from the [releases page](https://github.com/ChinmayShringi/Chainsmith/releases)
 2. Place it in `node_modules/gpt-agent-orchestrator/bin/`
 3. Make it executable (Unix/Mac): `chmod +x <binary-path>`
 
@@ -53,4 +53,4 @@ MIT
 
 ## Repository
 
-[https://github.com/ChinmayShringi/gpt-claude-orchestrator](https://github.com/ChinmayShringi/gpt-claude-orchestrator)
+[https://github.com/ChinmayShringi/Chainsmith](https://github.com/ChinmayShringi/Chainsmith)

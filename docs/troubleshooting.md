@@ -616,7 +616,7 @@ gpt-orch ~/project --resume
 
 If you can't resolve your issue:
 
-1. **Check existing issues**: https://github.com/ChinmayShringi/gpt-claude-orchestrator/issues
+1. **Check existing issues**: https://github.com/ChinmayShringi/Chainsmith/issues
 2. **Create a new issue** with:
    - Error messages
    - Configuration (`gpt-orch config show`)

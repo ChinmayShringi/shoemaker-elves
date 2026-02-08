@@ -69,7 +69,7 @@ function getBinaryName(version) {
  */
 function getDownloadUrl(version) {
   const binaryName = getBinaryName(version);
-  const repo = 'ChinmayShringi/gpt-claude-orchestrator';
+  const repo = 'ChinmayShringi/Chainsmith';
   const tag = `v${version}`;
 
   return `https://github.com/${repo}/releases/download/${tag}/${binaryName}`;
@@ -81,7 +81,7 @@ function getDownloadUrl(version) {
  * @returns {string} Checksums file URL
  */
 function getChecksumsUrl(version) {
-  const repo = 'ChinmayShringi/gpt-claude-orchestrator';
+  const repo = 'ChinmayShringi/Chainsmith';
   const tag = `v${version}`;
 
   return `https://github.com/${repo}/releases/download/${tag}/checksums.txt`;

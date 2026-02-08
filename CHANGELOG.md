@@ -42,5 +42,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Test suite and CI documentation
 - PyInstaller binary build documentation
 
-[Unreleased]: https://github.com/ChinmayShringi/gpt-claude-orchestrator/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/ChinmayShringi/gpt-claude-orchestrator/releases/tag/v0.1.0
+[Unreleased]: https://github.com/ChinmayShringi/Chainsmith/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/ChinmayShringi/Chainsmith/releases/tag/v0.1.0

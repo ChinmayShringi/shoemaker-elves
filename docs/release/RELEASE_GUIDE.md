@@ -17,7 +17,7 @@ The release process is automated via GitHub Actions and publishes to:
    - Go to https://pypi.org/manage/account/publishing/
    - Add a new publisher:
      - Owner: `ChinmayShringi`
-     - Repository: `gpt-claude-orchestrator`
+     - Repository: `Chainsmith`
      - Workflow: `release.yml`
      - Environment: `pypi`
    - No API token needed with trusted publishing!
@@ -125,7 +125,7 @@ After the workflow completes, verify:
    gpt-orch --version
    ```
 
-3. **GitHub Release**: https://github.com/ChinmayShringi/gpt-claude-orchestrator/releases
+3. **GitHub Release**: https://github.com/ChinmayShringi/Chainsmith/releases
    - Download and test a binary
    - Verify checksums match
 
@@ -249,4 +249,4 @@ If a release has critical issues:
 For issues with the release process:
 - Check workflow logs in GitHub Actions
 - Review this guide for common issues
-- Open an issue: https://github.com/ChinmayShringi/gpt-claude-orchestrator/issues
+- Open an issue: https://github.com/ChinmayShringi/Chainsmith/issues

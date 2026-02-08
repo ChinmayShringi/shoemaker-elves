@@ -2,7 +2,7 @@
 
 > An intelligent task orchestrator that breaks down large projects into atomic tasks and executes them through an AI coding agent automatically.
 
-[![CI Status](https://github.com/ChinmayShringi/gpt-claude-orchestrator/actions/workflows/ci.yml/badge.svg)](https://github.com/ChinmayShringi/gpt-claude-orchestrator/actions/workflows/ci.yml)
+[![CI Status](https://github.com/ChinmayShringi/Chainsmith/actions/workflows/ci.yml/badge.svg)](https://github.com/ChinmayShringi/Chainsmith/actions/workflows/ci.yml)
 [![PyPI version](https://badge.fury.io/py/gpt-agent-orchestrator.svg)](https://badge.fury.io/py/gpt-agent-orchestrator)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
@@ -91,8 +91,8 @@ pipx install "gpt-agent-orchestrator[all]"
 ### From Source
 
 ```bash
-git clone https://github.com/ChinmayShringi/gpt-claude-orchestrator.git
-cd gpt-claude-orchestrator
+git clone https://github.com/ChinmayShringi/Chainsmith.git
+cd Chainsmith
 pip install -e ".[all]"
 ```
 
@@ -685,7 +685,7 @@ See [Release Guide](docs/release/RELEASE_GUIDE.md) for detailed release instruct
 ## Project Structure
 
 ```
-gpt-claude-orchestrator/
+Chainsmith/
 ├── src/
 │   └── gpt_agent_orchestrator/      # Main package
 │       ├── __init__.py

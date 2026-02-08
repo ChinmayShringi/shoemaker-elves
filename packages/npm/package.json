@@ -23,11 +23,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ChinmayShringi/gpt-claude-orchestrator.git"
+    "url": "https://github.com/ChinmayShringi/Chainsmith.git"
   },
-  "homepage": "https://github.com/ChinmayShringi/gpt-claude-orchestrator",
+  "homepage": "https://github.com/ChinmayShringi/Chainsmith",
   "bugs": {
-    "url": "https://github.com/ChinmayShringi/gpt-claude-orchestrator/issues"
+    "url": "https://github.com/ChinmayShringi/Chainsmith/issues"
   },
   "engines": {
     "node": ">=16.0.0"
