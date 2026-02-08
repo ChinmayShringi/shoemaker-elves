@@ -40,14 +40,14 @@
 
 ### Files to be affected
 
-- `src/gpt_agent_orchestrator/planners/__init__.py` (new)
-- `src/gpt_agent_orchestrator/planners/types.py` (new)
-- `src/gpt_agent_orchestrator/planners/base.py` (new)
-- `src/gpt_agent_orchestrator/planners/openai_adapter.py` (new)
-- `src/gpt_agent_orchestrator/planners/registry.py` (new)
-- `src/gpt_agent_orchestrator/gpt_planner.py` (modify)
-- `src/gpt_agent_orchestrator/config.py` (modify)
-- `src/gpt_agent_orchestrator/cli.py` (modify)
+- `src/chainsmith/planners/__init__.py` (new)
+- `src/chainsmith/planners/types.py` (new)
+- `src/chainsmith/planners/base.py` (new)
+- `src/chainsmith/planners/openai_adapter.py` (new)
+- `src/chainsmith/planners/registry.py` (new)
+- `src/chainsmith/gpt_planner.py` (modify)
+- `src/chainsmith/config.py` (modify)
+- `src/chainsmith/cli.py` (modify)
 - `tests/test_openai_adapter.py` (new)
 
 ### Dependencies
@@ -105,13 +105,13 @@ Successfully implemented a clean provider-agnostic planner adapter system for th
 
 ### Files Modified
 
-- `src/gpt_agent_orchestrator/planners/__init__.py` — Package initialization, exports adapter interface
-- `src/gpt_agent_orchestrator/planners/types.py` — TaskSpec and ReviewSpec dataclasses with serialization
-- `src/gpt_agent_orchestrator/planners/base.py` — PlannerAdapter protocol definition
-- `src/gpt_agent_orchestrator/planners/openai_adapter.py` — OpenAI adapter implementation with validation
-- `src/gpt_agent_orchestrator/planners/registry.py` — Provider registration and factory system
-- `src/gpt_agent_orchestrator/gpt_planner.py` — Updated to use adapter pattern while maintaining backward compatibility
-- `src/gpt_agent_orchestrator/cli.py` — Added new planner CLI flags with legacy flag support
+- `src/chainsmith/planners/__init__.py` — Package initialization, exports adapter interface
+- `src/chainsmith/planners/types.py` — TaskSpec and ReviewSpec dataclasses with serialization
+- `src/chainsmith/planners/base.py` — PlannerAdapter protocol definition
+- `src/chainsmith/planners/openai_adapter.py` — OpenAI adapter implementation with validation
+- `src/chainsmith/planners/registry.py` — Provider registration and factory system
+- `src/chainsmith/gpt_planner.py` — Updated to use adapter pattern while maintaining backward compatibility
+- `src/chainsmith/cli.py` — Added new planner CLI flags with legacy flag support
 - `tests/test_openai_adapter.py` — 16 tests covering OpenAI adapter functionality
 - `tests/test_planner_registry.py` — 6 tests for registry and provider management
 - `tests/test_planner_types.py` — 12 tests for data type serialization

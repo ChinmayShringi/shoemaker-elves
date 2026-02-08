@@ -67,8 +67,8 @@ touch README.md
 
 ```python
 # src/my_planner/adapter.py
-from gpt_agent_orchestrator.planners.base import PlannerAdapter
-from gpt_agent_orchestrator.planners.types import (
+from chainsmith.planners.base import PlannerAdapter
+from chainsmith.planners.types import (
     PlannerResponse,
     AssessmentResponse,
     TaskItem,
@@ -178,7 +178,7 @@ dependencies = [
     "my-llm-sdk>=1.0.0",
 ]
 
-[project.entry-points."gpt_agent_orchestrator.planners"]
+[project.entry-points."chainsmith.planners"]
 my_provider = "my_planner.adapter:MyPlannerAdapter"
 ```
 
@@ -196,14 +196,14 @@ pip install .
 
 ```bash
 # Configure to use your provider
-gpt-orch config set planner.provider my_provider
-gpt-orch config set planner.model my-model-name
+chainsmith config set planner.provider my_provider
+chainsmith config set planner.model my-model-name
 
 # Set API key
-export GPT_ORCH_MY_PROVIDER_API_KEY=...
+export CHAINSMITH_MY_PROVIDER_API_KEY=...
 
 # Run orchestration
-gpt-orch ~/project --gpt -d "Build something"
+chainsmith ~/project --gpt -d "Build something"
 ```
 
 ## Plugin Interface
@@ -214,7 +214,7 @@ All planner adapters must implement `PlannerAdapter` interface:
 
 ```python
 from abc import ABC, abstractmethod
-from gpt_agent_orchestrator.planners.types import (
+from chainsmith.planners.types import (
     PlannerResponse,
     AssessmentResponse,
 )
@@ -295,8 +295,8 @@ my-planner-plugin/
 
 ```python
 # src/my_planner/adapter.py
-from gpt_agent_orchestrator.planners.base import PlannerAdapter
-from gpt_agent_orchestrator.planners.types import (
+from chainsmith.planners.base import PlannerAdapter
+from chainsmith.planners.types import (
     PlannerResponse,
     AssessmentResponse,
     TaskItem,
@@ -535,7 +535,7 @@ dev = [
 ]
 
 # CRITICAL: Entry point registration
-[project.entry-points."gpt_agent_orchestrator.planners"]
+[project.entry-points."chainsmith.planners"]
 my_provider = "my_planner.adapter:MyPlannerAdapter"
 ```
 
@@ -551,22 +551,22 @@ The orchestrator discovers plugins via Python entry points.
 
 1. Plugin declares entry point in `pyproject.toml`
 2. On installation, entry point is registered
-3. Orchestrator's registry scans for `gpt_agent_orchestrator.planners` entry points
+3. Orchestrator's registry scans for `chainsmith.planners` entry points
 4. Adapters are loaded dynamically
 
 ### Entry Point Naming
 
 ```toml
-[project.entry-points."gpt_agent_orchestrator.planners"]
+[project.entry-points."chainsmith.planners"]
 my_provider = "my_planner.adapter:MyPlannerAdapter"
 company_llm = "company_planner.adapter:CompanyAdapter"
 ```
 
 **Use in config**:
 ```bash
-gpt-orch config set planner.provider my_provider
+chainsmith config set planner.provider my_provider
 # or
-gpt-orch config set planner.provider company_llm
+chainsmith config set planner.provider company_llm
 ```
 
 ## Testing
@@ -625,11 +625,11 @@ def test_assess_batch():
 # Test with orchestrator
 pip install -e .
 
-gpt-orch config set planner.provider my_provider
-export GPT_ORCH_MY_PROVIDER_API_KEY=...
+chainsmith config set planner.provider my_provider
+export CHAINSMITH_MY_PROVIDER_API_KEY=...
 
 # Run small test
-gpt-orch ~/test-project --gpt -d "Create a hello world file" --max-batches 1
+chainsmith ~/test-project --gpt -d "Create a hello world file" --max-batches 1
 ```
 
 ## Distribution
@@ -651,7 +651,7 @@ python -m twine upload dist/*
 pip install my-planner-plugin
 
 # Will automatically register with orchestrator
-gpt-orch config set planner.provider my_provider
+chainsmith config set planner.provider my_provider
 ```
 
 ## Examples

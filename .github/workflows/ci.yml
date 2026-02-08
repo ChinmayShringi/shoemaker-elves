@@ -87,7 +87,7 @@ jobs:
 
       - name: Run mypy
         run: |
-          mypy src/gpt_agent_orchestrator
+          mypy src/chainsmith
 
   # Check version consistency
   version-sync:

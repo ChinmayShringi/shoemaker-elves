@@ -59,7 +59,7 @@ function getBinaryName(version) {
   const arch = getArch();
   const ext = platform === 'win32' ? '.exe' : '';
 
-  return `gpt-orch-${platform}-${arch}${ext}`;
+  return `chainsmith-${platform}-${arch}${ext}`;
 }
 
 /**

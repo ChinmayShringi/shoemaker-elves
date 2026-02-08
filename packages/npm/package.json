@@ -1,10 +1,10 @@
 {
-  "name": "gpt-agent-orchestrator",
+  "name": "chainsmith",
   "version": "0.1.0",
-  "description": "A CLI tool that uses GPT as an orchestrator to break down large projects into tasks, then runs each task through an AI coding agent automatically",
-  "main": "bin/gpt-orch.js",
+  "description": "A CLI tool that breaks down large projects into atomic tasks and runs each task through an AI coding agent automatically",
+  "main": "bin/chainsmith.js",
   "bin": {
-    "gpt-orch": "bin/gpt-orch.js"
+    "chainsmith": "bin/chainsmith.js"
   },
   "scripts": {
     "postinstall": "node scripts/postinstall.js",

@@ -28,12 +28,12 @@ python --version
 pip install --upgrade pip
 
 # Try installing with verbose output
-pip install -v gpt-agent-orchestrator
+pip install -v chainsmith
 ```
 
 ### Import errors after installation
 
-**Error**: `ModuleNotFoundError: No module named 'gpt_agent_orchestrator'`
+**Error**: `ModuleNotFoundError: No module named 'chainsmith'`
 
 **Solution**:
 ```bash
@@ -44,18 +44,18 @@ pip list | grep gpt-agent
 source venv/bin/activate  # or `venv\Scripts\activate` on Windows
 
 # Reinstall
-pip install --force-reinstall gpt-agent-orchestrator
+pip install --force-reinstall chainsmith
 ```
 
-### `gpt-orch` command not found
+### `chainsmith` command not found
 
 **Solution**:
 ```bash
 # Ensure pip's bin directory is in PATH
-python -m gpt_agent_orchestrator --help
+python -m chainsmith --help
 
 # Or use pipx (recommended)
-pipx install gpt-agent-orchestrator
+pipx install chainsmith
 
 # Or add pip's bin to PATH
 export PATH="$HOME/.local/bin:$PATH"  # Linux/macOS
@@ -86,16 +86,16 @@ claude --version
 **Solution**:
 ```bash
 # Option 1: Use environment variable (recommended)
-export GPT_ORCH_OPENAI_API_KEY=sk-...
+export CHAINSMITH_OPENAI_API_KEY=sk-...
 
 # Option 2: Use config file
-gpt-orch init
+chainsmith init
 
 # Option 3: Set via config command
-gpt-orch config set planner.api_key sk-...
+chainsmith config set planner.api_key sk-...
 
 # Verify
-gpt-orch config show --no-mask
+chainsmith config show --no-mask
 ```
 
 ### Config file not loaded
@@ -105,17 +105,17 @@ gpt-orch config show --no-mask
 **Solution**:
 ```bash
 # Check config file location
-gpt-orch config show
+chainsmith config show
 
 # Ensure config file exists
-ls -la ~/.config/gpt-orch/config.toml  # Linux/macOS
-dir %APPDATA%\gpt-orch\config.toml     # Windows
+ls -la ~/.config/chainsmith/config.toml  # Linux/macOS
+dir %APPDATA%\chainsmith\config.toml     # Windows
 
 # Verify config syntax (TOML)
-cat ~/.config/gpt-orch/config.toml
+cat ~/.config/chainsmith/config.toml
 
 # Recreate config
-gpt-orch init
+chainsmith init
 ```
 
 ### Wrong provider selected
@@ -125,14 +125,14 @@ gpt-orch init
 **Solution**:
 ```bash
 # Check effective configuration
-gpt-orch config show
+chainsmith config show
 
 # Remember priority: CLI flags > env vars > config file
 # Unset env vars if needed
-unset GPT_ORCH_PLANNER_PROVIDER
+unset CHAINSMITH_PLANNER_PROVIDER
 
 # Or explicitly set via CLI
-gpt-orch ~/project --gpt -d "..." --planner-provider openai
+chainsmith ~/project --gpt -d "..." --planner-provider openai
 ```
 
 ## Provider Issues
@@ -147,7 +147,7 @@ gpt-orch ~/project --gpt -d "..." --planner-provider openai
    ```bash
    # Test your key
    curl https://api.openai.com/v1/models \
-     -H "Authorization: Bearer $GPT_ORCH_OPENAI_API_KEY"
+     -H "Authorization: Bearer $CHAINSMITH_OPENAI_API_KEY"
 
    # Regenerate key at https://platform.openai.com/api-keys
    ```
@@ -155,10 +155,10 @@ gpt-orch ~/project --gpt -d "..." --planner-provider openai
 2. **Rate limit exceeded**:
    ```bash
    # Reduce batch size
-   gpt-orch ~/project --gpt -d "..." --batch-size 3
+   chainsmith ~/project --gpt -d "..." --batch-size 3
 
    # Wait and retry
-   gpt-orch ~/project --resume
+   chainsmith ~/project --resume
    ```
 
 3. **Insufficient quota**:
@@ -174,7 +174,7 @@ gpt-orch ~/project --gpt -d "..." --planner-provider openai
 1. **Invalid API key**:
    ```bash
    # Verify key format (should start with sk-ant-)
-   echo $GPT_ORCH_ANTHROPIC_API_KEY
+   echo $CHAINSMITH_ANTHROPIC_API_KEY
 
    # Get new key at https://console.anthropic.com/
    ```
@@ -182,7 +182,7 @@ gpt-orch ~/project --gpt -d "..." --planner-provider openai
 2. **Model not available**:
    ```bash
    # Use exact model name
-   gpt-orch config set planner.model claude-sonnet-4-5-20250929
+   chainsmith config set planner.model claude-sonnet-4-5-20250929
    ```
 
 ### Azure OpenAI errors
@@ -194,9 +194,9 @@ gpt-orch ~/project --gpt -d "..." --planner-provider openai
 1. **Missing configuration**:
    ```bash
    # All three required
-   export GPT_ORCH_AZURE_ENDPOINT=https://your-resource.openai.azure.com
-   export GPT_ORCH_AZURE_DEPLOYMENT=your-deployment-name
-   export GPT_ORCH_AZURE_API_VERSION=2024-02-01
+   export CHAINSMITH_AZURE_ENDPOINT=https://your-resource.openai.azure.com
+   export CHAINSMITH_AZURE_DEPLOYMENT=your-deployment-name
+   export CHAINSMITH_AZURE_API_VERSION=2024-02-01
    ```
 
 2. **Wrong deployment name**:
@@ -214,14 +214,14 @@ gpt-orch ~/project --gpt -d "..." --planner-provider openai
 **Solutions**:
 ```bash
 # Verify API key
-echo $GPT_ORCH_DEEPSEEK_API_KEY
+echo $CHAINSMITH_DEEPSEEK_API_KEY
 
 # Test connection
 curl https://api.deepseek.com/v1/models \
-  -H "Authorization: Bearer $GPT_ORCH_DEEPSEEK_API_KEY"
+  -H "Authorization: Bearer $CHAINSMITH_DEEPSEEK_API_KEY"
 
 # Try custom base URL if needed
-gpt-orch config set planner.base_url https://api.deepseek.com
+chainsmith config set planner.base_url https://api.deepseek.com
 ```
 
 ### Local model (OpenAI-compatible) issues
@@ -243,7 +243,7 @@ gpt-orch config set planner.base_url https://api.deepseek.com
    ```bash
    # Check server logs for correct port
    # Update config
-   gpt-orch config set planner.base_url http://localhost:11434/v1
+   chainsmith config set planner.base_url http://localhost:11434/v1
    ```
 
 3. **Model not loaded**:
@@ -279,7 +279,7 @@ gpt-orch config set planner.base_url https://api.deepseek.com
    # Should contain SessionEnd hook
    # Reinstall if needed
    rm ~/your-project/.claude/settings.local.json
-   gpt-orch ~/your-project  # Reinstalls hook
+   chainsmith ~/your-project  # Reinstalls hook
    ```
 
 3. **Check permissions**:
@@ -297,7 +297,7 @@ gpt-orch config set planner.base_url https://api.deepseek.com
 1. **Check task content**:
    ```bash
    # View generated tasks
-   cat src/gpt_agent_orchestrator/tasks/1.md
+   cat src/chainsmith/tasks/1.md
 
    # Ensure tasks are well-formed
    ```
@@ -324,13 +324,13 @@ gpt-orch config set planner.base_url https://api.deepseek.com
    ```bash
    # Default timeout: 600s (10 minutes)
    # Adjust if needed
-   gpt-orch ~/project --task-timeout 1200  # 20 minutes
+   chainsmith ~/project --task-timeout 1200  # 20 minutes
    ```
 
 2. **Resume after timeout**:
    ```bash
    # Wait for timeout, then
-   gpt-orch ~/project --resume
+   chainsmith ~/project --resume
    ```
 
 3. **Check agent process**:
@@ -359,7 +359,7 @@ gpt-orch config set planner.base_url https://api.deepseek.com
 
 3. **Monitor with verbose mode**:
    ```bash
-   gpt-orch ~/project --verbose
+   chainsmith ~/project --verbose
    ```
 
 ## Performance Issues
@@ -372,12 +372,12 @@ gpt-orch config set planner.base_url https://api.deepseek.com
 
 1. **Use faster model**:
    ```bash
-   gpt-orch config set planner.model gpt-4-turbo
+   chainsmith config set planner.model gpt-4-turbo
    ```
 
 2. **Reduce batch size**:
    ```bash
-   gpt-orch ~/project --gpt -d "..." --batch-size 3
+   chainsmith ~/project --gpt -d "..." --batch-size 3
    ```
 
 3. **Simplify description**:
@@ -392,24 +392,24 @@ gpt-orch config set planner.base_url https://api.deepseek.com
 
 1. **Set cost limits**:
    ```bash
-   gpt-orch config set planner.max_cost_usd 25.0
+   chainsmith config set planner.max_cost_usd 25.0
    ```
 
 2. **Use cheaper model**:
    ```bash
    # OpenAI
-   gpt-orch config set planner.model gpt-3.5-turbo
+   chainsmith config set planner.model gpt-3.5-turbo
 
    # Anthropic
-   gpt-orch config set planner.model claude-3-haiku-20240307
+   chainsmith config set planner.model claude-3-haiku-20240307
 
    # DeepSeek
-   gpt-orch config set planner.provider deepseek
+   chainsmith config set planner.provider deepseek
    ```
 
 3. **Reduce batches**:
    ```bash
-   gpt-orch ~/project --gpt -d "..." --max-batches 3
+   chainsmith ~/project --gpt -d "..." --max-batches 3
    ```
 
 4. **Use manual mode**:
@@ -429,7 +429,7 @@ gpt-orch config set planner.base_url https://api.deepseek.com
 
 2. **Clear old state files**:
    ```bash
-   rm src/gpt_agent_orchestrator/state.json
+   rm src/chainsmith/state.json
    ```
 
 3. **Use manual mode** for large projects
@@ -443,10 +443,10 @@ gpt-orch config set planner.base_url https://api.deepseek.com
 **Solution**:
 ```bash
 # Ensure state file exists
-ls src/gpt_agent_orchestrator/state.json
+ls src/chainsmith/state.json
 
 # If missing, cannot resume - start fresh
-gpt-orch ~/project --gpt -d "..."
+chainsmith ~/project --gpt -d "..."
 ```
 
 ### Stale state
@@ -456,10 +456,10 @@ gpt-orch ~/project --gpt -d "..."
 **Solution**:
 ```bash
 # Manually inspect state
-cat src/gpt_agent_orchestrator/state.json | jq .
+cat src/chainsmith/state.json | jq .
 
 # Delete stale state to restart
-rm src/gpt_agent_orchestrator/state.json
+rm src/chainsmith/state.json
 ```
 
 ### State corruption
@@ -469,11 +469,11 @@ rm src/gpt_agent_orchestrator/state.json
 **Solution**:
 ```bash
 # Validate JSON
-cat src/gpt_agent_orchestrator/state.json | jq .
+cat src/chainsmith/state.json | jq .
 
 # If corrupted, delete and restart
-rm src/gpt_agent_orchestrator/state.json
-gpt-orch ~/project --gpt -d "..."
+rm src/chainsmith/state.json
+chainsmith ~/project --gpt -d "..."
 ```
 
 ### Lock file issues
@@ -483,16 +483,16 @@ gpt-orch ~/project --gpt -d "..."
 **Solution**:
 ```bash
 # Another orchestrator process may be running
-ps aux | grep gpt-orch
+ps aux | grep chainsmith
 
 # Kill other processes
 kill <PID>
 
 # Remove lock file
-rm src/gpt_agent_orchestrator/state.json.lock
+rm src/chainsmith/state.json.lock
 
 # Retry
-gpt-orch ~/project --resume
+chainsmith ~/project --resume
 ```
 
 ## Cost and Limits
@@ -505,18 +505,18 @@ gpt-orch ~/project --resume
 
 1. **Increase limit**:
    ```bash
-   gpt-orch config set planner.max_cost_usd 100.0
+   chainsmith config set planner.max_cost_usd 100.0
    ```
 
 2. **Resume with new limit**:
    ```bash
-   gpt-orch ~/project --resume --max-cost-usd 75.0
+   chainsmith ~/project --resume --max-cost-usd 75.0
    ```
 
 3. **Check cost tracking accuracy**:
    ```bash
    # View state
-   cat src/gpt_agent_orchestrator/state.json | jq .total_cost_usd
+   cat src/chainsmith/state.json | jq .total_cost_usd
 
    # Costs are estimates; actual may vary
    ```
@@ -555,7 +555,7 @@ gpt-orch ~/project --resume
 2. **Reinstall hook**:
    ```bash
    rm ~/your-project/.claude/settings.local.json
-   gpt-orch ~/project --resume
+   chainsmith ~/project --resume
    ```
 
 3. **Check agent permissions**:
@@ -600,7 +600,7 @@ gpt-orch ~/project --resume
 2. **Test hook manually**:
    ```bash
    # Simulate hook execution
-   python src/gpt_agent_orchestrator/hook_handler.py ~/your-project
+   python src/chainsmith/hook_handler.py ~/your-project
    ```
 
 3. **Verify Python path**:
@@ -609,7 +609,7 @@ gpt-orch ~/project --resume
    which python3
 
    # Ensure shebang is correct in hook_handler.py
-   head -1 src/gpt_agent_orchestrator/hook_handler.py
+   head -1 src/chainsmith/hook_handler.py
    ```
 
 ## Getting Help
@@ -619,12 +619,12 @@ If you can't resolve your issue:
 1. **Check existing issues**: https://github.com/ChinmayShringi/Chainsmith/issues
 2. **Create a new issue** with:
    - Error messages
-   - Configuration (`gpt-orch config show`)
+   - Configuration (`chainsmith config show`)
    - Steps to reproduce
    - Environment (OS, Python version, etc.)
 3. **Enable verbose logging**:
    ```bash
-   gpt-orch ~/project --verbose
+   chainsmith ~/project --verbose
    ```
 
 ## See Also

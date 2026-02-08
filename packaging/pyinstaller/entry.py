@@ -5,7 +5,7 @@ This file uses absolute imports to avoid PyInstaller issues with relative import
 """
 
 import sys
-from gpt_agent_orchestrator.cli import main
+from chainsmith.cli import main
 
 if __name__ == "__main__":
     sys.exit(main())

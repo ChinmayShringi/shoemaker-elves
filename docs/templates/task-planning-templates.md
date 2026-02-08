@@ -12,29 +12,29 @@
 
 ### Changes Made
 
-1. **Enhanced TaskSpec Data Model** (`src/gpt_agent_orchestrator/planners/types.py`)
+1. **Enhanced TaskSpec Data Model** (`src/chainsmith/planners/types.py`)
    - Added new fields to TaskSpec: `id`, `summary`, `steps`, `files`, `acceptance_checks`, `risks`, `constraints`
    - Updated `to_dict()` and `from_dict()` methods to support new fields
    - All fields are optional except `title` and `prompt` for backward compatibility
 
-2. **Enhanced ReviewSpec Data Model** (`src/gpt_agent_orchestrator/planners/types.py`)
+2. **Enhanced ReviewSpec Data Model** (`src/chainsmith/planners/types.py`)
    - Added `next_tasks` field to ReviewSpec for structured next-step planning
    - Updated serialization/deserialization methods
 
-3. **Upgraded Planning Prompt** (`src/gpt_agent_orchestrator/templates.py`)
+3. **Upgraded Planning Prompt** (`src/chainsmith/templates.py`)
    - Rewrote TASK_PLANNING_SYSTEM_PROMPT with enhanced structure and guards
    - Added task quality standards (atomic, specific files, clear steps, acceptance checks, risk awareness, constraints)
    - Added output constraints (JSON-only output, batch size enforcement, strict schema)
    - Included comprehensive example of a well-formed task
    - Enforces minimal diffs and incremental builds
 
-4. **Upgraded Review Prompt** (`src/gpt_agent_orchestrator/templates.py`)
+4. **Upgraded Review Prompt** (`src/chainsmith/templates.py`)
    - Rewrote ASSESSMENT_SYSTEM_PROMPT with structured output requirements
    - Added next-task generation capability
    - Added detection of missing requirements
    - Included comprehensive example output
 
-5. **Prompt Validator Utility** (`src/gpt_agent_orchestrator/prompt_validator.py`)
+5. **Prompt Validator Utility** (`src/chainsmith/prompt_validator.py`)
    - Created PromptValidator class with comprehensive validation
    - Validates planning responses (tasks structure, batch size, field presence)
    - Validates review responses (all required fields, next_tasks structure)
@@ -43,9 +43,9 @@
    - `ValidationError` exception for validation failures
 
 6. **Adapter Integration**
-   - Updated OpenAI adapter (`src/gpt_agent_orchestrator/planners/openai_adapter.py`)
-   - Updated Anthropic adapter (`src/gpt_agent_orchestrator/planners/anthropic_adapter.py`)
-   - Updated Azure OpenAI adapter (`src/gpt_agent_orchestrator/planners/azure_openai_adapter.py`)
+   - Updated OpenAI adapter (`src/chainsmith/planners/openai_adapter.py`)
+   - Updated Anthropic adapter (`src/chainsmith/planners/anthropic_adapter.py`)
+   - Updated Azure OpenAI adapter (`src/chainsmith/planners/azure_openai_adapter.py`)
    - All adapters now use PromptValidator before processing responses
    - Validation failures trigger existing repair mechanism
 
@@ -56,12 +56,12 @@
 
 ### Files Modified
 
-- `src/gpt_agent_orchestrator/planners/types.py` — Enhanced TaskSpec and ReviewSpec dataclasses
-- `src/gpt_agent_orchestrator/templates.py` — Rewrote planning and review prompts
-- `src/gpt_agent_orchestrator/prompt_validator.py` — New validation utility (created)
-- `src/gpt_agent_orchestrator/planners/openai_adapter.py` — Integrated validator
-- `src/gpt_agent_orchestrator/planners/anthropic_adapter.py` — Integrated validator
-- `src/gpt_agent_orchestrator/planners/azure_openai_adapter.py` — Integrated validator
+- `src/chainsmith/planners/types.py` — Enhanced TaskSpec and ReviewSpec dataclasses
+- `src/chainsmith/templates.py` — Rewrote planning and review prompts
+- `src/chainsmith/prompt_validator.py` — New validation utility (created)
+- `src/chainsmith/planners/openai_adapter.py` — Integrated validator
+- `src/chainsmith/planners/anthropic_adapter.py` — Integrated validator
+- `src/chainsmith/planners/azure_openai_adapter.py` — Integrated validator
 - `tests/test_planner_types.py` — Updated and expanded tests
 - `tests/test_prompt_validator.py` — New comprehensive test suite (created)
 - `tests/test_azure_openai_adapter.py` — Updated assertion to match new validation
@@ -129,8 +129,8 @@
 
 ### Files to be affected
 
-- `src/gpt_agent_orchestrator/templates.py` — Update prompts with new structure
-- `src/gpt_agent_orchestrator/gpt_planner.py` — Add validator integration
+- `src/chainsmith/templates.py` — Update prompts with new structure
+- `src/chainsmith/gpt_planner.py` — Add validator integration
 - `tests/test_templates.py` — New test file for template validation
 - `tests/test_prompt_validator.py` — New test file for validator
 

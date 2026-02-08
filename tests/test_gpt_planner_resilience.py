@@ -8,8 +8,8 @@ from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 
-from gpt_agent_orchestrator.planners.openai_adapter import OpenAIAdapter
-from gpt_agent_orchestrator.planners.types import TaskSpec, UsageMetrics
+from chainsmith.planners.openai_adapter import OpenAIAdapter
+from chainsmith.planners.types import TaskSpec, UsageMetrics
 
 
 def create_mock_rate_limit_error():

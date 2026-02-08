@@ -43,8 +43,8 @@
 ### Files to be affected
 
 **Core Implementation:**
-- `src/gpt_agent_orchestrator/planners/registry.py` - Add plugin loading
-- `src/gpt_agent_orchestrator/planners/base.py` - May need plugin interface docs
+- `src/chainsmith/planners/registry.py` - Add plugin loading
+- `src/chainsmith/planners/base.py` - May need plugin interface docs
 
 **Example Plugin:**
 - `examples/planner_plugin_example/pyproject.toml`
@@ -94,7 +94,7 @@ Successfully implemented a complete plugin system for custom planner providers w
 ### Files Modified
 
 **Core Implementation:**
-- `src/gpt_agent_orchestrator/planners/registry.py`
+- `src/chainsmith/planners/registry.py`
   - Added `load_plugins()` function for entrypoint discovery
   - Added `_create_plugin_registrar()` helper that prevents built-in overrides
   - Added logging for plugin load success/failure
@@ -190,7 +190,7 @@ Successfully implemented a complete plugin system for custom planner providers w
 
 ### Verification
 
-1. ✅ Plugin loads successfully: `python -c "from src.gpt_agent_orchestrator.planners.registry import get_available_providers; print(get_available_providers())"`
+1. ✅ Plugin loads successfully: `python -c "from src.chainsmith.planners.registry import get_available_providers; print(get_available_providers())"`
    - Output includes 'example' provider along with built-ins
 
 2. ✅ Plugin adapter works: Created and tested example adapter

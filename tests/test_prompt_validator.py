@@ -6,7 +6,7 @@ Tests validation of task planning and review responses.
 
 import pytest
 
-from gpt_agent_orchestrator.prompt_validator import (
+from chainsmith.prompt_validator import (
     PromptValidator,
     ValidationError,
 )

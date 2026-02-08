@@ -19,8 +19,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 # Import from package
-from gpt_agent_orchestrator.state import State
-from gpt_agent_orchestrator.transcript_parser import parse_transcript
+from chainsmith.state import State
+from chainsmith.transcript_parser import parse_transcript
 
 
 def log(msg: str):

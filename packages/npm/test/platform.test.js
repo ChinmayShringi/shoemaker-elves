@@ -49,7 +49,7 @@ describe('Platform Detection', () => {
 
     assert.ok(binaryName.includes(platform));
     assert.ok(binaryName.includes(arch === 'aarch64' ? 'arm64' : arch));
-    assert.ok(binaryName.startsWith('gpt-orch-'));
+    assert.ok(binaryName.startsWith('chainsmith-'));
   });
 
   test('getBinaryName adds .exe extension on Windows', () => {
@@ -70,7 +70,7 @@ describe('Platform Detection', () => {
     assert.ok(url.startsWith('https://github.com/'));
     assert.ok(url.includes('/releases/download/'));
     assert.ok(url.includes('v0.1.0'));
-    assert.ok(url.includes('gpt-orch-'));
+    assert.ok(url.includes('chainsmith-'));
   });
 
   test('getChecksumsUrl returns valid GitHub URL', () => {
@@ -88,11 +88,11 @@ describe('Platform Detection', () => {
 
     // Test different platform/arch combinations conceptually
     const expectedPatterns = [
-      'gpt-orch-darwin-x64',
-      'gpt-orch-darwin-arm64',
-      'gpt-orch-linux-x64',
-      'gpt-orch-linux-arm64',
-      'gpt-orch-win-x64.exe',
+      'chainsmith-darwin-x64',
+      'chainsmith-darwin-arm64',
+      'chainsmith-linux-x64',
+      'chainsmith-linux-arm64',
+      'chainsmith-win-x64.exe',
     ];
 
     // Verify at least one matches current platform

@@ -17,13 +17,13 @@ function showManualInstallInstructions() {
   console.error('\n===========================================');
   console.error('Manual Installation Instructions');
   console.error('===========================================\n');
-  console.error('To manually install gpt-orch:');
+  console.error('To manually install chainsmith:');
   console.error('');
   console.error('1. Download the binary for your platform from:');
   console.error(`   https://github.com/ChinmayShringi/Chainsmith/releases/tag/v${PACKAGE_JSON.version}`);
   console.error('');
   console.error('2. Place the binary in:');
-  console.error(`   ${path.join(__dirname, '..', 'bin', 'gpt-orch' + (process.platform === 'win32' ? '.exe' : ''))}`);
+  console.error(`   ${path.join(__dirname, '..', 'bin', 'chainsmith' + (process.platform === 'win32' ? '.exe' : ''))}`);
   console.error('');
   console.error('3. Make it executable (Unix/Mac):');
   console.error('   chmod +x <path-to-binary>');
@@ -63,11 +63,11 @@ async function main() {
     // Create marker file
     fs.writeFileSync(MARKER_FILE, new Date().toISOString());
 
-    console.log('\n✓ gpt-orch installed successfully!');
-    console.log(`Run 'npx gpt-orch --help' to get started.\n`);
+    console.log('\n✓ chainsmith installed successfully!');
+    console.log(`Run 'npx chainsmith --help' to get started.\n`);
 
   } catch (error) {
-    console.error('\n✗ Failed to install gpt-orch binary:');
+    console.error('\n✗ Failed to install chainsmith binary:');
     console.error(error.message);
     console.error('');
 

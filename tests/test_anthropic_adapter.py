@@ -9,8 +9,8 @@ from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 
-from gpt_agent_orchestrator.planners.anthropic_adapter import AnthropicAdapter
-from gpt_agent_orchestrator.planners.types import ReviewSpec, TaskSpec
+from chainsmith.planners.anthropic_adapter import AnthropicAdapter
+from chainsmith.planners.types import ReviewSpec, TaskSpec
 
 
 # ─────────────────────────────────────────────────────────────
@@ -21,7 +21,7 @@ from gpt_agent_orchestrator.planners.types import ReviewSpec, TaskSpec
 @pytest.fixture
 def mock_anthropic_client():
     """Mock Anthropic client for testing."""
-    with patch("src.gpt_agent_orchestrator.planners.anthropic_adapter.Anthropic") as mock_anthropic:
+    with patch("src.chainsmith.planners.anthropic_adapter.Anthropic") as mock_anthropic:
         client = Mock()
         mock_anthropic.return_value = client
         yield client
@@ -40,7 +40,7 @@ def adapter(mock_anthropic_client):
 
 def test_adapter_init():
     """Test Anthropic adapter initialization."""
-    with patch("src.gpt_agent_orchestrator.planners.anthropic_adapter.Anthropic") as mock_anthropic:
+    with patch("src.chainsmith.planners.anthropic_adapter.Anthropic") as mock_anthropic:
         adapter = AnthropicAdapter(api_key="test-key", model="claude-sonnet-4-5-20250929")
 
         # Should initialize with api_key
@@ -50,7 +50,7 @@ def test_adapter_init():
 
 def test_adapter_init_default_model():
     """Test Anthropic adapter initialization with default model."""
-    with patch("src.gpt_agent_orchestrator.planners.anthropic_adapter.Anthropic") as mock_anthropic:
+    with patch("src.chainsmith.planners.anthropic_adapter.Anthropic") as mock_anthropic:
         adapter = AnthropicAdapter(api_key="test-key")
 
         assert adapter.model == "claude-sonnet-4-5-20250929"
@@ -398,7 +398,7 @@ def test_rate_limit_retry(adapter, mock_anthropic_client):
     ]
 
     # Mock time.sleep to avoid actual delays in tests
-    with patch("src.gpt_agent_orchestrator.planners.anthropic_adapter.time.sleep"):
+    with patch("src.chainsmith.planners.anthropic_adapter.time.sleep"):
         tasks = adapter.plan_batch(
             project_description="Build a web app",
             repo_summary="",
@@ -419,7 +419,7 @@ def test_api_error_max_retries(adapter, mock_anthropic_client):
         body=None,
     )
 
-    with patch("src.gpt_agent_orchestrator.planners.anthropic_adapter.time.sleep"):
+    with patch("src.chainsmith.planners.anthropic_adapter.time.sleep"):
         with pytest.raises(RuntimeError) as exc_info:
             adapter.plan_batch(
                 project_description="Build a web app",

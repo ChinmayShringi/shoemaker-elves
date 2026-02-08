@@ -18,7 +18,7 @@ function Write-ColorOutput {
 $ProjectRoot = Split-Path -Parent $PSScriptRoot
 Set-Location $ProjectRoot
 
-Write-ColorOutput "Building gpt-orch standalone binary" -Color Green
+Write-ColorOutput "Building chainsmith standalone binary" -Color Green
 Write-Host "Project root: $ProjectRoot"
 
 # Detect architecture
@@ -58,17 +58,17 @@ if (Test-Path "dist") { Remove-Item -Recurse -Force "dist" }
 # Build with PyInstaller
 Write-Host ""
 Write-ColorOutput "Building binary with PyInstaller..." -Color Green
-pyinstaller --clean --noconfirm packaging/pyinstaller/gpt-orch.spec
+pyinstaller --clean --noconfirm packaging/pyinstaller/chainsmith.spec
 
 # Check if build succeeded
-$BinaryPath = "dist/gpt-orch.exe"
+$BinaryPath = "dist/chainsmith.exe"
 if (-not (Test-Path $BinaryPath)) {
     Write-ColorOutput "Error: Build failed - binary not found" -Color Red
     exit 1
 }
 
 # Rename binary with platform and architecture
-$BinaryName = "gpt-orch-$Platform-$Arch.exe"
+$BinaryName = "chainsmith-$Platform-$Arch.exe"
 Write-Host ""
 Write-ColorOutput "Renaming binary to $BinaryName" -Color Green
 Move-Item -Path $BinaryPath -Destination "dist/$BinaryName" -Force

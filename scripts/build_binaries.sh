@@ -13,7 +13,7 @@ NC='\033[0m' # No Color
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$PROJECT_ROOT"
 
-echo -e "${GREEN}Building gpt-orch standalone binary${NC}"
+echo -e "${GREEN}Building chainsmith standalone binary${NC}"
 echo "Project root: $PROJECT_ROOT"
 
 # Detect platform and architecture
@@ -61,18 +61,18 @@ echo -e "\n${GREEN}Building binary with PyInstaller...${NC}"
 pyinstaller \
     --clean \
     --noconfirm \
-    packaging/pyinstaller/gpt-orch.spec
+    packaging/pyinstaller/chainsmith.spec
 
 # Check if build succeeded
-if [ ! -f "dist/gpt-orch" ]; then
+if [ ! -f "dist/chainsmith" ]; then
     echo -e "${RED}Error: Build failed - binary not found${NC}"
     exit 1
 fi
 
 # Rename binary with platform and architecture
-BINARY_NAME="gpt-orch-${PLATFORM}-${ARCH}"
+BINARY_NAME="chainsmith-${PLATFORM}-${ARCH}"
 echo -e "\n${GREEN}Renaming binary to ${BINARY_NAME}${NC}"
-mv dist/gpt-orch "dist/${BINARY_NAME}"
+mv dist/chainsmith "dist/${BINARY_NAME}"
 
 # Make binary executable (should already be, but just in case)
 chmod +x "dist/${BINARY_NAME}"

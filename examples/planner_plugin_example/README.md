@@ -24,11 +24,11 @@ After installation, the `example` provider will be available to the orchestrator
 
 ```bash
 # Check that the plugin is available
-gpt-orch init
+chainsmith init
 # You should see "example" in the provider list
 
 # Run with the example provider
-gpt-orch gpt "Build a web app" \
+chainsmith gpt "Build a web app" \
     --planner-provider example \
     --planner-api-key demo-key \
     --planner-model example-model-v1
@@ -97,15 +97,15 @@ To verify the plugin works:
 pip install -e .
 
 # Check it's registered
-python -c "from gpt_agent_orchestrator.planners.registry import get_available_providers; print(get_available_providers())"
+python -c "from chainsmith.planners.registry import get_available_providers; print(get_available_providers())"
 # Should include 'example'
 
 # Try running with it
-gpt-orch gpt "test project" --planner-provider example
+chainsmith gpt "test project" --planner-provider example
 ```
 
 ## Learn More
 
 - See `docs/planners/plugin-development-guide.md` for detailed documentation
-- Review built-in adapters in `src/gpt_agent_orchestrator/planners/` for reference implementations
-- Check the `PlannerAdapter` protocol in `src/gpt_agent_orchestrator/planners/base.py`
+- Review built-in adapters in `src/chainsmith/planners/` for reference implementations
+- Check the `PlannerAdapter` protocol in `src/chainsmith/planners/base.py`

@@ -6,7 +6,7 @@ Tests TaskSpec and ReviewSpec serialization and deserialization.
 
 import pytest
 
-from gpt_agent_orchestrator.planners.types import ReviewSpec, TaskSpec
+from chainsmith.planners.types import ReviewSpec, TaskSpec
 
 
 # ─────────────────────────────────────────────────────────────

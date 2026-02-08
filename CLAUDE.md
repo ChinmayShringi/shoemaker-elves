@@ -92,7 +92,7 @@ I've successfully implemented **standalone binary builds using PyInstaller** for
 
 1. **PyInstaller Configuration** (`packaging/pyinstaller/`)
    - ...
-  Files: /Users/chinmay_shringi/Desktop/time-pass/gpt-claude-orchestrator-proj/.github/workflows/build-binaries.yml, /Users/chinmay_shringi/Desktop/time-pass/gpt-claude-orchestrator-proj/docs/packaging/pyinstaller-binaries.md, /Users/chinmay_shringi/Desktop/time-pass/gpt-claude-orchestrator-proj/packaging/pyinstaller/entry.py, /Users/chinmay_shringi/Desktop/time-pass/gpt-claude-orchestrator-proj/packaging/pyinstaller/gpt-orch.spec, /Users/chinmay_shringi/Desktop/time-pass/gpt-claude-orchestrator-proj/pyproject.toml, /Users/chinmay_shringi/Desktop/time-pass/gpt-claude-orchestrator-proj/scripts/build_binaries.ps1, /Users/chinmay_shringi/Desktop/time-pass/gpt-claude-orchestrator-proj/scripts/build_binaries.sh
+  Files: /Users/chinmay_shringi/Desktop/time-pass/gpt-claude-orchestrator-proj/.github/workflows/build-binaries.yml, /Users/chinmay_shringi/Desktop/time-pass/gpt-claude-orchestrator-proj/docs/packaging/pyinstaller-binaries.md, /Users/chinmay_shringi/Desktop/time-pass/gpt-claude-orchestrator-proj/packaging/pyinstaller/entry.py, /Users/chinmay_shringi/Desktop/time-pass/gpt-claude-orchestrator-proj/packaging/pyinstaller/chainsmith.spec, /Users/chinmay_shringi/Desktop/time-pass/gpt-claude-orchestrator-proj/pyproject.toml, /Users/chinmay_shringi/Desktop/time-pass/gpt-claude-orchestrator-proj/scripts/build_binaries.ps1, /Users/chinmay_shringi/Desktop/time-pass/gpt-claude-orchestrator-proj/scripts/build_binaries.sh
 ## Summary
 
 I have successfully implemented a comprehensive test suite and CI pipeline for the GPT Agent Orchestrator Python package. Here's what was delivered:

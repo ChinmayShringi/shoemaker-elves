@@ -3,8 +3,8 @@ Configuration system for GPT Agent Orchestrator.
 
 Supports TOML config files with environment variable overrides.
 Config file locations:
-  - Linux/macOS: ~/.config/gpt-orch/config.toml
-  - Windows: %APPDATA%\\gpt-orch\\config.toml
+  - Linux/macOS: ~/.config/chainsmith/config.toml
+  - Windows: %APPDATA%\\chainsmith\\config.toml
 """
 
 import os
@@ -31,17 +31,17 @@ except ImportError:
 def get_config_dir() -> Path:
     """Get the platform-specific config directory."""
     if sys.platform == "win32":
-        # Windows: %APPDATA%\gpt-orch
+        # Windows: %APPDATA%\chainsmith
         appdata = os.environ.get("APPDATA")
         if not appdata:
             raise RuntimeError("APPDATA environment variable not found")
-        return Path(appdata) / "gpt-orch"
+        return Path(appdata) / "chainsmith"
     else:
-        # Linux/macOS: ~/.config/gpt-orch
+        # Linux/macOS: ~/.config/chainsmith
         xdg_config = os.environ.get("XDG_CONFIG_HOME")
         if xdg_config:
-            return Path(xdg_config) / "gpt-orch"
-        return Path.home() / ".config" / "gpt-orch"
+            return Path(xdg_config) / "chainsmith"
+        return Path.home() / ".config" / "chainsmith"
 
 
 def get_config_path() -> Path:
@@ -51,25 +51,25 @@ def get_config_path() -> Path:
 
 # Environment variable mapping
 ENV_VAR_MAP = {
-    "planner.provider": "GPT_ORCH_PLANNER_PROVIDER",
-    "planner.model": "GPT_ORCH_PLANNER_MODEL",
-    "planner.api_key": "GPT_ORCH_OPENAI_API_KEY",  # Default for openai
-    "planner.base_url": "GPT_ORCH_PLANNER_BASE_URL",
-    "planner.max_cost_usd": "GPT_ORCH_MAX_COST_USD",
-    "azure.endpoint": "GPT_ORCH_AZURE_ENDPOINT",
-    "azure.deployment": "GPT_ORCH_AZURE_DEPLOYMENT",
-    "azure.api_version": "GPT_ORCH_AZURE_API_VERSION",
-    "azure.api_key": "GPT_ORCH_AZURE_OPENAI_API_KEY",
-    "agent.model": "GPT_ORCH_AGENT_MODEL",
+    "planner.provider": "CHAINSMITH_PLANNER_PROVIDER",
+    "planner.model": "CHAINSMITH_PLANNER_MODEL",
+    "planner.api_key": "CHAINSMITH_OPENAI_API_KEY",  # Default for openai
+    "planner.base_url": "CHAINSMITH_PLANNER_BASE_URL",
+    "planner.max_cost_usd": "CHAINSMITH_MAX_COST_USD",
+    "azure.endpoint": "CHAINSMITH_AZURE_ENDPOINT",
+    "azure.deployment": "CHAINSMITH_AZURE_DEPLOYMENT",
+    "azure.api_version": "CHAINSMITH_AZURE_API_VERSION",
+    "azure.api_key": "CHAINSMITH_AZURE_OPENAI_API_KEY",
+    "agent.model": "CHAINSMITH_AGENT_MODEL",
 }
 
 # Provider-specific API key env vars
 PROVIDER_API_KEY_ENV_VARS = {
-    "openai": "GPT_ORCH_OPENAI_API_KEY",
-    "anthropic": "GPT_ORCH_ANTHROPIC_API_KEY",
-    "azure_openai": "GPT_ORCH_AZURE_OPENAI_API_KEY",
-    "deepseek": "GPT_ORCH_DEEPSEEK_API_KEY",
-    "openai_compatible": "GPT_ORCH_OPENAI_API_KEY",
+    "openai": "CHAINSMITH_OPENAI_API_KEY",
+    "anthropic": "CHAINSMITH_ANTHROPIC_API_KEY",
+    "azure_openai": "CHAINSMITH_AZURE_OPENAI_API_KEY",
+    "deepseek": "CHAINSMITH_DEEPSEEK_API_KEY",
+    "openai_compatible": "CHAINSMITH_OPENAI_API_KEY",
 }
 
 # Default config schema

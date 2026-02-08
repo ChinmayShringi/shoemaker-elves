@@ -7,7 +7,7 @@
 
 ### Plan
 1. Add PyInstaller as a dev dependency to pyproject.toml
-2. Create `packaging/pyinstaller/gpt-orch.spec` file with proper configuration
+2. Create `packaging/pyinstaller/chainsmith.spec` file with proper configuration
    - Include all dependencies (including optional ones for full binary)
    - Handle data files and config files
    - Configure for one-file mode for easier distribution
@@ -28,7 +28,7 @@
 
 ### Files to be affected
 - `pyproject.toml` — add PyInstaller dependency
-- `packaging/pyinstaller/gpt-orch.spec` — PyInstaller spec file
+- `packaging/pyinstaller/chainsmith.spec` — PyInstaller spec file
 - `scripts/build_binaries.sh` — POSIX build script
 - `scripts/build_binaries.ps1` — Windows build script
 - `.github/workflows/build-binaries.yml` — CI workflow for binary builds
@@ -42,8 +42,8 @@
 ### Assumptions
 - Binaries will include ALL optional dependencies (gpt, anthropic, rich) for maximum compatibility
 - One-file mode will be used for easier distribution
-- Binaries will be named `gpt-orch-{platform}-{arch}` or `gpt-orch-{platform}-{arch}.exe`
-- Config file support will work via standard paths (~/.config/gpt-orch/config.toml)
+- Binaries will be named `chainsmith-{platform}-{arch}` or `chainsmith-{platform}-{arch}.exe`
+- Config file support will work via standard paths (~/.config/chainsmith/config.toml)
 - Build process will be triggered on git tags (e.g., v0.1.0)
 - Users will not need Python installed to run the binaries
 
@@ -61,7 +61,7 @@
 ### Files Modified
 
 #### Created Files
-- `packaging/pyinstaller/gpt-orch.spec` — PyInstaller specification file with proper configuration
+- `packaging/pyinstaller/chainsmith.spec` — PyInstaller specification file with proper configuration
   - Uses one-file mode for easier distribution
   - Includes all optional dependencies (OpenAI, Anthropic, Rich)
   - Excludes test/dev dependencies to reduce size
@@ -81,9 +81,9 @@
 
 1. **Entry Point Strategy**: Created a separate `entry.py` file instead of using `__main__.py` directly
    - Reason: PyInstaller has issues with relative imports in `__main__.py`
-   - Solution: Custom entry point with absolute imports (`from gpt_agent_orchestrator.cli import main`)
+   - Solution: Custom entry point with absolute imports (`from chainsmith.cli import main`)
 
-2. **Binary Naming Convention**: Used `gpt-orch-{platform}-{arch}` format
+2. **Binary Naming Convention**: Used `chainsmith-{platform}-{arch}` format
    - Platforms: darwin (macOS), linux, windows
    - Architectures: x64, arm64
    - Makes it easy to identify and select the correct binary
@@ -134,11 +134,11 @@
 **Running the binary:**
 ```bash
 # macOS/Linux
-./dist/gpt-orch-darwin-arm64 --help
-./dist/gpt-orch-linux-x64 --help
+./dist/chainsmith-darwin-arm64 --help
+./dist/chainsmith-linux-x64 --help
 
 # Windows
-.\dist\gpt-orch-windows-x64.exe --help
+.\dist\chainsmith-windows-x64.exe --help
 ```
 
 **CI/CD:**

@@ -1,6 +1,6 @@
 # -*- mode: python ; coding: utf-8 -*-
 """
-PyInstaller spec file for building gpt-orch standalone binary.
+PyInstaller spec file for building chainsmith standalone binary.
 
 This creates a one-file executable that includes all dependencies.
 """
@@ -35,9 +35,9 @@ a = Analysis(
         "tomli_w",
         "filelock",
         # Include all planner adapters
-        "gpt_agent_orchestrator.planners.openai_adapter",
-        "gpt_agent_orchestrator.planners.anthropic_adapter",
-        "gpt_agent_orchestrator.planners.azure_openai_adapter",
+        "chainsmith.planners.openai_adapter",
+        "chainsmith.planners.anthropic_adapter",
+        "chainsmith.planners.azure_openai_adapter",
         # Standard library modules that might not be auto-detected
         "argparse",
         "json",
@@ -80,7 +80,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name="gpt-orch",
+    name="chainsmith",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,

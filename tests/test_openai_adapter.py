@@ -9,8 +9,8 @@ from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 
-from gpt_agent_orchestrator.planners.openai_adapter import OpenAIAdapter
-from gpt_agent_orchestrator.planners.types import ReviewSpec, TaskSpec
+from chainsmith.planners.openai_adapter import OpenAIAdapter
+from chainsmith.planners.types import ReviewSpec, TaskSpec
 
 
 # ─────────────────────────────────────────────────────────────
@@ -21,7 +21,7 @@ from gpt_agent_orchestrator.planners.types import ReviewSpec, TaskSpec
 @pytest.fixture
 def mock_openai_client():
     """Mock OpenAI client for testing."""
-    with patch("src.gpt_agent_orchestrator.planners.openai_adapter.OpenAI") as mock_openai:
+    with patch("src.chainsmith.planners.openai_adapter.OpenAI") as mock_openai:
         client = Mock()
         mock_openai.return_value = client
         yield client
@@ -40,7 +40,7 @@ def adapter(mock_openai_client):
 
 def test_adapter_init_standard():
     """Test standard OpenAI initialization."""
-    with patch("src.gpt_agent_orchestrator.planners.openai_adapter.OpenAI") as mock_openai:
+    with patch("src.chainsmith.planners.openai_adapter.OpenAI") as mock_openai:
         adapter = OpenAIAdapter(api_key="test-key", model="gpt-4o")
 
         # Should initialize with api_key, no base_url
@@ -51,7 +51,7 @@ def test_adapter_init_standard():
 
 def test_adapter_init_with_base_url():
     """Test OpenAI-compatible endpoint initialization."""
-    with patch("src.gpt_agent_orchestrator.planners.openai_adapter.OpenAI") as mock_openai:
+    with patch("src.chainsmith.planners.openai_adapter.OpenAI") as mock_openai:
         adapter = OpenAIAdapter(
             api_key="test-key",
             model="gpt-4o",
@@ -375,7 +375,7 @@ def test_rate_limit_retry(adapter, mock_openai_client):
     ]
 
     # Mock time.sleep to avoid actual delays in tests
-    with patch("src.gpt_agent_orchestrator.planners.openai_adapter.time.sleep"):
+    with patch("src.chainsmith.planners.openai_adapter.time.sleep"):
         tasks = adapter.plan_batch(
             project_description="Build a web app",
             repo_summary="",
@@ -396,7 +396,7 @@ def test_api_error_max_retries(adapter, mock_openai_client):
         body=None,
     )
 
-    with patch("src.gpt_agent_orchestrator.planners.openai_adapter.time.sleep"):
+    with patch("src.chainsmith.planners.openai_adapter.time.sleep"):
         with pytest.raises(RuntimeError) as exc_info:
             adapter.plan_batch(
                 project_description="Build a web app",

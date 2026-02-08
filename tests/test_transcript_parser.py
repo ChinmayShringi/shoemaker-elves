@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from gpt_agent_orchestrator.transcript_parser import parse_transcript
+from chainsmith.transcript_parser import parse_transcript
 
 
 @pytest.fixture

@@ -8,7 +8,7 @@ In a real plugin, you would call an actual LLM API here.
 import logging
 from typing import Any
 
-from gpt_agent_orchestrator.planners.types import ReviewSpec, TaskSpec
+from chainsmith.planners.types import ReviewSpec, TaskSpec
 
 logger = logging.getLogger(__name__)
 

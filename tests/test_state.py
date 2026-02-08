@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from gpt_agent_orchestrator.state import State, StateCorruptionError
+from chainsmith.state import State, StateCorruptionError
 
 
 @pytest.fixture

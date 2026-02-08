@@ -3,9 +3,9 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "gpt-agent-orchestrator"
+name = "chainsmith"
 version = "0.1.0"
-description = "A standalone CLI tool that uses GPT as an orchestrator to break down large projects into tasks, then runs each task through an AI coding agent automatically using a hook-driven chain."
+description = "A CLI tool that breaks down large projects into atomic tasks and runs each task through an AI coding agent automatically using a hook-driven chain."
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
@@ -42,7 +42,7 @@ dev = [
 ]
 
 [project.scripts]
-gpt-orch = "gpt_agent_orchestrator.cli:main"
+chainsmith = "chainsmith.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/ChinmayShringi/Chainsmith"
@@ -50,7 +50,7 @@ Repository = "https://github.com/ChinmayShringi/Chainsmith"
 Issues = "https://github.com/ChinmayShringi/Chainsmith/issues"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/gpt_agent_orchestrator"]
+packages = ["src/chainsmith"]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -72,7 +72,7 @@ addopts = [
     "-v",
     "--tb=short",
     "--strict-markers",
-    "--cov=src/gpt_agent_orchestrator",
+    "--cov=src/chainsmith",
     "--cov-report=term-missing",
     "--cov-report=html",
     "--cov-report=xml",
@@ -87,7 +87,7 @@ markers = [
 # ─────────────────────────────────────────────────────────────
 
 [tool.coverage.run]
-source = ["src/gpt_agent_orchestrator"]
+source = ["src/chainsmith"]
 omit = [
     "*/tests/*",
     "*/__pycache__/*",

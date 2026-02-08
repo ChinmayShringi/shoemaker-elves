@@ -3,7 +3,7 @@
 > An intelligent task orchestrator that breaks down large projects into atomic tasks and executes them through an AI coding agent automatically.
 
 [![CI Status](https://github.com/ChinmayShringi/Chainsmith/actions/workflows/ci.yml/badge.svg)](https://github.com/ChinmayShringi/Chainsmith/actions/workflows/ci.yml)
-[![PyPI version](https://badge.fury.io/py/gpt-agent-orchestrator.svg)](https://badge.fury.io/py/gpt-agent-orchestrator)
+[![PyPI version](https://badge.fury.io/py/chainsmith.svg)](https://badge.fury.io/py/chainsmith)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
 ## Table of Contents
@@ -69,23 +69,23 @@ An LLM (GPT, Claude, etc.) generates tasks, the agent executes them, and the LLM
 
 ```bash
 # Core package (manual mode only)
-pip install gpt-agent-orchestrator
+pip install chainsmith
 
 # With OpenAI support (GPT mode)
-pip install "gpt-agent-orchestrator[gpt]"
+pip install "chainsmith[gpt]"
 
 # With Anthropic support
-pip install "gpt-agent-orchestrator[anthropic]"
+pip install "chainsmith[anthropic]"
 
 # With all providers
-pip install "gpt-agent-orchestrator[all]"
+pip install "chainsmith[all]"
 ```
 
 ### Via pipx (Isolated Environment)
 
 ```bash
 # Recommended for CLI tools
-pipx install "gpt-agent-orchestrator[all]"
+pipx install "chainsmith[all]"
 ```
 
 ### From Source
@@ -114,23 +114,23 @@ pip install -e ".[all]"
 
 1. **Install the orchestrator**:
    ```bash
-   pip install "gpt-agent-orchestrator[all]"
+   pip install "chainsmith[all]"
    ```
 
 2. **Configure your provider**:
    ```bash
-   gpt-orch init
+   chainsmith init
    ```
    This interactive wizard will guide you through selecting a provider, model, and API key setup.
 
 3. **Run in Manual Mode** (using pre-written tasks):
    ```bash
-   gpt-orch ~/my-project
+   chainsmith ~/my-project
    ```
 
 4. **Or run in GPT Mode** (auto-generated tasks):
    ```bash
-   gpt-orch ~/my-project --gpt -d "Build a REST API with user authentication"
+   chainsmith ~/my-project --gpt -d "Build a REST API with user authentication"
    ```
 
 ### Manual Mode Example
@@ -138,7 +138,7 @@ pip install -e ".[all]"
 Create task files in the orchestrator's `tasks/` directory:
 
 ```bash
-# src/gpt_agent_orchestrator/tasks/1.md
+# src/chainsmith/tasks/1.md
 # Initialize Express.js project
 
 Create a new Express.js project with TypeScript support.
@@ -147,7 +147,7 @@ Create a basic src/app.ts with a health check endpoint.
 ```
 
 ```bash
-# src/gpt_agent_orchestrator/tasks/2.md
+# src/chainsmith/tasks/2.md
 # Add user authentication
 
 Implement JWT-based authentication with /register and /login endpoints.
@@ -157,7 +157,7 @@ Add middleware for protected routes.
 
 Then run:
 ```bash
-gpt-orch ~/my-project
+chainsmith ~/my-project
 ```
 
 ### GPT Mode Example
@@ -165,7 +165,7 @@ gpt-orch ~/my-project
 Simply provide a project description:
 
 ```bash
-gpt-orch ~/my-project \
+chainsmith ~/my-project \
   --gpt \
   -d "Build a todo app with REST API, SQLite database, and basic CRUD operations" \
   --max-batches 3 \
@@ -175,7 +175,7 @@ gpt-orch ~/my-project \
 Or use a spec file:
 
 ```bash
-gpt-orch ~/my-project --gpt -d ./examples/project-spec.md
+chainsmith ~/my-project --gpt -d ./examples/project-spec.md
 ```
 
 ## Configuration
@@ -183,16 +183,16 @@ gpt-orch ~/my-project --gpt -d ./examples/project-spec.md
 ### Interactive Setup (Recommended)
 
 ```bash
-gpt-orch init
+chainsmith init
 ```
 
 This creates a configuration file at:
-- **Linux/macOS**: `~/.config/gpt-orch/config.toml`
-- **Windows**: `%APPDATA%\gpt-orch\config.toml`
+- **Linux/macOS**: `~/.config/chainsmith/config.toml`
+- **Windows**: `%APPDATA%\chainsmith\config.toml`
 
 ### Manual Configuration
 
-Create `~/.config/gpt-orch/config.toml`:
+Create `~/.config/chainsmith/config.toml`:
 
 ```toml
 [planner]
@@ -217,56 +217,56 @@ Environment variables override config file values:
 
 ```bash
 # Provider selection
-export GPT_ORCH_PLANNER_PROVIDER=openai
+export CHAINSMITH_PLANNER_PROVIDER=openai
 
 # Model selection
-export GPT_ORCH_PLANNER_MODEL=gpt-4
+export CHAINSMITH_PLANNER_MODEL=gpt-4
 
 # API keys (provider-specific)
-export GPT_ORCH_OPENAI_API_KEY=sk-...
-export GPT_ORCH_ANTHROPIC_API_KEY=sk-ant-...
-export GPT_ORCH_AZURE_OPENAI_API_KEY=...
-export GPT_ORCH_DEEPSEEK_API_KEY=...
+export CHAINSMITH_OPENAI_API_KEY=sk-...
+export CHAINSMITH_ANTHROPIC_API_KEY=sk-ant-...
+export CHAINSMITH_AZURE_OPENAI_API_KEY=...
+export CHAINSMITH_DEEPSEEK_API_KEY=...
 
 # OpenAI-compatible or DeepSeek custom base URL
-export GPT_ORCH_PLANNER_BASE_URL=https://api.example.com
+export CHAINSMITH_PLANNER_BASE_URL=https://api.example.com
 
 # Azure OpenAI specific
-export GPT_ORCH_AZURE_ENDPOINT=https://...
-export GPT_ORCH_AZURE_DEPLOYMENT=...
+export CHAINSMITH_AZURE_ENDPOINT=https://...
+export CHAINSMITH_AZURE_DEPLOYMENT=...
 
 # Cost and agent settings
-export GPT_ORCH_MAX_COST_USD=100.0
-export GPT_ORCH_AGENT_MODEL=sonnet
+export CHAINSMITH_MAX_COST_USD=100.0
+export CHAINSMITH_AGENT_MODEL=sonnet
 ```
 
 ### Configuration Priority
 
 Values are resolved in this order (highest to lowest):
 1. **CLI flags** (`--planner-model gpt-4`)
-2. **Environment variables** (`GPT_ORCH_PLANNER_MODEL`)
-3. **Config file** (`~/.config/gpt-orch/config.toml`)
+2. **Environment variables** (`CHAINSMITH_PLANNER_MODEL`)
+3. **Config file** (`~/.config/chainsmith/config.toml`)
 4. **Default values**
 
 ### Managing Configuration
 
 ```bash
 # View current config (secrets masked)
-gpt-orch config show
+chainsmith config show
 
 # View unmasked config
-gpt-orch config show --no-mask
+chainsmith config show --no-mask
 
 # Update specific values
-gpt-orch config set planner.model gpt-4
-gpt-orch config set planner.max_cost_usd 100.0
+chainsmith config set planner.model gpt-4
+chainsmith config set planner.max_cost_usd 100.0
 ```
 
 ## Usage
 
 ### Manual Mode
 
-**Create task files** in `src/gpt_agent_orchestrator/tasks/`:
+**Create task files** in `src/chainsmith/tasks/`:
 - `tasks/1.md` - First task
 - `tasks/2.md` - Second task
 - `tasks/3.md` - Third task
@@ -274,7 +274,7 @@ gpt-orch config set planner.max_cost_usd 100.0
 
 **Run orchestration**:
 ```bash
-gpt-orch ~/my-project
+chainsmith ~/my-project
 ```
 
 **What happens**:
@@ -289,12 +289,12 @@ gpt-orch ~/my-project
 
 **Basic usage**:
 ```bash
-gpt-orch ~/my-project --gpt -d "Your project description here"
+chainsmith ~/my-project --gpt -d "Your project description here"
 ```
 
 **With custom settings**:
 ```bash
-gpt-orch ~/my-project \
+chainsmith ~/my-project \
   --gpt \
   -d "Build a web app with user auth and dashboard" \
   --planner-provider openai \
@@ -307,7 +307,7 @@ gpt-orch ~/my-project \
 
 **Using a spec file**:
 ```bash
-gpt-orch ~/my-project --gpt -d ./project-spec.md
+chainsmith ~/my-project --gpt -d ./project-spec.md
 ```
 
 **What happens**:
@@ -322,7 +322,7 @@ gpt-orch ~/my-project --gpt -d ./project-spec.md
 #### OpenAI
 
 ```bash
-gpt-orch ~/my-project \
+chainsmith ~/my-project \
   --gpt \
   -d "Build a CLI tool in Python" \
   --planner-provider openai \
@@ -332,9 +332,9 @@ gpt-orch ~/my-project \
 #### Anthropic (Claude)
 
 ```bash
-export GPT_ORCH_ANTHROPIC_API_KEY=sk-ant-...
+export CHAINSMITH_ANTHROPIC_API_KEY=sk-ant-...
 
-gpt-orch ~/my-project \
+chainsmith ~/my-project \
   --gpt \
   -d "Build a REST API" \
   --planner-provider anthropic \
@@ -344,9 +344,9 @@ gpt-orch ~/my-project \
 #### Azure OpenAI
 
 ```bash
-export GPT_ORCH_AZURE_OPENAI_API_KEY=...
+export CHAINSMITH_AZURE_OPENAI_API_KEY=...
 
-gpt-orch ~/my-project \
+chainsmith ~/my-project \
   --gpt \
   -d "Build a web app" \
   --planner-provider azure_openai \
@@ -358,9 +358,9 @@ gpt-orch ~/my-project \
 #### DeepSeek
 
 ```bash
-export GPT_ORCH_DEEPSEEK_API_KEY=...
+export CHAINSMITH_DEEPSEEK_API_KEY=...
 
-gpt-orch ~/my-project \
+chainsmith ~/my-project \
   --gpt \
   -d "Build a data pipeline" \
   --planner-provider deepseek \
@@ -371,7 +371,7 @@ gpt-orch ~/my-project \
 
 ```bash
 # For example, using Ollama, LM Studio, or vLLM
-gpt-orch ~/my-project \
+chainsmith ~/my-project \
   --gpt \
   -d "Build a chatbot" \
   --planner-provider openai_compatible \
@@ -384,7 +384,7 @@ gpt-orch ~/my-project \
 If you interrupt the orchestrator (Ctrl+C) or it crashes, you can resume:
 
 ```bash
-gpt-orch ~/my-project --resume
+chainsmith ~/my-project --resume
 ```
 
 **Stall detection**: Resume mode automatically detects and retries stalled tasks (tasks running longer than `--task-timeout` seconds).
@@ -394,10 +394,10 @@ gpt-orch ~/my-project --resume
 ### Commands
 
 ```bash
-gpt-orch <project_dir> [options]    # Run orchestration (default command)
-gpt-orch init                        # Interactive configuration setup
-gpt-orch config show [--no-mask]    # Show current configuration
-gpt-orch config set <key> <value>   # Set configuration value
+chainsmith <project_dir> [options]    # Run orchestration (default command)
+chainsmith init                        # Interactive configuration setup
+chainsmith config show [--no-mask]    # Show current configuration
+chainsmith config set <key> <value>   # Set configuration value
 ```
 
 ### Orchestration Options
@@ -436,7 +436,7 @@ These flags are deprecated but still supported:
 
 ```bash
 # Via Python module
-python -m gpt_agent_orchestrator <project_dir> [options]
+python -m chainsmith <project_dir> [options]
 
 # Legacy shim (backward compatibility)
 python3 orchestrator.py <project_dir> [options]
@@ -480,13 +480,13 @@ Implement basic CRUD operations.
 
 Run:
 ```bash
-gpt-orch ~/my-nextjs-app
+chainsmith ~/my-nextjs-app
 ```
 
 ### Example 2: GPT Mode - Build a CLI Tool
 
 ```bash
-gpt-orch ~/my-cli-tool \
+chainsmith ~/my-cli-tool \
   --gpt \
   -d "Build a Python CLI tool that:
     - Fetches weather data from OpenWeather API
@@ -537,19 +537,19 @@ Build a RESTful API for an e-commerce platform.
 
 Run:
 ```bash
-gpt-orch ~/ecommerce-api --gpt -d ./project-spec.md --max-batches 6
+chainsmith ~/ecommerce-api --gpt -d ./project-spec.md --max-batches 6
 ```
 
 ### Example 4: Resume After Interruption
 
 ```bash
 # Start orchestration
-gpt-orch ~/my-project --gpt -d "Build a dashboard"
+chainsmith ~/my-project --gpt -d "Build a dashboard"
 
 # ... Ctrl+C to interrupt ...
 
 # Resume later
-gpt-orch ~/my-project --resume
+chainsmith ~/my-project --resume
 ```
 
 ## Documentation
@@ -651,7 +651,7 @@ pip install -e ".[dev]"
 pytest
 
 # With coverage
-pytest --cov=src/gpt_agent_orchestrator --cov-report=html
+pytest --cov=src/chainsmith --cov-report=html
 ```
 
 ### Building Documentation
@@ -687,7 +687,7 @@ See [Release Guide](docs/release/RELEASE_GUIDE.md) for detailed release instruct
 ```
 Chainsmith/
 ├── src/
-│   └── gpt_agent_orchestrator/      # Main package
+│   └── chainsmith/      # Main package
 │       ├── __init__.py
 │       ├── __main__.py              # Entry point for `python -m`
 │       ├── cli.py                   # CLI implementation
@@ -747,7 +747,7 @@ A: The orchestrator marks it as failed and continues. In GPT mode, the LLM recei
 A: Cost is estimated from transcript token counts. Actual costs may vary based on caching, batching, and API pricing changes.
 
 **Q: Can I customize the prompts sent to the LLM?**
-A: Yes, modify `src/gpt_agent_orchestrator/templates.py` or create a custom planner plugin.
+A: Yes, modify `src/chainsmith/templates.py` or create a custom planner plugin.
 
 ## License
 

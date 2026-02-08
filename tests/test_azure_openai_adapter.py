@@ -9,8 +9,8 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from gpt_agent_orchestrator.planners.azure_openai_adapter import AzureOpenAIAdapter
-from gpt_agent_orchestrator.planners.types import ReviewSpec, TaskSpec
+from chainsmith.planners.azure_openai_adapter import AzureOpenAIAdapter
+from chainsmith.planners.types import ReviewSpec, TaskSpec
 
 
 # ─────────────────────────────────────────────────────────────
@@ -21,7 +21,7 @@ from gpt_agent_orchestrator.planners.types import ReviewSpec, TaskSpec
 @pytest.fixture
 def mock_azure_client():
     """Mock Azure OpenAI client for testing."""
-    with patch("src.gpt_agent_orchestrator.planners.azure_openai_adapter.AzureOpenAI") as mock_azure:
+    with patch("src.chainsmith.planners.azure_openai_adapter.AzureOpenAI") as mock_azure:
         client = Mock()
         mock_azure.return_value = client
         yield client
@@ -45,7 +45,7 @@ def adapter(mock_azure_client):
 
 def test_adapter_init():
     """Test Azure OpenAI initialization."""
-    with patch("src.gpt_agent_orchestrator.planners.azure_openai_adapter.AzureOpenAI") as mock_azure:
+    with patch("src.chainsmith.planners.azure_openai_adapter.AzureOpenAI") as mock_azure:
         adapter = AzureOpenAIAdapter(
             api_key="test-key",
             endpoint="https://test.openai.azure.com/",
@@ -66,7 +66,7 @@ def test_adapter_init():
 
 def test_adapter_init_default_api_version():
     """Test Azure OpenAI initialization with default API version."""
-    with patch("src.gpt_agent_orchestrator.planners.azure_openai_adapter.AzureOpenAI") as mock_azure:
+    with patch("src.chainsmith.planners.azure_openai_adapter.AzureOpenAI") as mock_azure:
         adapter = AzureOpenAIAdapter(
             api_key="test-key",
             endpoint="https://test.openai.azure.com/",
@@ -392,7 +392,7 @@ def test_rate_limit_retry(adapter, mock_azure_client):
     ]
 
     # Mock time.sleep to avoid actual delays in tests
-    with patch("src.gpt_agent_orchestrator.planners.azure_openai_adapter.time.sleep"):
+    with patch("src.chainsmith.planners.azure_openai_adapter.time.sleep"):
         tasks = adapter.plan_batch(
             project_description="Build a web app",
             repo_summary="",
@@ -413,7 +413,7 @@ def test_api_error_max_retries(adapter, mock_azure_client):
         body=None,
     )
 
-    with patch("src.gpt_agent_orchestrator.planners.azure_openai_adapter.time.sleep"):
+    with patch("src.chainsmith.planners.azure_openai_adapter.time.sleep"):
         with pytest.raises(RuntimeError) as exc_info:
             adapter.plan_batch(
                 project_description="Build a web app",
@@ -454,7 +454,7 @@ def test_deployment_name_used_as_model(adapter, mock_azure_client):
 
 def test_different_api_versions(mock_azure_client):
     """Test initialization with different API versions."""
-    with patch("src.gpt_agent_orchestrator.planners.azure_openai_adapter.AzureOpenAI") as mock_azure:
+    with patch("src.chainsmith.planners.azure_openai_adapter.AzureOpenAI") as mock_azure:
         adapter = AzureOpenAIAdapter(
             api_key="test-key",
             endpoint="https://test.openai.azure.com/",

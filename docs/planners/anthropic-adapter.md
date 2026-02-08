@@ -8,18 +8,18 @@
 ### Plan
 1. Examine existing OpenAI adapter to understand patterns and requirements
 2. Add `anthropic` Python SDK as optional dependency in pyproject.toml
-3. Create `src/gpt_agent_orchestrator/planners/anthropic_adapter.py`:
+3. Create `src/chainsmith/planners/anthropic_adapter.py`:
    - Implement `AnthropicAdapter` class following the `PlannerAdapter` protocol
    - Use Anthropic Messages API
    - Support api_key and model parameters
    - Implement `plan_batch()` method for generating tasks
    - Implement `review_batch()` method for assessing results
    - Include retry logic similar to OpenAI adapter
-4. Update `src/gpt_agent_orchestrator/planners/registry.py`:
+4. Update `src/chainsmith/planners/registry.py`:
    - Register `anthropic` provider
-5. Update `src/gpt_agent_orchestrator/config.py`:
-   - Add support for `GPT_ORCH_ANTHROPIC_API_KEY` environment variable
-6. Update `src/gpt_agent_orchestrator/cli.py`:
+5. Update `src/chainsmith/config.py`:
+   - Add support for `CHAINSMITH_ANTHROPIC_API_KEY` environment variable
+6. Update `src/chainsmith/cli.py`:
    - Allow selecting `anthropic` as planner provider
 7. Write comprehensive tests for the new adapter:
    - Mock Anthropic client behavior
@@ -31,10 +31,10 @@
 
 ### Files to be affected
 - `pyproject.toml` - Add anthropic dependency
-- `src/gpt_agent_orchestrator/planners/anthropic_adapter.py` (new) - Main adapter implementation
-- `src/gpt_agent_orchestrator/planners/registry.py` - Register anthropic provider
-- `src/gpt_agent_orchestrator/config.py` - Add anthropic API key support
-- `src/gpt_agent_orchestrator/cli.py` - Add anthropic provider option
+- `src/chainsmith/planners/anthropic_adapter.py` (new) - Main adapter implementation
+- `src/chainsmith/planners/registry.py` - Register anthropic provider
+- `src/chainsmith/config.py` - Add anthropic API key support
+- `src/chainsmith/cli.py` - Add anthropic provider option
 - `tests/test_anthropic_adapter.py` (new) - Unit tests for adapter
 
 ### Dependencies
@@ -55,18 +55,18 @@
 **Status**: Completed
 
 ### Changes Made
-- Implemented `AnthropicAdapter` class in `src/gpt_agent_orchestrator/planners/anthropic_adapter.py`
+- Implemented `AnthropicAdapter` class in `src/chainsmith/planners/anthropic_adapter.py`
 - Registered `anthropic` provider in the planner registry
 - Updated CLI to support selecting Anthropic as planner provider
 - Added comprehensive test suite with 19 test cases covering all functionality
 - Updated registry tests to verify Anthropic provider registration
-- Confirmed config system already supported `GPT_ORCH_ANTHROPIC_API_KEY` environment variable
+- Confirmed config system already supported `CHAINSMITH_ANTHROPIC_API_KEY` environment variable
 - Confirmed pyproject.toml already had anthropic dependency as optional extra
 
 ### Files Modified
-- `src/gpt_agent_orchestrator/planners/anthropic_adapter.py` (created) — Main Anthropic adapter implementation with plan_batch and review_batch methods
-- `src/gpt_agent_orchestrator/planners/registry.py` — Added import for AnthropicAdapter and registered `anthropic` provider with factory function
-- `src/gpt_agent_orchestrator/cli.py` — Updated `--planner-provider` help text to include `anthropic` and set default model to `claude-sonnet-4-5-20250929`
+- `src/chainsmith/planners/anthropic_adapter.py` (created) — Main Anthropic adapter implementation with plan_batch and review_batch methods
+- `src/chainsmith/planners/registry.py` — Added import for AnthropicAdapter and registered `anthropic` provider with factory function
+- `src/chainsmith/cli.py` — Updated `--planner-provider` help text to include `anthropic` and set default model to `claude-sonnet-4-5-20250929`
 - `tests/test_anthropic_adapter.py` (created) — Comprehensive test suite with 19 tests covering initialization, plan_batch, review_batch, and error handling
 - `tests/test_planner_registry.py` — Added test for creating Anthropic planner and updated provider list assertion
 - `docs/planners/anthropic-adapter.md` (created) — Pre-work and post-work documentation
@@ -96,18 +96,18 @@
 - All 64 tests pass (19 new Anthropic adapter tests + existing tests)
 - Anthropic provider successfully registered and discoverable via `get_available_providers()`
 - CLI properly supports `--planner-provider anthropic` argument
-- Config system correctly reads `GPT_ORCH_ANTHROPIC_API_KEY` environment variable
+- Config system correctly reads `CHAINSMITH_ANTHROPIC_API_KEY` environment variable
 - Optional dependency structure allows installation with `pip install gpt-agent-orchestrator[anthropic]`
 
 ### Usage Example
 ```bash
 # Using environment variable for API key
-export GPT_ORCH_ANTHROPIC_API_KEY=your-api-key-here
-gpt-orch ~/project --gpt --planner-provider anthropic --planner-model claude-sonnet-4-5-20250929 -d "Build a REST API"
+export CHAINSMITH_ANTHROPIC_API_KEY=your-api-key-here
+chainsmith ~/project --gpt --planner-provider anthropic --planner-model claude-sonnet-4-5-20250929 -d "Build a REST API"
 
 # Using init command to configure
-gpt-orch init
+chainsmith init
 # Select option 2 for Anthropic
 # Model: claude-sonnet-4-5-20250929
-# API key: Set via environment variable GPT_ORCH_ANTHROPIC_API_KEY
+# API key: Set via environment variable CHAINSMITH_ANTHROPIC_API_KEY
 ```

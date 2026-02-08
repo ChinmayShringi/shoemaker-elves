@@ -33,7 +33,7 @@ pytest tests/test_config.py
 ### Run tests with coverage report
 
 ```bash
-pytest --cov=src/gpt_agent_orchestrator --cov-report=html
+pytest --cov=src/chainsmith --cov-report=html
 ```
 
 Coverage report will be generated in `htmlcov/index.html`.
@@ -75,7 +75,7 @@ ruff format .
 Run mypy for static type checking:
 
 ```bash
-mypy src/gpt_agent_orchestrator
+mypy src/chainsmith
 ```
 
 ## Continuous Integration
@@ -102,7 +102,7 @@ Current coverage highlights:
 View detailed coverage report:
 
 ```bash
-pytest --cov=src/gpt_agent_orchestrator --cov-report=html
+pytest --cov=src/chainsmith --cov-report=html
 open htmlcov/index.html
 ```
 
