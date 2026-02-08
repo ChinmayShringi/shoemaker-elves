@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-GPT Agent Orchestrator - Legacy Entry Point
+Shoemaker Elves - Legacy Entry Point
 ============================================
 
 This is a backward-compatibility shim for the old CLI interface.

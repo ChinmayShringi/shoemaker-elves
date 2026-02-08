@@ -72,7 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/gpt-agent-orchestrator
+      url: https://pypi.org/p/shoemaker-elves
 
     steps:
       - name: Checkout code
@@ -271,7 +271,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: npm
-      url: https://www.npmjs.com/package/gpt-agent-orchestrator
+      url: https://www.npmjs.com/package/shoemaker-elves
 
     steps:
       - name: Checkout code
@@ -344,7 +344,7 @@ jobs:
           else
             echo "## Links" >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
-            echo "- [PyPI Package](https://pypi.org/project/gpt-agent-orchestrator/${{ needs.validate-version.outputs.version }}/)" >> $GITHUB_STEP_SUMMARY
-            echo "- [npm Package](https://www.npmjs.com/package/gpt-agent-orchestrator/v/${{ needs.validate-version.outputs.version }})" >> $GITHUB_STEP_SUMMARY
+            echo "- [PyPI Package](https://pypi.org/project/shoemaker-elves/${{ needs.validate-version.outputs.version }}/)" >> $GITHUB_STEP_SUMMARY
+            echo "- [npm Package](https://www.npmjs.com/package/shoemaker-elves/v/${{ needs.validate-version.outputs.version }})" >> $GITHUB_STEP_SUMMARY
             echo "- [GitHub Release](https://github.com/${{ github.repository }}/releases/tag/v${{ needs.validate-version.outputs.version }})" >> $GITHUB_STEP_SUMMARY
           fi

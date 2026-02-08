@@ -1,5 +1,5 @@
 """
-State management for the GPT Agent Orchestrator.
+State management for the Shoemaker Elves.
 Uses file locking (fcntl.flock) for safe concurrent access
 between the main orchestrator process and the SessionEnd hook subprocess.
 """

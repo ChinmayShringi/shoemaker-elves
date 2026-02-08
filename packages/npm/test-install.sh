@@ -21,7 +21,7 @@ trap cleanup EXIT
 # Pack the package
 echo ""
 echo "Packing npm package..."
-PACKAGE_FILE=$(npm pack 2>&1 | grep -o 'gpt-agent-orchestrator.*\.tgz' | head -n1)
+PACKAGE_FILE=$(npm pack 2>&1 | grep -o 'shoemaker-elves.*\.tgz' | head -n1)
 
 if [ -z "$PACKAGE_FILE" ]; then
   echo "Error: Failed to create package file"
@@ -52,11 +52,11 @@ echo ""
 
 # Show what was installed
 echo "Installed files:"
-ls -la node_modules/gpt-agent-orchestrator/
+ls -la node_modules/shoemaker-elves/
 
 echo ""
 echo "Binary directory contents:"
-ls -la node_modules/gpt-agent-orchestrator/bin/ || echo "bin directory not found"
+ls -la node_modules/shoemaker-elves/bin/ || echo "bin directory not found"
 
 echo ""
 echo "Test complete!"

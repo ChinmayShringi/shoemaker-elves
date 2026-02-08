@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-SessionEnd hook handler for the GPT Agent Orchestrator.
+SessionEnd hook handler for the Shoemaker Elves.
 
 This script is invoked when an AI agent session ends.
 It reads hook JSON from stdin, processes the transcript,

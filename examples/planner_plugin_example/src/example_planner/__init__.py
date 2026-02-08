@@ -1,5 +1,5 @@
 """
-Example Planner Plugin for GPT Agent Orchestrator.
+Example Planner Plugin for Shoemaker Elves.
 
 This is a minimal working example of how to create a custom planner provider plugin.
 It demonstrates the plugin interface and registration mechanism.

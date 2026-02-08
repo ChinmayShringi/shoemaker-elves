@@ -38,7 +38,7 @@ pip install -v shoemaker-elves
 **Solution**:
 ```bash
 # Ensure package is installed
-pip list | grep gpt-agent
+pip list | grep shoemaker-elves
 
 # If using virtual environment, activate it first
 source venv/bin/activate  # or `venv\Scripts\activate` on Windows

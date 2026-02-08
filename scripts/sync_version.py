@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Version synchronization script for gpt-agent-orchestrator.
+Version synchronization script for shoemaker-elves.
 
 This script ensures version consistency between pyproject.toml (source of truth)
 and package.json (npm wrapper). It can:

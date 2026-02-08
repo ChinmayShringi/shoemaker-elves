@@ -20,7 +20,7 @@ if (!fs.existsSync(binaryPath)) {
   console.error('The binary may not have been downloaded during installation.');
   console.error('Please try reinstalling the package:');
   console.error('');
-  console.error('  npm install gpt-agent-orchestrator');
+  console.error('  npm install shoemaker-elves');
   console.error('');
   console.error('Or manually download the binary from:');
   console.error('https://github.com/ChinmayShringi/shoemaker-elves/releases');

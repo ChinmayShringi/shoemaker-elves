@@ -1,6 +1,6 @@
 # Testing Guide
 
-This document provides instructions for running tests, linting, and type checking for the GPT Agent Orchestrator.
+This document provides instructions for running tests, linting, and type checking for the Shoemaker Elves.
 
 ## Setup
 

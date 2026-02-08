@@ -1,5 +1,5 @@
 """
-Configuration system for GPT Agent Orchestrator.
+Configuration system for Shoemaker Elves.
 
 Supports TOML config files with environment variable overrides.
 Config file locations:

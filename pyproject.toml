@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "shoemaker-elves"
-version = "0.1.3"
+version = "0.1.4"
 description = "A CLI tool that breaks down large projects into atomic tasks and runs each task through an AI coding agent automatically using a hook-driven chain."
 readme = "README.md"
 license = {text = "MIT"}

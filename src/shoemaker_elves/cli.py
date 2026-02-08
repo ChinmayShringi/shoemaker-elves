@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-GPT Agent Orchestrator - CLI Entry Point
+Shoemaker Elves - CLI Entry Point
 ==========================================
 
 A standalone CLI tool that runs a queue of tasks through an AI coding
@@ -52,7 +52,7 @@ def lazy_import_gpt():
 
 def parse_args(args=None):
     parser = argparse.ArgumentParser(
-        description="GPT Agent Orchestrator: Run tasks through an AI coding agent with hook-driven chaining.",
+        description="Shoemaker Elves: Run tasks through an AI coding agent with hook-driven chaining.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -668,7 +668,7 @@ class Orchestrator:
         self.validate()
 
         # Display header
-        self.logger.header("GPT Agent Orchestrator")
+        self.logger.header("Shoemaker Elves")
 
         # Display configuration
         config_lines = [
@@ -1176,7 +1176,7 @@ def cmd_init():
     import json
 
     print("\n" + "="*60)
-    print("  GPT Agent Orchestrator - Configuration Setup")
+    print("  Shoemaker Elves - Configuration Setup")
     print("="*60 + "\n")
 
     config = load_config()
