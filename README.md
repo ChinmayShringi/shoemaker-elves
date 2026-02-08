@@ -3,7 +3,7 @@
 > An intelligent task orchestrator that breaks down large projects into atomic tasks and executes them through an AI coding agent automatically.
 
 [![CI Status](https://github.com/ChinmayShringi/shoemaker-elves/actions/workflows/ci.yml/badge.svg)](https://github.com/ChinmayShringi/shoemaker-elves/actions/workflows/ci.yml)
-[![PyPI version](https://badge.fury.io/py/shoemaker-elves.svg)](https://badge.fury.io/py/shoemaker-elves)
+[![PyPI version](https://img.shields.io/pypi/v/shoemaker-elves.svg)](https://pypi.org/project/shoemaker-elves/)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 
 ## Table of Contents

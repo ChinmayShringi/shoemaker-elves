@@ -91,7 +91,7 @@ def load_plugins() -> None:
             plugin_entries = eps.select(group="shoemaker_elves.planners")
         else:
             # Python 3.9 API (dict-like)
-            plugin_entries = eps.get("shoemaker_elves.planners", [])
+            plugin_entries = eps.get("shoemaker_elves.planners", [])  # type: ignore[arg-type]
     except Exception as e:
         logger.warning(f"Failed to discover plugins: {e}")
         return

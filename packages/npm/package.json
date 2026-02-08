@@ -1,6 +1,6 @@
 {
   "name": "shoemaker-elves",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "A CLI tool that breaks down large projects into atomic tasks and runs each task through an AI coding agent automatically",
   "main": "bin/shoemaker-elves.js",
   "bin": {
