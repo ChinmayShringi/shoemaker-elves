@@ -8,9 +8,13 @@ const path = require('path');
 const fs = require('fs');
 
 // Determine binary path
+// Map Node.js platform names to build script naming convention
 const binDir = __dirname;
 const isWindows = process.platform === 'win32';
-const binaryName = isWindows ? 'shoemaker-elves-win-x64.exe' : `shoemaker-elves-${process.platform}-${process.arch}`;
+const platformMap = { 'win32': 'windows', 'darwin': 'darwin', 'linux': 'linux' };
+const platform = platformMap[process.platform] || process.platform;
+const ext = isWindows ? '.exe' : '';
+const binaryName = `shoemaker-elves-${platform}-${process.arch}${ext}`;
 const binaryPath = path.join(binDir, binaryName);
 
 // Check if binary exists

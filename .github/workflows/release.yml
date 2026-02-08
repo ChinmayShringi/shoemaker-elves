@@ -156,6 +156,8 @@ jobs:
 
       - name: Build binary (Unix)
         if: matrix.platform != 'windows'
+        env:
+          TARGET_ARCH: ${{ matrix.arch }}
         run: |
           chmod +x ${{ matrix.script }}
           bash ${{ matrix.script }}
@@ -163,6 +165,8 @@ jobs:
       - name: Build binary (Windows)
         if: matrix.platform == 'windows'
         shell: powershell
+        env:
+          TARGET_ARCH: ${{ matrix.arch }}
         run: |
           & ${{ matrix.script }}
 

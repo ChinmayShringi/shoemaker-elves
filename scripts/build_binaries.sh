@@ -16,16 +16,23 @@ cd "$PROJECT_ROOT"
 echo -e "${GREEN}Building shoemaker-elves standalone binary${NC}"
 echo "Project root: $PROJECT_ROOT"
 
-# Detect platform and architecture
+# Detect platform and architecture (allow override from TARGET_ARCH env var)
 PLATFORM="$(uname -s | tr '[:upper:]' '[:lower:]')"
-ARCH="$(uname -m)"
+if [ -n "${TARGET_ARCH:-}" ]; then
+    ARCH="$TARGET_ARCH"
+else
+    ARCH="$(uname -m)"
+fi
 
-# Normalize architecture names
+# Normalize architecture names (skip if already normalized from TARGET_ARCH)
 case "$ARCH" in
+    x64|arm64)
+        # Already normalized
+        ;;
     x86_64|amd64)
         ARCH="x64"
         ;;
-    aarch64|arm64)
+    aarch64)
         ARCH="arm64"
         ;;
     *)

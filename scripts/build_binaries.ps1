@@ -21,8 +21,8 @@ Set-Location $ProjectRoot
 Write-ColorOutput "Building shoemaker-elves standalone binary" -Color Green
 Write-Host "Project root: $ProjectRoot"
 
-# Detect architecture
-$Arch = if ([Environment]::Is64BitOperatingSystem) { "x64" } else { "x86" }
+# Detect architecture (allow override from TARGET_ARCH env var)
+$Arch = if ($env:TARGET_ARCH) { $env:TARGET_ARCH } elseif ([Environment]::Is64BitOperatingSystem) { "x64" } else { "x86" }
 $Platform = "windows"
 
 Write-Host "Platform: $Platform"
@@ -85,7 +85,7 @@ Write-Host "Size: ${BinarySizeMB} MB"
 # Test the binary
 Write-Host ""
 Write-ColorOutput "Testing binary..." -Color Green
-$testOutput = & "dist/$BinaryName" --help 2>&1
+$testOutput = & "dist/$BinaryName" --help *>&1
 if ($LASTEXITCODE -eq 0) {
     Write-ColorOutput "✓ Binary test passed" -Color Green
 } else {
