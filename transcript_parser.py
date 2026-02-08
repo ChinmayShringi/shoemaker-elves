@@ -85,10 +85,7 @@ def parse_transcript(transcript_path: str) -> dict:
                     if tool_name == "Bash":
                         cmd = tool_input.get("command", "")
                         # Rough detection of file-modifying commands
-                        if any(
-                            op in cmd
-                            for op in ["mv ", "cp ", "mkdir ", "rm ", "touch "]
-                        ):
+                        if any(op in cmd for op in ["mv ", "cp ", "mkdir ", "rm ", "touch "]):
                             # Can't precisely track, but note it
                             pass
 
@@ -105,9 +102,7 @@ def parse_transcript(transcript_path: str) -> dict:
 
     # Estimate cost (Sonnet pricing approximation)
     # Input: $3/MTok, Output: $15/MTok
-    cost_usd = (total_input_tokens * 3.0 / 1_000_000) + (
-        total_output_tokens * 15.0 / 1_000_000
-    )
+    cost_usd = (total_input_tokens * 3.0 / 1_000_000) + (total_output_tokens * 15.0 / 1_000_000)
 
     # Use the last substantive assistant text as the summary
     summary = ""

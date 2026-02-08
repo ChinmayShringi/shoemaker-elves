@@ -4,7 +4,6 @@ Unit tests for planner data types.
 Tests TaskSpec and ReviewSpec serialization and deserialization.
 """
 
-
 from shoemaker_elves.planners.types import ReviewSpec, TaskSpec
 
 # ─────────────────────────────────────────────────────────────
@@ -376,7 +375,9 @@ def test_review_spec_next_tasks_to_dict():
     review = ReviewSpec(
         cumulative_summary="Summary",
         batch_assessment="Assessment",
-        next_tasks=[{"title": "Task 1", "summary": "Do X", "priority": "low", "reason": "Nice to have"}],
+        next_tasks=[
+            {"title": "Task 1", "summary": "Do X", "priority": "low", "reason": "Nice to have"}
+        ],
     )
 
     result = review.to_dict()

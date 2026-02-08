@@ -43,9 +43,7 @@ class ExampleAdapter:
         self.base_url = base_url or "https://api.example.com"
         self.extra_params = kwargs
 
-        logger.info(
-            f"ExampleAdapter initialized with model={model}, base_url={self.base_url}"
-        )
+        logger.info(f"ExampleAdapter initialized with model={model}, base_url={self.base_url}")
 
     def plan_batch(
         self,
@@ -130,9 +128,7 @@ class ExampleAdapter:
         # 4. Convert to ReviewSpec object
 
         # Example: check task results and determine status
-        all_successful = all(
-            result.get("completed", False) for result in task_results
-        )
+        all_successful = all(result.get("completed", False) for result in task_results)
         status = "success" if all_successful else "failure"
 
         # Example: create updated summary

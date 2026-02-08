@@ -20,7 +20,7 @@ def fixtures_dir():
 @pytest.fixture
 def temp_transcript():
     """Create a temporary transcript file."""
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.jsonl', delete=False) as f:
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".jsonl", delete=False) as f:
         yield f.name
     Path(f.name).unlink(missing_ok=True)
 
@@ -108,7 +108,7 @@ class TestTranscriptParserEdgeCases:
         """Test parsing transcript with malformed JSON lines."""
         Path(temp_transcript).write_text(
             '{"type": "assistant", "message": {"usage": {"input_tokens": 100, "output_tokens": 50}, "content": [{"type": "text", "text": "Valid line"}]}}\n'
-            '{invalid json line}\n'
+            "{invalid json line}\n"
             '{"type": "assistant", "message": {"usage": {"input_tokens": 120, "output_tokens": 60}, "content": [{"type": "text", "text": "Another valid line"}]}}\n'
         )
 
@@ -123,8 +123,8 @@ class TestTranscriptParserEdgeCases:
         """Test parsing transcript with empty lines."""
         Path(temp_transcript).write_text(
             '{"type": "assistant", "message": {"usage": {"input_tokens": 100, "output_tokens": 50}, "content": [{"type": "text", "text": "First"}]}}\n'
-            '\n'
-            '   \n'
+            "\n"
+            "   \n"
             '{"type": "assistant", "message": {"usage": {"input_tokens": 100, "output_tokens": 50}, "content": [{"type": "text", "text": "Second"}]}}\n'
         )
 
@@ -145,14 +145,12 @@ class TestTokenUsageAndCost:
                 "type": "assistant",
                 "message": {
                     "usage": {"input_tokens": 1_000_000, "output_tokens": 100_000},
-                    "content": [{"type": "text", "text": "Test"}]
-                }
+                    "content": [{"type": "text", "text": "Test"}],
+                },
             }
         ]
 
-        Path(temp_transcript).write_text(
-            '\n'.join(json.dumps(entry) for entry in transcript_data)
-        )
+        Path(temp_transcript).write_text("\n".join(json.dumps(entry) for entry in transcript_data))
 
         result = parse_transcript(temp_transcript)
 
@@ -166,14 +164,21 @@ class TestTokenUsageAndCost:
     def test_accumulate_tokens_across_messages(self, temp_transcript):
         """Test that tokens are accumulated across multiple messages."""
         transcript_data = [
-            {"type": "assistant", "message": {"usage": {"input_tokens": 100, "output_tokens": 50}, "content": []}},
-            {"type": "assistant", "message": {"usage": {"input_tokens": 200, "output_tokens": 75}, "content": []}},
-            {"type": "assistant", "message": {"usage": {"input_tokens": 150, "output_tokens": 25}, "content": []}},
+            {
+                "type": "assistant",
+                "message": {"usage": {"input_tokens": 100, "output_tokens": 50}, "content": []},
+            },
+            {
+                "type": "assistant",
+                "message": {"usage": {"input_tokens": 200, "output_tokens": 75}, "content": []},
+            },
+            {
+                "type": "assistant",
+                "message": {"usage": {"input_tokens": 150, "output_tokens": 25}, "content": []},
+            },
         ]
 
-        Path(temp_transcript).write_text(
-            '\n'.join(json.dumps(entry) for entry in transcript_data)
-        )
+        Path(temp_transcript).write_text("\n".join(json.dumps(entry) for entry in transcript_data))
 
         result = parse_transcript(temp_transcript)
 
@@ -192,16 +197,22 @@ class TestFileTracking:
                 "message": {
                     "usage": {"input_tokens": 100, "output_tokens": 50},
                     "content": [
-                        {"type": "tool_use", "name": "Write", "input": {"file_path": "/test/file1.py"}},
-                        {"type": "tool_use", "name": "Write", "input": {"file_path": "/test/file2.py"}},
-                    ]
-                }
+                        {
+                            "type": "tool_use",
+                            "name": "Write",
+                            "input": {"file_path": "/test/file1.py"},
+                        },
+                        {
+                            "type": "tool_use",
+                            "name": "Write",
+                            "input": {"file_path": "/test/file2.py"},
+                        },
+                    ],
+                },
             }
         ]
 
-        Path(temp_transcript).write_text(
-            '\n'.join(json.dumps(entry) for entry in transcript_data)
-        )
+        Path(temp_transcript).write_text("\n".join(json.dumps(entry) for entry in transcript_data))
 
         result = parse_transcript(temp_transcript)
 
@@ -217,15 +228,17 @@ class TestFileTracking:
                 "message": {
                     "usage": {"input_tokens": 100, "output_tokens": 50},
                     "content": [
-                        {"type": "tool_use", "name": "Edit", "input": {"file_path": "/test/modified.py"}},
-                    ]
-                }
+                        {
+                            "type": "tool_use",
+                            "name": "Edit",
+                            "input": {"file_path": "/test/modified.py"},
+                        },
+                    ],
+                },
             }
         ]
 
-        Path(temp_transcript).write_text(
-            '\n'.join(json.dumps(entry) for entry in transcript_data)
-        )
+        Path(temp_transcript).write_text("\n".join(json.dumps(entry) for entry in transcript_data))
 
         result = parse_transcript(temp_transcript)
 
@@ -239,15 +252,17 @@ class TestFileTracking:
                 "message": {
                     "usage": {"input_tokens": 100, "output_tokens": 50},
                     "content": [
-                        {"type": "tool_use", "name": "NotebookEdit", "input": {"notebook_path": "/test/notebook.ipynb"}},
-                    ]
-                }
+                        {
+                            "type": "tool_use",
+                            "name": "NotebookEdit",
+                            "input": {"notebook_path": "/test/notebook.ipynb"},
+                        },
+                    ],
+                },
             }
         ]
 
-        Path(temp_transcript).write_text(
-            '\n'.join(json.dumps(entry) for entry in transcript_data)
-        )
+        Path(temp_transcript).write_text("\n".join(json.dumps(entry) for entry in transcript_data))
 
         result = parse_transcript(temp_transcript)
 
@@ -261,17 +276,27 @@ class TestFileTracking:
                 "message": {
                     "usage": {"input_tokens": 100, "output_tokens": 50},
                     "content": [
-                        {"type": "tool_use", "name": "Write", "input": {"file_path": "/test/file.py"}},
-                        {"type": "tool_use", "name": "Edit", "input": {"file_path": "/test/file.py"}},
-                        {"type": "tool_use", "name": "Write", "input": {"file_path": "/test/file.py"}},
-                    ]
-                }
+                        {
+                            "type": "tool_use",
+                            "name": "Write",
+                            "input": {"file_path": "/test/file.py"},
+                        },
+                        {
+                            "type": "tool_use",
+                            "name": "Edit",
+                            "input": {"file_path": "/test/file.py"},
+                        },
+                        {
+                            "type": "tool_use",
+                            "name": "Write",
+                            "input": {"file_path": "/test/file.py"},
+                        },
+                    ],
+                },
             }
         ]
 
-        Path(temp_transcript).write_text(
-            '\n'.join(json.dumps(entry) for entry in transcript_data)
-        )
+        Path(temp_transcript).write_text("\n".join(json.dumps(entry) for entry in transcript_data))
 
         result = parse_transcript(temp_transcript)
 
@@ -286,14 +311,32 @@ class TestSummaryExtraction:
     def test_extract_last_substantive_text(self, temp_transcript):
         """Test extracting the last substantive text as summary."""
         transcript_data = [
-            {"type": "assistant", "message": {"usage": {"input_tokens": 100, "output_tokens": 50}, "content": [{"type": "text", "text": "Starting the task..."}]}},
-            {"type": "assistant", "message": {"usage": {"input_tokens": 100, "output_tokens": 50}, "content": [{"type": "text", "text": "Working on it..."}]}},
-            {"type": "assistant", "message": {"usage": {"input_tokens": 100, "output_tokens": 50}, "content": [{"type": "text", "text": "Task completed successfully! All tests passing."}]}},
+            {
+                "type": "assistant",
+                "message": {
+                    "usage": {"input_tokens": 100, "output_tokens": 50},
+                    "content": [{"type": "text", "text": "Starting the task..."}],
+                },
+            },
+            {
+                "type": "assistant",
+                "message": {
+                    "usage": {"input_tokens": 100, "output_tokens": 50},
+                    "content": [{"type": "text", "text": "Working on it..."}],
+                },
+            },
+            {
+                "type": "assistant",
+                "message": {
+                    "usage": {"input_tokens": 100, "output_tokens": 50},
+                    "content": [
+                        {"type": "text", "text": "Task completed successfully! All tests passing."}
+                    ],
+                },
+            },
         ]
 
-        Path(temp_transcript).write_text(
-            '\n'.join(json.dumps(entry) for entry in transcript_data)
-        )
+        Path(temp_transcript).write_text("\n".join(json.dumps(entry) for entry in transcript_data))
 
         result = parse_transcript(temp_transcript)
 
@@ -303,12 +346,16 @@ class TestSummaryExtraction:
         """Test that very long summaries are truncated."""
         long_text = "A" * 1500
         transcript_data = [
-            {"type": "assistant", "message": {"usage": {"input_tokens": 100, "output_tokens": 50}, "content": [{"type": "text", "text": long_text}]}},
+            {
+                "type": "assistant",
+                "message": {
+                    "usage": {"input_tokens": 100, "output_tokens": 50},
+                    "content": [{"type": "text", "text": long_text}],
+                },
+            },
         ]
 
-        Path(temp_transcript).write_text(
-            '\n'.join(json.dumps(entry) for entry in transcript_data)
-        )
+        Path(temp_transcript).write_text("\n".join(json.dumps(entry) for entry in transcript_data))
 
         result = parse_transcript(temp_transcript)
 
@@ -318,13 +365,28 @@ class TestSummaryExtraction:
     def test_skip_short_texts_for_summary(self, temp_transcript):
         """Test that short texts are skipped in favor of substantive ones."""
         transcript_data = [
-            {"type": "assistant", "message": {"usage": {"input_tokens": 100, "output_tokens": 50}, "content": [{"type": "text", "text": "This is a detailed explanation of what was accomplished in this task."}]}},
-            {"type": "assistant", "message": {"usage": {"input_tokens": 100, "output_tokens": 50}, "content": [{"type": "text", "text": "Ok"}]}},  # Short text
+            {
+                "type": "assistant",
+                "message": {
+                    "usage": {"input_tokens": 100, "output_tokens": 50},
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": "This is a detailed explanation of what was accomplished in this task.",
+                        }
+                    ],
+                },
+            },
+            {
+                "type": "assistant",
+                "message": {
+                    "usage": {"input_tokens": 100, "output_tokens": 50},
+                    "content": [{"type": "text", "text": "Ok"}],
+                },
+            },  # Short text
         ]
 
-        Path(temp_transcript).write_text(
-            '\n'.join(json.dumps(entry) for entry in transcript_data)
-        )
+        Path(temp_transcript).write_text("\n".join(json.dumps(entry) for entry in transcript_data))
 
         result = parse_transcript(temp_transcript)
 
@@ -339,13 +401,21 @@ class TestErrorTracking:
     def test_detect_tool_errors(self, temp_transcript):
         """Test that tool errors are detected and captured."""
         transcript_data = [
-            {"type": "assistant", "message": {"usage": {"input_tokens": 100, "output_tokens": 50}, "content": [{"type": "tool_use", "name": "Read", "input": {}}]}},
-            {"type": "tool_result", "content": [{"type": "text", "text": "Error: Permission denied"}], "is_error": True},
+            {
+                "type": "assistant",
+                "message": {
+                    "usage": {"input_tokens": 100, "output_tokens": 50},
+                    "content": [{"type": "tool_use", "name": "Read", "input": {}}],
+                },
+            },
+            {
+                "type": "tool_result",
+                "content": [{"type": "text", "text": "Error: Permission denied"}],
+                "is_error": True,
+            },
         ]
 
-        Path(temp_transcript).write_text(
-            '\n'.join(json.dumps(entry) for entry in transcript_data)
-        )
+        Path(temp_transcript).write_text("\n".join(json.dumps(entry) for entry in transcript_data))
 
         result = parse_transcript(temp_transcript)
 
@@ -357,12 +427,14 @@ class TestErrorTracking:
         """Test that long error messages are truncated."""
         long_error = "Error: " + "X" * 300
         transcript_data = [
-            {"type": "tool_result", "content": [{"type": "text", "text": long_error}], "is_error": True},
+            {
+                "type": "tool_result",
+                "content": [{"type": "text", "text": long_error}],
+                "is_error": True,
+            },
         ]
 
-        Path(temp_transcript).write_text(
-            '\n'.join(json.dumps(entry) for entry in transcript_data)
-        )
+        Path(temp_transcript).write_text("\n".join(json.dumps(entry) for entry in transcript_data))
 
         result = parse_transcript(temp_transcript)
 
@@ -374,9 +446,7 @@ class TestErrorTracking:
             {"type": "tool_result", "content": "Error string directly", "is_error": True},
         ]
 
-        Path(temp_transcript).write_text(
-            '\n'.join(json.dumps(entry) for entry in transcript_data)
-        )
+        Path(temp_transcript).write_text("\n".join(json.dumps(entry) for entry in transcript_data))
 
         result = parse_transcript(temp_transcript)
 

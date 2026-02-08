@@ -124,7 +124,9 @@ class TestStateBasics:
         assert updated["tasks"][0]["status"] == "running"
         assert updated["tasks"][0]["started_at"] is not None
         # Verify timestamp is recent (within last 5 seconds)
-        started_at = datetime.fromisoformat(updated["tasks"][0]["started_at"].replace("Z", "+00:00"))
+        started_at = datetime.fromisoformat(
+            updated["tasks"][0]["started_at"].replace("Z", "+00:00")
+        )
         now = datetime.now(timezone.utc)
         assert (now - started_at).total_seconds() < 5
 
@@ -237,8 +239,7 @@ class TestStateConcurrency:
                 errors.append(e)
 
         threads = [
-            threading.Thread(target=update_state, args=(0, f"running-{i}"))
-            for i in range(5)
+            threading.Thread(target=update_state, args=(0, f"running-{i}")) for i in range(5)
         ]
         for t in threads:
             t.start()

@@ -91,13 +91,15 @@ def test_plan_batch_success(adapter, mock_azure_client):
     # Mock successful API response
     mock_response = Mock()
     mock_response.choices = [Mock()]
-    mock_response.choices[0].message.content = json.dumps({
-        "tasks": [
-            {"title": "Task 1", "prompt": "Do thing 1"},
-            {"title": "Task 2", "prompt": "Do thing 2"},
-        ],
-        "batch_reasoning": "These tasks set up the foundation",
-    })
+    mock_response.choices[0].message.content = json.dumps(
+        {
+            "tasks": [
+                {"title": "Task 1", "prompt": "Do thing 1"},
+                {"title": "Task 2", "prompt": "Do thing 2"},
+            ],
+            "batch_reasoning": "These tasks set up the foundation",
+        }
+    )
     mock_azure_client.chat.completions.create.return_value = mock_response
 
     # Call plan_batch
@@ -126,10 +128,12 @@ def test_plan_batch_empty_tasks(adapter, mock_azure_client):
     """Test project complete signal (empty tasks array)."""
     mock_response = Mock()
     mock_response.choices = [Mock()]
-    mock_response.choices[0].message.content = json.dumps({
-        "tasks": [],
-        "batch_reasoning": "Project is complete",
-    })
+    mock_response.choices[0].message.content = json.dumps(
+        {
+            "tasks": [],
+            "batch_reasoning": "Project is complete",
+        }
+    )
     mock_azure_client.chat.completions.create.return_value = mock_response
 
     tasks = adapter.plan_batch(
@@ -163,9 +167,11 @@ def test_plan_batch_missing_tasks_field(adapter, mock_azure_client):
     """Test handling of response missing 'tasks' field."""
     mock_response = Mock()
     mock_response.choices = [Mock()]
-    mock_response.choices[0].message.content = json.dumps({
-        "batch_reasoning": "Missing tasks field",
-    })
+    mock_response.choices[0].message.content = json.dumps(
+        {
+            "batch_reasoning": "Missing tasks field",
+        }
+    )
     mock_azure_client.chat.completions.create.return_value = mock_response
 
     with pytest.raises(ValueError) as exc_info:
@@ -182,12 +188,14 @@ def test_plan_batch_invalid_task_structure(adapter, mock_azure_client):
     """Test handling of invalid task structure."""
     mock_response = Mock()
     mock_response.choices = [Mock()]
-    mock_response.choices[0].message.content = json.dumps({
-        "tasks": [
-            {"title": "Valid task", "prompt": "Do something"},
-            {"title": "Missing prompt"},  # Missing required field
-        ],
-    })
+    mock_response.choices[0].message.content = json.dumps(
+        {
+            "tasks": [
+                {"title": "Valid task", "prompt": "Do something"},
+                {"title": "Missing prompt"},  # Missing required field
+            ],
+        }
+    )
     mock_azure_client.chat.completions.create.return_value = mock_response
 
     with pytest.raises(ValueError) as exc_info:
@@ -204,9 +212,11 @@ def test_plan_batch_tasks_not_array(adapter, mock_azure_client):
     """Test handling when 'tasks' is not an array."""
     mock_response = Mock()
     mock_response.choices = [Mock()]
-    mock_response.choices[0].message.content = json.dumps({
-        "tasks": "not an array",
-    })
+    mock_response.choices[0].message.content = json.dumps(
+        {
+            "tasks": "not an array",
+        }
+    )
     mock_azure_client.chat.completions.create.return_value = mock_response
 
     with pytest.raises(ValueError) as exc_info:
@@ -228,14 +238,16 @@ def test_review_batch_success(adapter, mock_azure_client):
     """Test successful batch review."""
     mock_response = Mock()
     mock_response.choices = [Mock()]
-    mock_response.choices[0].message.content = json.dumps({
-        "cumulative_summary": "Completed setup and basic features",
-        "batch_assessment": "Batch completed successfully",
-        "issues": [],
-        "project_complete": False,
-        "completion_percentage": 30,
-        "recommendations": "Continue with authentication",
-    })
+    mock_response.choices[0].message.content = json.dumps(
+        {
+            "cumulative_summary": "Completed setup and basic features",
+            "batch_assessment": "Batch completed successfully",
+            "issues": [],
+            "project_complete": False,
+            "completion_percentage": 30,
+            "recommendations": "Continue with authentication",
+        }
+    )
     mock_azure_client.chat.completions.create.return_value = mock_response
 
     task_results = [
@@ -259,14 +271,16 @@ def test_review_batch_project_complete(adapter, mock_azure_client):
     """Test review indicating project completion."""
     mock_response = Mock()
     mock_response.choices = [Mock()]
-    mock_response.choices[0].message.content = json.dumps({
-        "cumulative_summary": "All features implemented and tested",
-        "batch_assessment": "Final polish complete",
-        "issues": [],
-        "project_complete": True,
-        "completion_percentage": 100,
-        "recommendations": "Project ready for deployment",
-    })
+    mock_response.choices[0].message.content = json.dumps(
+        {
+            "cumulative_summary": "All features implemented and tested",
+            "batch_assessment": "Final polish complete",
+            "issues": [],
+            "project_complete": True,
+            "completion_percentage": 100,
+            "recommendations": "Project ready for deployment",
+        }
+    )
     mock_azure_client.chat.completions.create.return_value = mock_response
 
     review = adapter.review_batch(
@@ -283,14 +297,16 @@ def test_review_batch_with_issues(adapter, mock_azure_client):
     """Test review with identified issues."""
     mock_response = Mock()
     mock_response.choices = [Mock()]
-    mock_response.choices[0].message.content = json.dumps({
-        "cumulative_summary": "Setup complete with issues",
-        "batch_assessment": "Some tasks failed",
-        "issues": ["Database connection failed", "Tests not passing"],
-        "project_complete": False,
-        "completion_percentage": 20,
-        "recommendations": "Fix database config",
-    })
+    mock_response.choices[0].message.content = json.dumps(
+        {
+            "cumulative_summary": "Setup complete with issues",
+            "batch_assessment": "Some tasks failed",
+            "issues": ["Database connection failed", "Tests not passing"],
+            "project_complete": False,
+            "completion_percentage": 20,
+            "recommendations": "Fix database config",
+        }
+    )
     mock_azure_client.chat.completions.create.return_value = mock_response
 
     review = adapter.review_batch(
@@ -327,10 +343,12 @@ def test_review_batch_missing_required_fields(adapter, mock_azure_client):
     """Test handling of missing required fields in review response."""
     mock_response = Mock()
     mock_response.choices = [Mock()]
-    mock_response.choices[0].message.content = json.dumps({
-        "batch_assessment": "Missing cumulative_summary",
-        "issues": [],
-    })
+    mock_response.choices[0].message.content = json.dumps(
+        {
+            "batch_assessment": "Missing cumulative_summary",
+            "issues": [],
+        }
+    )
     mock_azure_client.chat.completions.create.return_value = mock_response
 
     with pytest.raises(ValueError) as exc_info:
@@ -385,9 +403,19 @@ def test_rate_limit_retry(adapter, mock_azure_client):
             response=Mock(status_code=429),
             body=None,
         ),
-        Mock(choices=[Mock(message=Mock(content=json.dumps({
-            "tasks": [{"title": "Test", "prompt": "Test task"}],
-        })))]),
+        Mock(
+            choices=[
+                Mock(
+                    message=Mock(
+                        content=json.dumps(
+                            {
+                                "tasks": [{"title": "Test", "prompt": "Test task"}],
+                            }
+                        )
+                    )
+                )
+            ]
+        ),
     ]
 
     # Mock time.sleep to avoid actual delays in tests
@@ -435,9 +463,11 @@ def test_deployment_name_used_as_model(adapter, mock_azure_client):
     """Test that deployment name is used as model parameter."""
     mock_response = Mock()
     mock_response.choices = [Mock()]
-    mock_response.choices[0].message.content = json.dumps({
-        "tasks": [{"title": "Test", "prompt": "Test task"}],
-    })
+    mock_response.choices[0].message.content = json.dumps(
+        {
+            "tasks": [{"title": "Test", "prompt": "Test task"}],
+        }
+    )
     mock_azure_client.chat.completions.create.return_value = mock_response
 
     adapter.plan_batch(

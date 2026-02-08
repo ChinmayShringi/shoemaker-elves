@@ -183,10 +183,7 @@ def test_validate_planning_response_tasks_not_list():
 def test_validate_planning_response_batch_size_exceeded():
     """Test validation fails when batch size is exceeded."""
     response = {
-        "tasks": [
-            {"title": f"Task {i}", "prompt": f"Do task {i}"}
-            for i in range(11)
-        ],
+        "tasks": [{"title": f"Task {i}", "prompt": f"Do task {i}"} for i in range(11)],
     }
 
     errors = PromptValidator.validate_planning_response(response, batch_size=10)

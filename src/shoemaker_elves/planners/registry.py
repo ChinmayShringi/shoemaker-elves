@@ -49,10 +49,7 @@ def create_planner(provider: str, **kwargs) -> PlannerAdapter:
     """
     if provider not in _REGISTRY:
         available = ", ".join(sorted(_REGISTRY.keys()))
-        raise ValueError(
-            f"Unknown planner provider: {provider}. "
-            f"Available providers: {available}"
-        )
+        raise ValueError(f"Unknown planner provider: {provider}. Available providers: {available}")
 
     factory = _REGISTRY[provider]
     return factory(**kwargs)

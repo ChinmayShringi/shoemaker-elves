@@ -95,15 +95,13 @@ class AnthropicAdapter:
             response_text=response_text,
             system_prompt=TASK_PLANNING_SYSTEM_PROMPT,
             user_prompt=user_prompt,
-            operation="plan_batch"
+            operation="plan_batch",
         )
 
         # Validate with PromptValidator
         try:
             PromptValidator.validate_and_raise(
-                parsed,
-                operation="plan_batch",
-                batch_size=batch_size
+                parsed, operation="plan_batch", batch_size=batch_size
             )
         except ValidationError as e:
             # Trigger repair mechanism if validation fails
@@ -165,7 +163,7 @@ class AnthropicAdapter:
                 response_text=response_text,
                 system_prompt=ASSESSMENT_SYSTEM_PROMPT,
                 user_prompt=user_prompt,
-                operation="review_batch"
+                operation="review_batch",
             )
         except (json.JSONDecodeError, ValueError) as e:
             # Return a basic assessment if parsing fails completely
@@ -255,9 +253,7 @@ class AnthropicAdapter:
                 return content_text, usage
 
             except AuthenticationError:
-                raise RuntimeError(
-                    "Anthropic authentication failed. Check your API key."
-                )
+                raise RuntimeError("Anthropic authentication failed. Check your API key.")
 
             except RateLimitError:
                 if attempt == max_retries - 1:

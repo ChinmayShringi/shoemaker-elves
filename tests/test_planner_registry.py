@@ -372,7 +372,10 @@ def test_entrypoint_discovery_failure():
     from shoemaker_elves.planners.registry import load_plugins
 
     # Mock entry_points to raise an error
-    with patch("shoemaker_elves.planners.registry.entry_points", side_effect=RuntimeError("Discovery failed")):
+    with patch(
+        "shoemaker_elves.planners.registry.entry_points",
+        side_effect=RuntimeError("Discovery failed"),
+    ):
         with patch("shoemaker_elves.planners.registry.logger") as mock_logger:
             load_plugins()
             # Should have logged a warning

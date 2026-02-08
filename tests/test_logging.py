@@ -16,11 +16,22 @@ import pytest
 def test_logger_imports_without_rich():
     """Test that logger can be imported even if rich is not available."""
     # Mock rich as unavailable
-    with patch.dict(sys.modules, {'rich': None, 'rich.console': None, 'rich.progress': None, 'rich.table': None, 'rich.panel': None, 'rich.text': None}):
+    with patch.dict(
+        sys.modules,
+        {
+            "rich": None,
+            "rich.console": None,
+            "rich.progress": None,
+            "rich.table": None,
+            "rich.panel": None,
+            "rich.text": None,
+        },
+    ):
         # Reload the module to trigger the import error path
         import importlib
 
         from shoemaker_elves import logging as log_module
+
         importlib.reload(log_module)
 
         # Should be able to create a logger
@@ -118,7 +129,9 @@ def test_logger_log_event():
             lines = f.readlines()
 
         # Find the custom event
-        custom_events = [json.loads(line) for line in lines if json.loads(line).get("event") == "custom_event"]
+        custom_events = [
+            json.loads(line) for line in lines if json.loads(line).get("event") == "custom_event"
+        ]
         assert len(custom_events) == 1
         assert custom_events[0]["key"] == "value"
         assert custom_events[0]["number"] == 42

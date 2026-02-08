@@ -120,9 +120,7 @@ class TestLaunchNextTaskIdempotency:
         mock_popen.assert_not_called()
 
     @patch("shoemaker_elves.hook_handler.subprocess.Popen")
-    def test_launch_next_task_pending(
-        self, mock_popen, temp_project_dir, sample_state_data
-    ):
+    def test_launch_next_task_pending(self, mock_popen, temp_project_dir, sample_state_data):
         """Test that launching a pending task succeeds."""
         # Setup
         state = State(str(temp_project_dir["state_file"]))
@@ -146,9 +144,7 @@ class TestLaunchNextTaskIdempotency:
         assert updated_state["tasks"][1]["started_at"] is not None
 
     @patch("shoemaker_elves.hook_handler.subprocess.Popen")
-    def test_launch_next_task_double_call(
-        self, mock_popen, temp_project_dir, sample_state_data
-    ):
+    def test_launch_next_task_double_call(self, mock_popen, temp_project_dir, sample_state_data):
         """Test that calling launch_next_task twice doesn't launch twice."""
         # Setup
         state = State(str(temp_project_dir["state_file"]))
@@ -203,11 +199,21 @@ class TestHookHandlerIdempotency:
         }
 
         # First hook invocation
-        with patch("sys.stdin", MagicMock(read=lambda: json.dumps({
-            "session_id": "test-session-123",
-            "transcript_path": "/tmp/transcript.txt",
-            "cwd": str(temp_project_dir["project_dir"]),
-        }))), patch("shoemaker_elves.hook_handler.log"):
+        with (
+            patch(
+                "sys.stdin",
+                MagicMock(
+                    read=lambda: json.dumps(
+                        {
+                            "session_id": "test-session-123",
+                            "transcript_path": "/tmp/transcript.txt",
+                            "cwd": str(temp_project_dir["project_dir"]),
+                        }
+                    )
+                ),
+            ),
+            patch("shoemaker_elves.hook_handler.log"),
+        ):
             main()
 
         # Verify task 2 was launched
@@ -221,11 +227,21 @@ class TestHookHandlerIdempotency:
         assert state_data["tasks"][1]["status"] == "running"
 
         # Second hook invocation with SAME session (simulating double call)
-        with patch("sys.stdin", MagicMock(read=lambda: json.dumps({
-            "session_id": "test-session-123",
-            "transcript_path": "/tmp/transcript.txt",
-            "cwd": str(temp_project_dir["project_dir"]),
-        }))), patch("shoemaker_elves.hook_handler.log"):
+        with (
+            patch(
+                "sys.stdin",
+                MagicMock(
+                    read=lambda: json.dumps(
+                        {
+                            "session_id": "test-session-123",
+                            "transcript_path": "/tmp/transcript.txt",
+                            "cwd": str(temp_project_dir["project_dir"]),
+                        }
+                    )
+                ),
+            ),
+            patch("shoemaker_elves.hook_handler.log"),
+        ):
             main()
 
         # Verify task 2 was NOT launched again (still 1 call)
@@ -267,11 +283,21 @@ class TestHookHandlerIdempotency:
         }
 
         # First hook invocation with session 1
-        with patch("sys.stdin", MagicMock(read=lambda: json.dumps({
-            "session_id": "session-1",
-            "transcript_path": "/tmp/transcript1.txt",
-            "cwd": str(temp_project_dir["project_dir"]),
-        }))), patch("shoemaker_elves.hook_handler.log"):
+        with (
+            patch(
+                "sys.stdin",
+                MagicMock(
+                    read=lambda: json.dumps(
+                        {
+                            "session_id": "session-1",
+                            "transcript_path": "/tmp/transcript1.txt",
+                            "cwd": str(temp_project_dir["project_dir"]),
+                        }
+                    )
+                ),
+            ),
+            patch("shoemaker_elves.hook_handler.log"),
+        ):
             main()
 
         # Verify state
@@ -296,11 +322,21 @@ class TestHookHandlerIdempotency:
             "cost_usd": 0.3,
         }
 
-        with patch("sys.stdin", MagicMock(read=lambda: json.dumps({
-            "session_id": "session-2",
-            "transcript_path": "/tmp/transcript2.txt",
-            "cwd": str(temp_project_dir["project_dir"]),
-        }))), patch("shoemaker_elves.hook_handler.log"):
+        with (
+            patch(
+                "sys.stdin",
+                MagicMock(
+                    read=lambda: json.dumps(
+                        {
+                            "session_id": "session-2",
+                            "transcript_path": "/tmp/transcript2.txt",
+                            "cwd": str(temp_project_dir["project_dir"]),
+                        }
+                    )
+                ),
+            ),
+            patch("shoemaker_elves.hook_handler.log"),
+        ):
             main()
 
         # Verify state has both executions

@@ -41,6 +41,7 @@ def lazy_import_gpt():
     global GPTPlanner
     if GPTPlanner is None:
         from .gpt_planner import GPTPlanner as _GPTPlanner
+
         GPTPlanner = _GPTPlanner
 
 
@@ -81,26 +82,46 @@ Examples:
     # GPT mode
     run_parser.add_argument("--gpt", action="store_true", help="Enable GPT orchestration mode")
     run_parser.add_argument("-d", "--description", help="Project description (required with --gpt)")
-    run_parser.add_argument("--gpt-model", help="GPT model (overrides config) [deprecated: use --planner-model]")
-    run_parser.add_argument("--planner-provider", help="Planner provider (openai, anthropic, azure_openai, deepseek, openai_compatible)")
+    run_parser.add_argument(
+        "--gpt-model", help="GPT model (overrides config) [deprecated: use --planner-model]"
+    )
+    run_parser.add_argument(
+        "--planner-provider",
+        help="Planner provider (openai, anthropic, azure_openai, deepseek, openai_compatible)",
+    )
     run_parser.add_argument("--planner-model", help="Planner model (overrides config)")
-    run_parser.add_argument("--planner-base-url", help="Base URL for openai_compatible or deepseek provider")
+    run_parser.add_argument(
+        "--planner-base-url", help="Base URL for openai_compatible or deepseek provider"
+    )
     run_parser.add_argument("--azure-endpoint", help="Azure OpenAI endpoint URL")
     run_parser.add_argument("--azure-deployment", help="Azure OpenAI deployment name")
-    run_parser.add_argument("--azure-api-version", help="Azure OpenAI API version (default: 2024-02-01)")
-    run_parser.add_argument("--max-batches", type=int, default=5, help="Max GPT planning rounds (default: 5)")
-    run_parser.add_argument("--batch-size", type=int, default=5, help="Tasks per batch (default: 5)")
+    run_parser.add_argument(
+        "--azure-api-version", help="Azure OpenAI API version (default: 2024-02-01)"
+    )
+    run_parser.add_argument(
+        "--max-batches", type=int, default=5, help="Max GPT planning rounds (default: 5)"
+    )
+    run_parser.add_argument(
+        "--batch-size", type=int, default=5, help="Tasks per batch (default: 5)"
+    )
 
     # Agent options
     run_parser.add_argument("--agent-model", help="AI agent model (overrides config)")
-    run_parser.add_argument("--max-cost-usd", type=float, help="Cost ceiling in USD (overrides config)")
-    run_parser.add_argument("--task-timeout", type=int, default=600, help="Max seconds per task (default: 600)")
+    run_parser.add_argument(
+        "--max-cost-usd", type=float, help="Cost ceiling in USD (overrides config)"
+    )
+    run_parser.add_argument(
+        "--task-timeout", type=int, default=600, help="Max seconds per task (default: 600)"
+    )
 
     # Other
     run_parser.add_argument("--resume", action="store_true", help="Resume from existing state")
     run_parser.add_argument("--verbose", action="store_true", help="Detailed logging")
     run_parser.add_argument("--openai-api-key", help="OpenAI API key (or use env var)")
-    run_parser.add_argument("--provider", help="Planner provider (openai, anthropic, azure_openai, deepseek, openai_compatible)")
+    run_parser.add_argument(
+        "--provider",
+        help="Planner provider (openai, anthropic, azure_openai, deepseek, openai_compatible)",
+    )
     run_parser.add_argument("--base-url", help="Base URL for openai_compatible provider")
 
     # Init command
@@ -108,7 +129,9 @@ Examples:
 
     # Config command
     config_parser = subparsers.add_parser("config", help="Manage configuration")
-    config_subparsers = config_parser.add_subparsers(dest="config_command", help="Config operations")
+    config_subparsers = config_parser.add_subparsers(
+        dest="config_command", help="Config operations"
+    )
 
     config_show_parser = config_subparsers.add_parser("show", help="Show current configuration")
     config_show_parser.add_argument("--no-mask", action="store_true", help="Show secrets unmasked")
@@ -305,32 +328,40 @@ class ContextMDManager:
         ]
 
         if description:
-            lines.extend([
-                "## Project Description",
-                description,
-                "",
-            ])
+            lines.extend(
+                [
+                    "## Project Description",
+                    description,
+                    "",
+                ]
+            )
 
-        lines.extend([
-            "## Progress So Far",
-            "(No tasks completed yet)",
-            "",
-        ])
+        lines.extend(
+            [
+                "## Progress So Far",
+                "(No tasks completed yet)",
+                "",
+            ]
+        )
 
         if cumulative_summary:
-            lines.extend([
-                "## Cumulative Summary",
-                cumulative_summary,
-                "",
-            ])
+            lines.extend(
+                [
+                    "## Cumulative Summary",
+                    cumulative_summary,
+                    "",
+                ]
+            )
 
         # Preserve original content
         if self.backup_path.exists():
-            lines.extend([
-                "---",
-                "## Original Project Instructions",
-                self.backup_path.read_text(),
-            ])
+            lines.extend(
+                [
+                    "---",
+                    "## Original Project Instructions",
+                    self.backup_path.read_text(),
+                ]
+            )
 
         self.context_md.write_text("\n".join(lines))
 
@@ -452,10 +483,12 @@ def discover_manual_tasks() -> list[dict]:
                 title = line[2:].strip()
                 break
 
-        tasks.append({
-            "title": title,
-            "file": f"tasks/{filepath.name}",
-        })
+        tasks.append(
+            {
+                "title": title,
+                "file": f"tasks/{filepath.name}",
+            }
+        )
 
     return tasks
 
@@ -520,7 +553,9 @@ class Orchestrator:
 
         # Initialize logger with log directory in .claude/logs
         log_dir = self.project_dir / ".claude" / "logs"
-        self.logger = Logger(log_dir=log_dir, enable_rich=not args.verbose if hasattr(args, 'verbose') else True)
+        self.logger = Logger(
+            log_dir=log_dir, enable_rich=not args.verbose if hasattr(args, "verbose") else True
+        )
 
         # Load and merge config
         self.config = load_config()
@@ -536,51 +571,51 @@ class Orchestrator:
     def _apply_flag_overrides(self):
         """Apply CLI flag overrides to config (flags have highest priority)."""
         # Agent model
-        if hasattr(self.args, 'agent_model') and self.args.agent_model:
+        if hasattr(self.args, "agent_model") and self.args.agent_model:
             self.config["agent"]["model"] = self.args.agent_model
 
         # Max cost
-        if hasattr(self.args, 'max_cost_usd') and self.args.max_cost_usd is not None:
+        if hasattr(self.args, "max_cost_usd") and self.args.max_cost_usd is not None:
             self.config["planner"]["max_cost_usd"] = self.args.max_cost_usd
 
         # GPT model (deprecated, but still supported)
-        if hasattr(self.args, 'gpt_model') and self.args.gpt_model:
+        if hasattr(self.args, "gpt_model") and self.args.gpt_model:
             self.config["planner"]["model"] = self.args.gpt_model
 
         # Planner provider
-        if hasattr(self.args, 'planner_provider') and self.args.planner_provider:
+        if hasattr(self.args, "planner_provider") and self.args.planner_provider:
             self.config["planner"]["provider"] = self.args.planner_provider
         # Legacy provider flag
-        elif hasattr(self.args, 'provider') and self.args.provider:
+        elif hasattr(self.args, "provider") and self.args.provider:
             self.config["planner"]["provider"] = self.args.provider
 
         # Planner model
-        if hasattr(self.args, 'planner_model') and self.args.planner_model:
+        if hasattr(self.args, "planner_model") and self.args.planner_model:
             self.config["planner"]["model"] = self.args.planner_model
 
         # Planner base URL
-        if hasattr(self.args, 'planner_base_url') and self.args.planner_base_url:
+        if hasattr(self.args, "planner_base_url") and self.args.planner_base_url:
             self.config["planner"]["base_url"] = self.args.planner_base_url
         # Legacy base_url flag
-        elif hasattr(self.args, 'base_url') and self.args.base_url:
+        elif hasattr(self.args, "base_url") and self.args.base_url:
             self.config["planner"]["base_url"] = self.args.base_url
 
         # API key (legacy flag)
-        if hasattr(self.args, 'openai_api_key') and self.args.openai_api_key:
+        if hasattr(self.args, "openai_api_key") and self.args.openai_api_key:
             self.config["planner"]["api_key"] = self.args.openai_api_key
 
         # Azure-specific flags
-        if hasattr(self.args, 'azure_endpoint') and self.args.azure_endpoint:
+        if hasattr(self.args, "azure_endpoint") and self.args.azure_endpoint:
             if "azure" not in self.config:
                 self.config["azure"] = {}
             self.config["azure"]["endpoint"] = self.args.azure_endpoint
 
-        if hasattr(self.args, 'azure_deployment') and self.args.azure_deployment:
+        if hasattr(self.args, "azure_deployment") and self.args.azure_deployment:
             if "azure" not in self.config:
                 self.config["azure"] = {}
             self.config["azure"]["deployment"] = self.args.azure_deployment
 
-        if hasattr(self.args, 'azure_api_version') and self.args.azure_api_version:
+        if hasattr(self.args, "azure_api_version") and self.args.azure_api_version:
             if "azure" not in self.config:
                 self.config["azure"] = {}
             self.config["azure"]["api_version"] = self.args.azure_api_version
@@ -630,7 +665,9 @@ class Orchestrator:
             api_key = self.config["planner"].get("api_key")
             if not api_key:
                 self.logger.error("API key not found in config or environment")
-                self.logger.info("Run 'shoemaker-elves init' to configure, or set environment variable")
+                self.logger.info(
+                    "Run 'shoemaker-elves init' to configure, or set environment variable"
+                )
                 sys.exit(1)
 
             lazy_import_gpt()
@@ -677,11 +714,13 @@ class Orchestrator:
         ]
 
         if self.args.gpt:
-            config_lines.extend([
-                f"Provider: {self.config['planner']['provider']}",
-                f"Model:    {self.config['planner']['model']}",
-                f"Batches:  {self.args.max_batches} x {self.args.batch_size} tasks",
-            ])
+            config_lines.extend(
+                [
+                    f"Provider: {self.config['planner']['provider']}",
+                    f"Model:    {self.config['planner']['model']}",
+                    f"Batches:  {self.args.max_batches} x {self.args.batch_size} tasks",
+                ]
+            )
 
         config_lines.append(f"Cost cap: ${self.config['planner']['max_cost_usd']:.2f}")
 
@@ -835,17 +874,19 @@ class Orchestrator:
                 for t in task_entries:
                     idx = len(state_data["tasks"])
                     new_indices.append(idx)
-                    state_data["tasks"].append({
-                        "index": idx,
-                        "title": t["title"],
-                        "file": t["file"],
-                        "status": "pending",
-                        "session_id": None,
-                        "transcript_path": None,
-                        "result_summary": None,
-                        "files_modified": [],
-                        "cost_usd": 0,
-                    })
+                    state_data["tasks"].append(
+                        {
+                            "index": idx,
+                            "title": t["title"],
+                            "file": t["file"],
+                            "status": "pending",
+                            "session_id": None,
+                            "transcript_path": None,
+                            "result_summary": None,
+                            "files_modified": [],
+                            "cost_usd": 0,
+                        }
+                    )
                 state_data["current_batch"] = batch_num
                 state_data["current_task_index"] = new_indices[0]
                 state_data["batches"][str(batch_num)] = {
@@ -880,13 +921,15 @@ class Orchestrator:
             batch_results = []
             for idx in batch_info["task_indices"]:
                 task = state_data["tasks"][idx]
-                batch_results.append({
-                    "title": task["title"],
-                    "success": task["status"] == "completed",
-                    "result_summary": task.get("result_summary", ""),
-                    "files_modified": task.get("files_modified", []),
-                    "errors": [],
-                })
+                batch_results.append(
+                    {
+                        "title": task["title"],
+                        "success": task["status"] == "completed",
+                        "result_summary": task.get("result_summary", ""),
+                        "files_modified": task.get("files_modified", []),
+                        "errors": [],
+                    }
+                )
 
             # GPT assessment
             self.logger.info(f"Asking GPT to assess batch {batch_num}...")
@@ -932,7 +975,7 @@ class Orchestrator:
         # Detect stalled tasks
         tasks = state_data.get("tasks", [])
         stalled_tasks = []
-        task_timeout = self.args.task_timeout if hasattr(self.args, 'task_timeout') else 600
+        task_timeout = self.args.task_timeout if hasattr(self.args, "task_timeout") else 600
 
         now = datetime.now(timezone.utc)
         for i, task in enumerate(tasks):
@@ -952,10 +995,13 @@ class Orchestrator:
             for idx, task, elapsed in stalled_tasks:
                 print(f"    Task {idx + 1}: {task['title']} (stalled for {elapsed:.0f}s)")
                 # Mark as failed so they can be retried
-                self.state.update_task(idx, {
-                    "status": "failed",
-                    "result_summary": f"Task stalled (exceeded {task_timeout}s timeout)"
-                })
+                self.state.update_task(
+                    idx,
+                    {
+                        "status": "failed",
+                        "result_summary": f"Task stalled (exceeded {task_timeout}s timeout)",
+                    },
+                )
 
         # Find next pending task
         next_idx = None
@@ -1033,9 +1079,7 @@ class Orchestrator:
                 cost = state_data.get("total_cost_usd", 0)
 
                 if running > 0:
-                    running_task = next(
-                        (t for t in tasks if t["status"] == "running"), None
-                    )
+                    running_task = next((t for t in tasks if t["status"] == "running"), None)
                     name = running_task["title"] if running_task else "?"
                     print(f"  [{completed}/{total}] Running: {name} (${cost:.2f} spent)")
 
@@ -1051,11 +1095,9 @@ class Orchestrator:
                 if t["status"] == "running" and t.get("started_at"):
                     try:
                         started = datetime.fromisoformat(t["started_at"])
-                        elapsed = (
-                            datetime.now(timezone.utc) - started
-                        ).total_seconds()
+                        elapsed = (datetime.now(timezone.utc) - started).total_seconds()
                         if elapsed > self.args.task_timeout:
-                            print(f"  WARNING: Task {t['index']+1} stalled ({elapsed:.0f}s)")
+                            print(f"  WARNING: Task {t['index'] + 1} stalled ({elapsed:.0f}s)")
                             self.state.update_task(
                                 t["index"],
                                 {"status": "failed", "result_summary": "Timeout / stall detected"},
@@ -1105,11 +1147,17 @@ class Orchestrator:
                 cost = state_data.get("total_cost_usd", 0)
 
                 running_task = next(
-                    (tasks[i] for i in batch_indices if i < len(tasks) and tasks[i]["status"] == "running"),
+                    (
+                        tasks[i]
+                        for i in batch_indices
+                        if i < len(tasks) and tasks[i]["status"] == "running"
+                    ),
                     None,
                 )
                 if running_task:
-                    print(f"  [{completed}/{total}] Running: {running_task['title']} (${cost:.2f} spent)")
+                    print(
+                        f"  [{completed}/{total}] Running: {running_task['title']} (${cost:.2f} spent)"
+                    )
 
                 last_index = current_idx
 
@@ -1173,9 +1221,9 @@ class Orchestrator:
 def cmd_init():
     """Interactive configuration setup wizard."""
 
-    print("\n" + "="*60)
+    print("\n" + "=" * 60)
     print("  Shoemaker Elves - Configuration Setup")
-    print("="*60 + "\n")
+    print("=" * 60 + "\n")
 
     config = load_config()
 
@@ -1224,6 +1272,7 @@ def cmd_init():
     else:
         # Provide guidance on env var
         from .config import PROVIDER_API_KEY_ENV_VARS
+
         env_var = PROVIDER_API_KEY_ENV_VARS.get(provider, "SHOEMAKER_ELVES_OPENAI_API_KEY")
         print(f"\nSet your API key as environment variable: {env_var}")
         print(f"Example: export {env_var}=your-api-key-here")
@@ -1287,10 +1336,11 @@ def cmd_config_show(no_mask: bool = False):
         config = mask_secrets(config)
 
     import json
+
     print("\nCurrent configuration:")
-    print("="*60)
+    print("=" * 60)
     print(json.dumps(config, indent=2))
-    print("="*60)
+    print("=" * 60)
     print(f"\nConfig file: {get_config_path()}")
     print("(Environment variables have been applied)")
 

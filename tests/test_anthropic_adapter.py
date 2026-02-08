@@ -65,13 +65,15 @@ def test_plan_batch_success(adapter, mock_anthropic_client):
     # Mock successful API response
     mock_response = Mock()
     mock_text_block = Mock()
-    mock_text_block.text = json.dumps({
-        "tasks": [
-            {"title": "Task 1", "prompt": "Do thing 1"},
-            {"title": "Task 2", "prompt": "Do thing 2"},
-        ],
-        "batch_reasoning": "These tasks set up the foundation",
-    })
+    mock_text_block.text = json.dumps(
+        {
+            "tasks": [
+                {"title": "Task 1", "prompt": "Do thing 1"},
+                {"title": "Task 2", "prompt": "Do thing 2"},
+            ],
+            "batch_reasoning": "These tasks set up the foundation",
+        }
+    )
     mock_response.content = [mock_text_block]
     mock_anthropic_client.messages.create.return_value = mock_response
 
@@ -102,10 +104,12 @@ def test_plan_batch_empty_tasks(adapter, mock_anthropic_client):
     """Test project complete signal (empty tasks array)."""
     mock_response = Mock()
     mock_text_block = Mock()
-    mock_text_block.text = json.dumps({
-        "tasks": [],
-        "batch_reasoning": "Project is complete",
-    })
+    mock_text_block.text = json.dumps(
+        {
+            "tasks": [],
+            "batch_reasoning": "Project is complete",
+        }
+    )
     mock_response.content = [mock_text_block]
     mock_anthropic_client.messages.create.return_value = mock_response
 
@@ -142,9 +146,11 @@ def test_plan_batch_missing_tasks_field(adapter, mock_anthropic_client):
     """Test handling of response missing 'tasks' field."""
     mock_response = Mock()
     mock_text_block = Mock()
-    mock_text_block.text = json.dumps({
-        "batch_reasoning": "Missing tasks field",
-    })
+    mock_text_block.text = json.dumps(
+        {
+            "batch_reasoning": "Missing tasks field",
+        }
+    )
     mock_response.content = [mock_text_block]
     mock_anthropic_client.messages.create.return_value = mock_response
 
@@ -162,12 +168,14 @@ def test_plan_batch_invalid_task_structure(adapter, mock_anthropic_client):
     """Test handling of invalid task structure."""
     mock_response = Mock()
     mock_text_block = Mock()
-    mock_text_block.text = json.dumps({
-        "tasks": [
-            {"title": "Valid task", "prompt": "Do something"},
-            {"title": "Missing prompt"},  # Missing required field
-        ],
-    })
+    mock_text_block.text = json.dumps(
+        {
+            "tasks": [
+                {"title": "Valid task", "prompt": "Do something"},
+                {"title": "Missing prompt"},  # Missing required field
+            ],
+        }
+    )
     mock_response.content = [mock_text_block]
     mock_anthropic_client.messages.create.return_value = mock_response
 
@@ -185,9 +193,11 @@ def test_plan_batch_tasks_not_array(adapter, mock_anthropic_client):
     """Test handling when 'tasks' is not an array."""
     mock_response = Mock()
     mock_text_block = Mock()
-    mock_text_block.text = json.dumps({
-        "tasks": "not an array",
-    })
+    mock_text_block.text = json.dumps(
+        {
+            "tasks": "not an array",
+        }
+    )
     mock_response.content = [mock_text_block]
     mock_anthropic_client.messages.create.return_value = mock_response
 
@@ -226,14 +236,16 @@ def test_review_batch_success(adapter, mock_anthropic_client):
     """Test successful batch review."""
     mock_response = Mock()
     mock_text_block = Mock()
-    mock_text_block.text = json.dumps({
-        "cumulative_summary": "Completed setup and basic features",
-        "batch_assessment": "Batch completed successfully",
-        "issues": [],
-        "project_complete": False,
-        "completion_percentage": 30,
-        "recommendations": "Continue with authentication",
-    })
+    mock_text_block.text = json.dumps(
+        {
+            "cumulative_summary": "Completed setup and basic features",
+            "batch_assessment": "Batch completed successfully",
+            "issues": [],
+            "project_complete": False,
+            "completion_percentage": 30,
+            "recommendations": "Continue with authentication",
+        }
+    )
     mock_response.content = [mock_text_block]
     mock_anthropic_client.messages.create.return_value = mock_response
 
@@ -258,14 +270,16 @@ def test_review_batch_project_complete(adapter, mock_anthropic_client):
     """Test review indicating project completion."""
     mock_response = Mock()
     mock_text_block = Mock()
-    mock_text_block.text = json.dumps({
-        "cumulative_summary": "All features implemented and tested",
-        "batch_assessment": "Final polish complete",
-        "issues": [],
-        "project_complete": True,
-        "completion_percentage": 100,
-        "recommendations": "Project ready for deployment",
-    })
+    mock_text_block.text = json.dumps(
+        {
+            "cumulative_summary": "All features implemented and tested",
+            "batch_assessment": "Final polish complete",
+            "issues": [],
+            "project_complete": True,
+            "completion_percentage": 100,
+            "recommendations": "Project ready for deployment",
+        }
+    )
     mock_response.content = [mock_text_block]
     mock_anthropic_client.messages.create.return_value = mock_response
 
@@ -283,14 +297,16 @@ def test_review_batch_with_issues(adapter, mock_anthropic_client):
     """Test review with identified issues."""
     mock_response = Mock()
     mock_text_block = Mock()
-    mock_text_block.text = json.dumps({
-        "cumulative_summary": "Setup complete with issues",
-        "batch_assessment": "Some tasks failed",
-        "issues": ["Database connection failed", "Tests not passing"],
-        "project_complete": False,
-        "completion_percentage": 20,
-        "recommendations": "Fix database config",
-    })
+    mock_text_block.text = json.dumps(
+        {
+            "cumulative_summary": "Setup complete with issues",
+            "batch_assessment": "Some tasks failed",
+            "issues": ["Database connection failed", "Tests not passing"],
+            "project_complete": False,
+            "completion_percentage": 20,
+            "recommendations": "Fix database config",
+        }
+    )
     mock_response.content = [mock_text_block]
     mock_anthropic_client.messages.create.return_value = mock_response
 
@@ -328,10 +344,12 @@ def test_review_batch_missing_required_fields(adapter, mock_anthropic_client):
     """Test handling of missing required fields in review response."""
     mock_response = Mock()
     mock_text_block = Mock()
-    mock_text_block.text = json.dumps({
-        "batch_assessment": "Missing cumulative_summary",
-        "issues": [],
-    })
+    mock_text_block.text = json.dumps(
+        {
+            "batch_assessment": "Missing cumulative_summary",
+            "issues": [],
+        }
+    )
     mock_response.content = [mock_text_block]
     mock_anthropic_client.messages.create.return_value = mock_response
 
@@ -377,9 +395,11 @@ def test_rate_limit_retry(adapter, mock_anthropic_client):
     # First two calls fail with rate limit, third succeeds
     mock_success_response = Mock()
     mock_text_block = Mock()
-    mock_text_block.text = json.dumps({
-        "tasks": [{"title": "Test", "prompt": "Test task"}],
-    })
+    mock_text_block.text = json.dumps(
+        {
+            "tasks": [{"title": "Test", "prompt": "Test task"}],
+        }
+    )
     mock_success_response.content = [mock_text_block]
 
     mock_anthropic_client.messages.create.side_effect = [
@@ -436,10 +456,12 @@ def test_plan_batch_with_reasoning(adapter, mock_anthropic_client, capsys):
     """Test that batch reasoning is printed when provided."""
     mock_response = Mock()
     mock_text_block = Mock()
-    mock_text_block.text = json.dumps({
-        "tasks": [{"title": "Task 1", "prompt": "Do thing 1"}],
-        "batch_reasoning": "Starting with database setup",
-    })
+    mock_text_block.text = json.dumps(
+        {
+            "tasks": [{"title": "Task 1", "prompt": "Do thing 1"}],
+            "batch_reasoning": "Starting with database setup",
+        }
+    )
     mock_response.content = [mock_text_block]
     mock_anthropic_client.messages.create.return_value = mock_response
 

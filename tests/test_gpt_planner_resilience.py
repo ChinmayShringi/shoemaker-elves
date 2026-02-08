@@ -18,6 +18,7 @@ def create_mock_rate_limit_error():
 
     # Import the error class
     from openai import RateLimitError
+
     return RateLimitError("Rate limit exceeded", response=mock_response, body=None)
 
 
@@ -26,6 +27,7 @@ def create_mock_api_error():
     mock_request = Mock()
 
     from openai import APIError
+
     return APIError("Service unavailable", request=mock_request, body=None)
 
 
@@ -39,9 +41,7 @@ class TestRetryLogic:
         # Mock client to fail twice with rate limit, then succeed
         mock_response = MagicMock()
         mock_response.choices = [MagicMock(message=MagicMock(content='{"tasks": []}'))]
-        mock_response.usage = MagicMock(
-            prompt_tokens=100, completion_tokens=50, total_tokens=150
-        )
+        mock_response.usage = MagicMock(prompt_tokens=100, completion_tokens=50, total_tokens=150)
 
         adapter.client.chat.completions.create = MagicMock(
             side_effect=[
@@ -53,9 +53,7 @@ class TestRetryLogic:
 
         # Patch time.sleep to avoid actual waiting
         with patch("time.sleep") as mock_sleep:
-            result, usage = adapter._call_api_with_retry(
-                system_prompt="test", user_prompt="test"
-            )
+            result, usage = adapter._call_api_with_retry(system_prompt="test", user_prompt="test")
 
             # Should have retried twice
             assert adapter.client.chat.completions.create.call_count == 3
@@ -75,9 +73,7 @@ class TestRetryLogic:
         # Mock client to fail twice with API error, then succeed
         mock_response = MagicMock()
         mock_response.choices = [MagicMock(message=MagicMock(content='{"tasks": []}'))]
-        mock_response.usage = MagicMock(
-            prompt_tokens=100, completion_tokens=50, total_tokens=150
-        )
+        mock_response.usage = MagicMock(prompt_tokens=100, completion_tokens=50, total_tokens=150)
 
         adapter.client.chat.completions.create = MagicMock(
             side_effect=[
@@ -88,9 +84,7 @@ class TestRetryLogic:
         )
 
         with patch("time.sleep") as mock_sleep:
-            result, usage = adapter._call_api_with_retry(
-                system_prompt="test", user_prompt="test"
-            )
+            result, usage = adapter._call_api_with_retry(system_prompt="test", user_prompt="test")
 
             # Should have retried twice
             assert adapter.client.chat.completions.create.call_count == 3
@@ -108,7 +102,9 @@ class TestRetryLogic:
 
         # Mock client to always fail
         adapter.client.chat.completions.create = MagicMock(
-            side_effect=lambda *args, **kwargs: (_ for _ in ()).throw(create_mock_rate_limit_error())
+            side_effect=lambda *args, **kwargs: (_ for _ in ()).throw(
+                create_mock_rate_limit_error()
+            )
         )
 
         with patch("time.sleep"):
@@ -164,9 +160,7 @@ class TestJSONRepair:
 
         mock_response_2 = MagicMock()
         mock_response_2.choices = [MagicMock(message=MagicMock(content=invalid_json_2))]
-        mock_response_2.usage = MagicMock(
-            prompt_tokens=120, completion_tokens=60, total_tokens=180
-        )
+        mock_response_2.usage = MagicMock(prompt_tokens=120, completion_tokens=60, total_tokens=180)
 
         # Mock repair attempt to also return invalid JSON
         adapter.client.chat.completions.create = MagicMock(return_value=mock_response_2)
@@ -209,15 +203,11 @@ class TestUsageTracking:
 
         mock_response = MagicMock()
         mock_response.choices = [MagicMock(message=MagicMock(content='{"tasks": []}'))]
-        mock_response.usage = MagicMock(
-            prompt_tokens=500, completion_tokens=300, total_tokens=800
-        )
+        mock_response.usage = MagicMock(prompt_tokens=500, completion_tokens=300, total_tokens=800)
 
         adapter.client.chat.completions.create = MagicMock(return_value=mock_response)
 
-        result, usage = adapter._call_api_with_retry(
-            system_prompt="test", user_prompt="test"
-        )
+        result, usage = adapter._call_api_with_retry(system_prompt="test", user_prompt="test")
 
         assert usage.prompt_tokens == 500
         assert usage.completion_tokens == 300
@@ -287,9 +277,7 @@ class TestEndToEndResilience:
 
         mock_response = MagicMock()
         mock_response.choices = [MagicMock(message=MagicMock(content=valid_json))]
-        mock_response.usage = MagicMock(
-            prompt_tokens=100, completion_tokens=50, total_tokens=150
-        )
+        mock_response.usage = MagicMock(prompt_tokens=100, completion_tokens=50, total_tokens=150)
 
         # Fail once with rate limit, then succeed
         adapter.client.chat.completions.create = MagicMock(

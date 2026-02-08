@@ -17,6 +17,7 @@ try:
     from rich.progress import BarColumn, Progress, SpinnerColumn, TextColumn, TimeRemainingColumn
     from rich.table import Table
     from rich.text import Text
+
     RICH_AVAILABLE = True
 except ImportError:
     RICH_AVAILABLE = False
@@ -58,7 +59,7 @@ class Logger:
             self.log_dir.mkdir(parents=True, exist_ok=True)
             self.log_file = self.log_dir / "run.log"
             # Create or clear the log file
-            with open(self.log_file, 'w') as f:
+            with open(self.log_file, "w") as f:
                 self._write_log_entry("session_start", {"timestamp": self._timestamp()})
         except OSError as e:
             print(f"Warning: Could not create log file: {e}")
@@ -74,13 +75,9 @@ class Logger:
             return
 
         try:
-            entry = {
-                "timestamp": self._timestamp(),
-                "event": event_type,
-                **data
-            }
-            with open(self.log_file, 'a') as f:
-                f.write(json.dumps(entry) + '\n')
+            entry = {"timestamp": self._timestamp(), "event": event_type, **data}
+            with open(self.log_file, "a") as f:
+                f.write(json.dumps(entry) + "\n")
         except OSError:
             pass  # Silently fail on log write errors
 
@@ -128,9 +125,9 @@ class Logger:
         if self.use_rich:
             self.console.print(Panel(text, style="bold blue"))
         else:
-            print(f"\n{'='*60}")
+            print(f"\n{'=' * 60}")
             print(f"  {text}")
-            print(f"{'='*60}\n")
+            print(f"{'=' * 60}\n")
 
     def section(self, text: str):
         """Print a section divider."""
@@ -138,9 +135,9 @@ class Logger:
             self.console.print(f"\n[bold cyan]{text}[/bold cyan]")
             self.console.print("─" * 60)
         else:
-            print(f"\n{'─'*60}")
+            print(f"\n{'─' * 60}")
             print(f"  {text}")
-            print(f"{'─'*60}")
+            print(f"{'─' * 60}")
 
     def table(self, title: str, columns: list[str], rows: list[list[str]]):
         """Display a table."""
@@ -163,11 +160,7 @@ class Logger:
             print()
 
         # Log table data
-        self._write_log_entry("table", {
-            "title": title,
-            "columns": columns,
-            "rows": rows
-        })
+        self._write_log_entry("table", {"title": title, "columns": columns, "rows": rows})
 
     @contextmanager
     def progress(self, description: str = "Processing..."):
@@ -187,7 +180,7 @@ class Logger:
                 BarColumn(),
                 TextColumn("[progress.percentage]{task.percentage:>3.0f}%"),
                 TimeRemainingColumn(),
-                console=self.console
+                console=self.console,
             )
             with progress:
                 yield progress
@@ -223,7 +216,7 @@ class Logger:
                     "completed": "[green]✓[/green]",
                     "failed": "[red]✗[/red]",
                     "running": "[yellow]⟳[/yellow]",
-                    "pending": "[dim]○[/dim]"
+                    "pending": "[dim]○[/dim]",
                 }.get(task["status"], "?")
 
                 files = task.get("files_modified", [])
@@ -247,7 +240,7 @@ class Logger:
                     "completed": "[+]",
                     "failed": "[x]",
                     "running": "[~]",
-                    "pending": "[ ]"
+                    "pending": "[ ]",
                 }.get(task["status"], "[?]")
 
                 print(f"  {status_icon} {task['title']}")
@@ -262,10 +255,7 @@ class Logger:
             print()
 
         # Log task summary
-        self._write_log_entry("task_summary", {
-            "tasks": tasks,
-            "total_cost": total_cost
-        })
+        self._write_log_entry("task_summary", {"tasks": tasks, "total_cost": total_cost})
 
     def log_event(self, event_type: str, data: dict):
         """Log a custom event to the machine-readable log."""

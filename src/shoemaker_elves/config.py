@@ -124,9 +124,7 @@ def save_config(config: dict[str, Any]) -> None:
         config: Config dictionary to save
     """
     if tomli_w is None:
-        raise RuntimeError(
-            "TOML write support not available. Install tomli-w: pip install tomli-w"
-        )
+        raise RuntimeError("TOML write support not available. Install tomli-w: pip install tomli-w")
 
     config_path = get_config_path()
     config_path.parent.mkdir(parents=True, exist_ok=True)

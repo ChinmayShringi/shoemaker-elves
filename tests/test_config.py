@@ -27,10 +27,7 @@ def temp_config_dir(monkeypatch):
     """Create a temporary config directory for testing."""
     with tempfile.TemporaryDirectory() as tmpdir:
         # Mock the config directory
-        monkeypatch.setattr(
-            "shoemaker_elves.config.get_config_dir",
-            lambda: Path(tmpdir)
-        )
+        monkeypatch.setattr("shoemaker_elves.config.get_config_dir", lambda: Path(tmpdir))
         yield Path(tmpdir)
 
 

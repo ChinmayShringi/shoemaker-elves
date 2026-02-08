@@ -4,9 +4,9 @@ Ensures JSON responses meet quality standards with required fields and content.
 """
 
 
-
 class ValidationError(Exception):
     """Raised when validation fails."""
+
     pass
 
 
@@ -39,7 +39,9 @@ class PromptValidator:
             if field not in task:
                 errors.append(f"{task_id}: missing required '{field}' field")
             elif not isinstance(task[field], str):
-                errors.append(f"{task_id}: Field '{field}' must be a string, got {type(task[field]).__name__}")
+                errors.append(
+                    f"{task_id}: Field '{field}' must be a string, got {type(task[field]).__name__}"
+                )
             elif not task[field].strip():
                 errors.append(f"{task_id}: Field '{field}' cannot be empty")
 
@@ -117,8 +119,7 @@ class PromptValidator:
         # Validate batch size constraint
         if len(tasks) > batch_size:
             errors.append(
-                f"Batch size exceeded: {len(tasks)} tasks generated, "
-                f"maximum is {batch_size}"
+                f"Batch size exceeded: {len(tasks)} tasks generated, maximum is {batch_size}"
             )
 
         # Validate each task
@@ -165,8 +166,7 @@ class PromptValidator:
                 errors.append(f"Response missing required field '{field}'")
             elif not isinstance(response[field], str):
                 errors.append(
-                    f"Field '{field}' must be a string, "
-                    f"got {type(response[field]).__name__}"
+                    f"Field '{field}' must be a string, got {type(response[field]).__name__}"
                 )
             elif not response[field].strip():
                 errors.append(f"Field '{field}' cannot be empty")
@@ -176,18 +176,12 @@ class PromptValidator:
             missing_fields.append("issues")
             errors.append("Missing required field 'issues'")
         elif not isinstance(response["issues"], list):
-            errors.append(
-                f"Field 'issues' must be a list, "
-                f"got {type(response['issues']).__name__}"
-            )
+            errors.append(f"Field 'issues' must be a list, got {type(response['issues']).__name__}")
         else:
             # Validate list contents
             for i, issue in enumerate(response["issues"]):
                 if not isinstance(issue, str):
-                    errors.append(
-                        f"issues[{i}] must be a string, "
-                        f"got {type(issue).__name__}"
-                    )
+                    errors.append(f"issues[{i}] must be a string, got {type(issue).__name__}")
 
         # Required boolean fields
         if "project_complete" not in response:
@@ -231,10 +225,7 @@ class PromptValidator:
                 # Validate next_tasks structure
                 for i, task in enumerate(response["next_tasks"]):
                     if not isinstance(task, dict):
-                        errors.append(
-                            f"next_tasks[{i}] must be a dict, "
-                            f"got {type(task).__name__}"
-                        )
+                        errors.append(f"next_tasks[{i}] must be a dict, got {type(task).__name__}")
                         continue
 
                     required_task_fields = ["title", "summary", "priority", "reason"]
