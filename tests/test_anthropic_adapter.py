@@ -5,13 +5,12 @@ Tests JSON parsing, validation, and error handling with mocked Anthropic client.
 """
 
 import json
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import Mock, patch
 
 import pytest
 
 from shoemaker_elves.planners.anthropic_adapter import AnthropicAdapter
 from shoemaker_elves.planners.types import ReviewSpec, TaskSpec
-
 
 # ─────────────────────────────────────────────────────────────
 # Fixtures

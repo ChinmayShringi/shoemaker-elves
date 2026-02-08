@@ -4,10 +4,8 @@ Unit tests for planner data types.
 Tests TaskSpec and ReviewSpec serialization and deserialization.
 """
 
-import pytest
 
 from shoemaker_elves.planners.types import ReviewSpec, TaskSpec
-
 
 # ─────────────────────────────────────────────────────────────
 # TaskSpec Tests

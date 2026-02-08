@@ -3,7 +3,6 @@ Prompt validator utility for validating task planning and review outputs.
 Ensures JSON responses meet quality standards with required fields and content.
 """
 
-from typing import Any
 
 
 class ValidationError(Exception):

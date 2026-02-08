@@ -19,6 +19,7 @@ def test_logger_imports_without_rich():
     with patch.dict(sys.modules, {'rich': None, 'rich.console': None, 'rich.progress': None, 'rich.table': None, 'rich.panel': None, 'rich.text': None}):
         # Reload the module to trigger the import error path
         import importlib
+
         from shoemaker_elves import logging as log_module
         importlib.reload(log_module)
 
@@ -87,7 +88,7 @@ def test_logger_creates_log_file():
         assert log_file.exists()
 
         # Check that log entries are valid JSON Lines
-        with open(log_file, 'r') as f:
+        with open(log_file) as f:
             lines = f.readlines()
 
         assert len(lines) > 0
@@ -113,7 +114,7 @@ def test_logger_log_event():
 
         # Check log file
         log_file = log_dir / "run.log"
-        with open(log_file, 'r') as f:
+        with open(log_file) as f:
             lines = f.readlines()
 
         # Find the custom event
@@ -156,7 +157,7 @@ def test_get_logger_singleton():
 
 def test_logger_table_with_rich(monkeypatch):
     """Test table display with rich available."""
-    from shoemaker_elves.logging import Logger, RICH_AVAILABLE
+    from shoemaker_elves.logging import RICH_AVAILABLE, Logger
 
     if not RICH_AVAILABLE:
         pytest.skip("Rich not installed")
@@ -173,7 +174,7 @@ def test_logger_table_with_rich(monkeypatch):
 
 def test_logger_progress_with_rich(monkeypatch):
     """Test progress display with rich available."""
-    from shoemaker_elves.logging import Logger, RICH_AVAILABLE
+    from shoemaker_elves.logging import RICH_AVAILABLE, Logger
 
     if not RICH_AVAILABLE:
         pytest.skip("Rich not installed")
@@ -192,7 +193,7 @@ def test_logger_progress_with_rich(monkeypatch):
 
 def test_logger_task_summary_with_rich():
     """Test task summary display with rich available."""
-    from shoemaker_elves.logging import Logger, RICH_AVAILABLE
+    from shoemaker_elves.logging import RICH_AVAILABLE, Logger
 
     if not RICH_AVAILABLE:
         pytest.skip("Rich not installed")

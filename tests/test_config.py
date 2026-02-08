@@ -2,7 +2,6 @@
 Unit tests for the configuration system.
 """
 
-import os
 import sys
 import tempfile
 from pathlib import Path
@@ -13,13 +12,13 @@ import pytest
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from shoemaker_elves.config import (
-    load_config,
-    save_config,
-    merge_env_overrides,
-    mask_secrets,
-    set_config_value,
-    get_config_value,
     DEFAULT_CONFIG,
+    get_config_value,
+    load_config,
+    mask_secrets,
+    merge_env_overrides,
+    save_config,
+    set_config_value,
 )
 
 
@@ -219,7 +218,7 @@ def test_config_preserves_new_keys():
     }
 
     # Deep merge with defaults
-    from shoemaker_elves.config import _deep_merge, _deep_copy_dict
+    from shoemaker_elves.config import _deep_copy_dict, _deep_merge
 
     result = _deep_copy_dict(DEFAULT_CONFIG)
     _deep_merge(result, old_config)

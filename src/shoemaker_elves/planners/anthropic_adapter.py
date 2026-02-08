@@ -5,12 +5,11 @@ Supports Claude models via the Anthropic Messages API.
 
 import json
 import time
-from typing import Tuple
 
 from anthropic import (
+    Anthropic,
     APIError,
     AuthenticationError,
-    Anthropic,
     RateLimitError,
 )
 
@@ -192,7 +191,7 @@ class AnthropicAdapter:
 
     def _call_api_with_retry(
         self, system_prompt: str, user_prompt: str
-    ) -> Tuple[str, UsageMetrics]:
+    ) -> tuple[str, UsageMetrics]:
         """
         Call Anthropic API with retry logic and usage tracking.
 
@@ -303,7 +302,7 @@ class AnthropicAdapter:
         except json.JSONDecodeError as e:
             print(f"  Warning: JSON parse error in {operation}: {e}")
             print(f"  Response excerpt: {response_text[:200]}...")
-            print(f"  Attempting JSON repair...")
+            print("  Attempting JSON repair...")
 
             # Make one repair attempt with explicit JSON-only instruction
             repair_prompt = (
@@ -318,7 +317,7 @@ class AnthropicAdapter:
                     user_prompt=f"{user_prompt}\n\n{repair_prompt}",
                 )
                 parsed = json.loads(repaired_text)
-                print(f"  JSON repair successful!")
+                print("  JSON repair successful!")
                 return parsed
             except json.JSONDecodeError as repair_error:
                 print(f"  JSON repair failed: {repair_error}")

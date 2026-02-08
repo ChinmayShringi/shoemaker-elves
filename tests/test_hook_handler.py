@@ -207,9 +207,8 @@ class TestHookHandlerIdempotency:
             "session_id": "test-session-123",
             "transcript_path": "/tmp/transcript.txt",
             "cwd": str(temp_project_dir["project_dir"]),
-        }))):
-            with patch("shoemaker_elves.hook_handler.log"):
-                main()
+        }))), patch("shoemaker_elves.hook_handler.log"):
+            main()
 
         # Verify task 2 was launched
         assert mock_popen.call_count == 1
@@ -226,9 +225,8 @@ class TestHookHandlerIdempotency:
             "session_id": "test-session-123",
             "transcript_path": "/tmp/transcript.txt",
             "cwd": str(temp_project_dir["project_dir"]),
-        }))):
-            with patch("shoemaker_elves.hook_handler.log"):
-                main()
+        }))), patch("shoemaker_elves.hook_handler.log"):
+            main()
 
         # Verify task 2 was NOT launched again (still 1 call)
         # Actually, it might be launched again because we're processing task 0 again
@@ -273,9 +271,8 @@ class TestHookHandlerIdempotency:
             "session_id": "session-1",
             "transcript_path": "/tmp/transcript1.txt",
             "cwd": str(temp_project_dir["project_dir"]),
-        }))):
-            with patch("shoemaker_elves.hook_handler.log"):
-                main()
+        }))), patch("shoemaker_elves.hook_handler.log"):
+            main()
 
         # Verify state
         state_data = state.read()
@@ -303,9 +300,8 @@ class TestHookHandlerIdempotency:
             "session_id": "session-2",
             "transcript_path": "/tmp/transcript2.txt",
             "cwd": str(temp_project_dir["project_dir"]),
-        }))):
-            with patch("shoemaker_elves.hook_handler.log"):
-                main()
+        }))), patch("shoemaker_elves.hook_handler.log"):
+            main()
 
         # Verify state has both executions
         state_data = state.read()

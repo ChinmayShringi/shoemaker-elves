@@ -22,17 +22,16 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-from .state import State
 from .config import (
-    load_config,
-    save_config,
-    merge_env_overrides,
-    mask_secrets,
     get_config_path,
+    load_config,
+    mask_secrets,
+    merge_env_overrides,
+    save_config,
     set_config_value,
-    get_config_value,
 )
 from .logging import Logger, is_rich_available
+from .state import State
 
 # Only import GPT modules if needed (they require openai)
 GPTPlanner = None
@@ -122,7 +121,7 @@ Examples:
     parsed = parser.parse_args(args)
 
     # If no command specified and first arg is not a command, assume "run"
-    if parsed.command is None and args and len(args) > 0 and not args[0] in ("init", "config"):
+    if parsed.command is None and args and len(args) > 0 and args[0] not in ("init", "config"):
         # Reparse with "run" command injected
         new_args = ["run"] + (args if args else [])
         parsed = parser.parse_args(new_args)
@@ -238,20 +237,20 @@ Append this to the existing doc file:
         if not self.prework_path.exists():
             try:
                 self.prework_path.write_text(self.PREWORK_TEMPLATE)
-                print(f"  Created prework.md")
+                print("  Created prework.md")
             except OSError as e:
                 print(f"  WARNING: Could not create prework.md: {e}")
         else:
-            print(f"  Found existing prework.md")
+            print("  Found existing prework.md")
 
         if not self.postwork_path.exists():
             try:
                 self.postwork_path.write_text(self.POSTWORK_TEMPLATE)
-                print(f"  Created postwork.md")
+                print("  Created postwork.md")
             except OSError as e:
                 print(f"  WARNING: Could not create postwork.md: {e}")
         else:
-            print(f"  Found existing postwork.md")
+            print("  Found existing postwork.md")
 
 
 class ContextMDManager:
@@ -267,17 +266,17 @@ class ContextMDManager:
         if self.original_existed:
             self.backup_path.parent.mkdir(parents=True, exist_ok=True)
             self.backup_path.write_text(self.context_md.read_text())
-            print(f"  Backed up existing context file")
+            print("  Backed up existing context file")
 
     def restore(self):
         """Restore original context file after orchestration."""
         if self.backup_path.exists():
             self.context_md.write_text(self.backup_path.read_text())
             self.backup_path.unlink()
-            print(f"  Restored original CLAUDE.md")
+            print("  Restored original CLAUDE.md")
         elif not self.original_existed and self.context_md.exists():
             self.context_md.unlink()
-            print(f"  Removed orchestrator CLAUDE.md")
+            print("  Removed orchestrator CLAUDE.md")
 
     def write_initial(self, description: str = "", cumulative_summary: str = ""):
         """Write initial CLAUDE.md for the first task."""
@@ -414,7 +413,7 @@ def uninstall_hook(project_dir: Path):
             settings = json.loads(settings_path.read_text())
             settings.pop("hooks", None)
             settings_path.write_text(json.dumps(settings, indent=2))
-            print(f"  Removed hook from settings.local.json")
+            print("  Removed hook from settings.local.json")
         except json.JSONDecodeError:
             pass
 
@@ -1173,7 +1172,6 @@ class Orchestrator:
 
 def cmd_init():
     """Interactive configuration setup wizard."""
-    import json
 
     print("\n" + "="*60)
     print("  Shoemaker Elves - Configuration Setup")
@@ -1220,7 +1218,7 @@ def cmd_init():
     storage_choice = input("\nChoice [1]: ").strip() or "1"
 
     if storage_choice == "2":
-        api_key = input(f"Enter API key: ").strip()
+        api_key = input("Enter API key: ").strip()
         if api_key:
             config["planner"]["api_key"] = api_key
     else:
@@ -1259,11 +1257,11 @@ def cmd_init():
             config["planner"]["base_url"] = base_url
 
     # Agent model
-    agent_model = input(f"\nAgent model [sonnet]: ").strip() or "sonnet"
+    agent_model = input("\nAgent model [sonnet]: ").strip() or "sonnet"
     config["agent"]["model"] = agent_model
 
     # Max cost
-    max_cost = input(f"Max cost in USD [50.0]: ").strip() or "50.0"
+    max_cost = input("Max cost in USD [50.0]: ").strip() or "50.0"
     try:
         config["planner"]["max_cost_usd"] = float(max_cost)
     except ValueError:

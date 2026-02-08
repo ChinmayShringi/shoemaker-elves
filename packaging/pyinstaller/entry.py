@@ -5,6 +5,7 @@ This file uses absolute imports to avoid PyInstaller issues with relative import
 """
 
 import sys
+
 from shoemaker_elves.cli import main
 
 if __name__ == "__main__":

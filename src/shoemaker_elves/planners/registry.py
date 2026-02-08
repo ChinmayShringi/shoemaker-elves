@@ -5,12 +5,12 @@ Supports plugin discovery via importlib.metadata entrypoints.
 """
 
 import logging
+from collections.abc import Callable
 from importlib.metadata import entry_points
-from typing import Callable
 
-from .base import PlannerAdapter
 from .anthropic_adapter import AnthropicAdapter
 from .azure_openai_adapter import AzureOpenAIAdapter
+from .base import PlannerAdapter
 from .openai_adapter import OpenAIAdapter
 
 logger = logging.getLogger(__name__)

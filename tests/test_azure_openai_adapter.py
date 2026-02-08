@@ -12,7 +12,6 @@ import pytest
 from shoemaker_elves.planners.azure_openai_adapter import AzureOpenAIAdapter
 from shoemaker_elves.planners.types import ReviewSpec, TaskSpec
 
-
 # ─────────────────────────────────────────────────────────────
 # Fixtures
 # ─────────────────────────────────────────────────────────────

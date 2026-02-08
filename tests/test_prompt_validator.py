@@ -11,7 +11,6 @@ from shoemaker_elves.prompt_validator import (
     ValidationError,
 )
 
-
 # ─────────────────────────────────────────────────────────────
 # Task Validation Tests
 # ─────────────────────────────────────────────────────────────

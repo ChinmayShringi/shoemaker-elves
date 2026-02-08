@@ -2,14 +2,12 @@
 Tests for GPT planner resilience: retry logic and JSON repair.
 """
 
-import json
-import time
 from unittest.mock import MagicMock, Mock, patch
 
 import pytest
 
 from shoemaker_elves.planners.openai_adapter import OpenAIAdapter
-from shoemaker_elves.planners.types import TaskSpec, UsageMetrics
+from shoemaker_elves.planners.types import UsageMetrics
 
 
 def create_mock_rate_limit_error():

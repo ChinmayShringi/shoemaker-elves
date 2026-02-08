@@ -5,7 +5,6 @@ Supports Azure OpenAI Service endpoints.
 
 import json
 import time
-from typing import Tuple
 
 from openai import APIError, AuthenticationError, AzureOpenAI, RateLimitError
 
@@ -201,7 +200,7 @@ class AzureOpenAIAdapter:
 
     def _call_api_with_retry(
         self, system_prompt: str, user_prompt: str
-    ) -> Tuple[str, UsageMetrics]:
+    ) -> tuple[str, UsageMetrics]:
         """
         Call Azure OpenAI API with retry logic and usage tracking.
 
@@ -297,7 +296,7 @@ class AzureOpenAIAdapter:
         except json.JSONDecodeError as e:
             print(f"  Warning: JSON parse error in {operation}: {e}")
             print(f"  Response excerpt: {response_text[:200]}...")
-            print(f"  Attempting JSON repair...")
+            print("  Attempting JSON repair...")
 
             # Make one repair attempt with explicit JSON-only instruction
             repair_prompt = (
@@ -312,7 +311,7 @@ class AzureOpenAIAdapter:
                     user_prompt=f"{user_prompt}\n\n{repair_prompt}",
                 )
                 parsed = json.loads(repaired_text)
-                print(f"  JSON repair successful!")
+                print("  JSON repair successful!")
                 return parsed
             except json.JSONDecodeError as repair_error:
                 print(f"  JSON repair failed: {repair_error}")

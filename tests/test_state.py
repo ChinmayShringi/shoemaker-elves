@@ -1,7 +1,6 @@
 """Tests for state management hardening."""
 
 import json
-import os
 import tempfile
 import threading
 import time

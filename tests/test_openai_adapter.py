@@ -5,13 +5,12 @@ Tests JSON parsing, validation, and error handling with mocked OpenAI client.
 """
 
 import json
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import Mock, patch
 
 import pytest
 
 from shoemaker_elves.planners.openai_adapter import OpenAIAdapter
 from shoemaker_elves.planners.types import ReviewSpec, TaskSpec
-
 
 # ─────────────────────────────────────────────────────────────
 # Fixtures

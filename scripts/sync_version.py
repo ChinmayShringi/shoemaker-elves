@@ -62,7 +62,7 @@ def read_package_json_version() -> str:
         print(f"Error: package.json not found at {package_json_path}", file=sys.stderr)
         sys.exit(1)
 
-    with open(package_json_path, "r", encoding="utf-8") as f:
+    with open(package_json_path, encoding="utf-8") as f:
         data = json.load(f)
 
     version = data.get("version")
@@ -77,7 +77,7 @@ def update_package_json_version(new_version: str) -> None:
     """Update version in package.json."""
     package_json_path = get_project_root() / "packages" / "npm" / "package.json"
 
-    with open(package_json_path, "r", encoding="utf-8") as f:
+    with open(package_json_path, encoding="utf-8") as f:
         data = json.load(f)
 
     old_version = data.get("version", "unknown")
@@ -100,7 +100,7 @@ def check_versions() -> bool:
         print(f"✓ Versions are in sync: {pyproject_version}")
         return True
     else:
-        print(f"✗ Version mismatch detected:", file=sys.stderr)
+        print("✗ Version mismatch detected:", file=sys.stderr)
         print(f"  pyproject.toml:  {pyproject_version}", file=sys.stderr)
         print(f"  package.json:    {package_json_version}", file=sys.stderr)
         return False

@@ -6,18 +6,16 @@ when available, but gracefully falls back to plain text output when rich is not 
 """
 
 import json
-import sys
 from contextlib import contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Optional
 
 # Try to import rich components
 try:
     from rich.console import Console
-    from rich.progress import Progress, SpinnerColumn, TextColumn, BarColumn, TimeRemainingColumn
-    from rich.table import Table
     from rich.panel import Panel
+    from rich.progress import BarColumn, Progress, SpinnerColumn, TextColumn, TimeRemainingColumn
+    from rich.table import Table
     from rich.text import Text
     RICH_AVAILABLE = True
 except ImportError:
@@ -30,7 +28,7 @@ class Logger:
     Also supports machine-readable logging to a file.
     """
 
-    def __init__(self, log_dir: Optional[Path] = None, enable_rich: bool = True):
+    def __init__(self, log_dir: Path | None = None, enable_rich: bool = True):
         """
         Initialize the logger.
 
@@ -86,7 +84,7 @@ class Logger:
         except OSError:
             pass  # Silently fail on log write errors
 
-    def print(self, text: str, style: Optional[str] = None):
+    def print(self, text: str, style: str | None = None):
         """Print text with optional styling."""
         if self.use_rich and style:
             self.console.print(text, style=style)
@@ -280,10 +278,10 @@ class Logger:
 
 
 # Singleton instance for convenience
-_default_logger: Optional[Logger] = None
+_default_logger: Logger | None = None
 
 
-def get_logger(log_dir: Optional[Path] = None, enable_rich: bool = True) -> Logger:
+def get_logger(log_dir: Path | None = None, enable_rich: bool = True) -> Logger:
     """Get or create the default logger instance."""
     global _default_logger
     if _default_logger is None:
