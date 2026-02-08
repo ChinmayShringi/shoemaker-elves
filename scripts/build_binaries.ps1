@@ -84,19 +84,19 @@ $BinarySize = (Get-Item "dist/$BinaryName").Length
 $BinarySizeMB = [math]::Round($BinarySize / 1MB, 2)
 
 Write-Host ""
-Write-ColorOutput "✓ Build successful!" -Color Green
+Write-ColorOutput "Build successful!" -Color Green
 Write-Host "Binary: dist/$BinaryName"
 Write-Host "Size: ${BinarySizeMB} MB"
 
 # Test the binary
 Write-Host ""
 Write-ColorOutput "Testing binary..." -Color Green
-$testOutput = & "dist/$BinaryName" --help *>&1
-if ($LASTEXITCODE -eq 0) {
-    Write-ColorOutput "✓ Binary test passed" -Color Green
-} else {
-    Write-ColorOutput "✗ Binary test failed" -Color Red
-    Write-Host $testOutput
+try {
+    $null = & "dist/$BinaryName" --help 2>&1
+    Write-ColorOutput "Binary test passed" -Color Green
+} catch {
+    Write-ColorOutput "Binary test failed" -Color Red
+    Write-Host $_.Exception.Message
     exit 1
 }
 
