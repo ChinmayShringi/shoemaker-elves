@@ -22,7 +22,13 @@ Write-ColorOutput "Building shoemaker-elves standalone binary" -Color Green
 Write-Host "Project root: $ProjectRoot"
 
 # Detect architecture (allow override from TARGET_ARCH env var)
-$Arch = if ($env:TARGET_ARCH) { $env:TARGET_ARCH } elseif ([Environment]::Is64BitOperatingSystem) { "x64" } else { "x86" }
+if ($env:TARGET_ARCH) {
+    $Arch = $env:TARGET_ARCH
+} elseif ([Environment]::Is64BitOperatingSystem) {
+    $Arch = "x64"
+} else {
+    $Arch = "x86"
+}
 $Platform = "windows"
 
 Write-Host "Platform: $Platform"
